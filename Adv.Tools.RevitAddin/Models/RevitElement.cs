@@ -24,7 +24,6 @@ namespace Adv.Tools.RevitAddin.Models
         public string CategoryName { get { return _element?.Category?.Name ?? string.Empty; } set { CategoryName = value; } }
         public string DocumentName { get { return _element.Document.Title; } set { DocumentName = value; } }
 
-
         public long ElementId
         {
             get
@@ -55,6 +54,8 @@ namespace Adv.Tools.RevitAddin.Models
                 ElementId = value;
             }
         }
+        
+        public Guid Guid { get { return new Guid(_element.UniqueId); } set { Guid = value; } }
         #endregion
 
         #region Methods

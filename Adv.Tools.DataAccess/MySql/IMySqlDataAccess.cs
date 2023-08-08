@@ -1,23 +1,14 @@
-﻿using System;
+﻿using Dapper;
+using MySql.Data.MySqlClient;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Dapper;
-using MySql.Data.MySqlClient;
 
 namespace Adv.Tools.DataAccess.MySql
 {
-    public class MySqlDataAccess : IMySqlDataAccess
+    public class IMySqlDataAccess
     {
-        private readonly string _connectionString;
-
-        public MySqlDataAccess(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
 
         public async Task<List<T>> LoadData<T, U>(string sqlQuery, U parameters)
         {

@@ -19,6 +19,7 @@ namespace Adv.Tools.RevitAddin.Models
 
         #region Properties
         public string Title { get { return _document.Title; } set { Title = value; } }
+        public Guid  Guid { get { return _document.GetCloudModelPath().GetModelGUID(); } set { Guid = value; } }
         #endregion
     }
 }

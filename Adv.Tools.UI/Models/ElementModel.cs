@@ -64,6 +64,6 @@ namespace Adv.Tools.UI.Models
         [Required(ErrorMessage = "Category Name is required")]
         public string CategoryName
         { get => categoryName; set => categoryName = value; }
-
+        public Guid Guid { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

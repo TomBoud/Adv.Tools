@@ -15,5 +15,7 @@ namespace Adv.Tools.Abstractions
 
         long ElementId { get; set; }
         long LevelId { get; set; }
+
+        Guid Guid { get; set; }
     }
 }
