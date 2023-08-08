@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+	<!-- <This code is used for referencing output files> -->
+	<Fragment>
+		<ComponentGroup Id="ProductComponents">
+
+			<ComponentRef Id="RevitAddin2021File"/>
+			<ComponentRef Id="RevitAddin2022File"/>
+			<ComponentRef Id="RevitAddin2023File"/>
+			<ComponentRef Id="RevitAddin2024File"/>
+			
+		</ComponentGroup>
+
+		<DirectoryRef Id="TargetRevit2021Folder" FileSource="$(var.Adv.Tools.RevitAddin.ProjectDir)\bin\Release\2021\Adv.Tools.RevitAddin\">
+			<Component Id="RevitAddin2021File" Guid="{5423ADD1-4FFA-418E-A27E-2C3A88EF0171}">
+				<File Id="Addin2021File" Name="Adv.Tools.addin" KeyPath="yes"/>
+			</Component>
+		</DirectoryRef>
+
+		<DirectoryRef Id="TargetRevit2022Folder" FileSource="$(var.Adv.Tools.RevitAddin.ProjectDir)\bin\Release\2022\Adv.Tools.RevitAddin\">
+			<Component Id="RevitAddin2022File" Guid="{2698B1E6-F3A1-4BC8-B0D1-F541737EF6C4}">
+				<File Id="Addin2022File" Name="Adv.Tools.addin" KeyPath="yes"/>
+			</Component>
+		</DirectoryRef>
+
+		<DirectoryRef Id="TargetRevit2023Folder" FileSource="$(var.Adv.Tools.RevitAddin.ProjectDir)\bin\Release\2023\Adv.Tools.RevitAddin\">
+			<Component Id="RevitAddin2023File" Guid="{0B9E43D8-DD2C-498F-850B-4AB91D5904E5}">
+				<File Id="Addin2023File" Name="Adv.Tools.addin" KeyPath="yes"/>
+			</Component>
+		</DirectoryRef>
+
+		<DirectoryRef Id="TargetRevit2024Folder" FileSource="$(var.Adv.Tools.RevitAddin.ProjectDir)\bin\Release\2024\Adv.Tools.RevitAddin\">
+			<Component Id="RevitAddin2024File" Guid="{2735BC39-2587-4E7F-B400-48A730873F05}">
+				<File Id="Addin2024File" Name="Adv.Tools.addin" KeyPath="yes"/>
+			</Component>
+		</DirectoryRef>
+		
+	</Fragment>
+
+</Wix>

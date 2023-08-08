@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RevitAddIns>
+	<AddIn Type="Application">
+		<Name>
+			Adv.Tools.RevitAddin
+		</Name>
+		<Assembly>
+			Adv.Tools.RevitAddin\Adv.Tools.RevitAddin.dll
+		</Assembly>
+		<AddInId>
+			FEA0D675-2969-4E0E-A5CF-3D747C31A51E
+		</AddInId>
+		<FullClassName>
+			Adv.Tools.RevitAddin.Application.RevitApp
+		</FullClassName>
+		<Text>
+			This is a template for a Revit Plugin
+		</Text>
+		<Description>
+			This Application is used as a template
+		</Description>
+		<VendorId>
+			Tom Boudniatski
+		</VendorId>
+		<VendorDescription>
+			tom4544@gmail.com
+		</VendorDescription>
+		<VisibilityMode>
+			NotVisibleWhenNoActiveDocument
+		</VisibilityMode>
+	</AddIn>
+</RevitAddIns>

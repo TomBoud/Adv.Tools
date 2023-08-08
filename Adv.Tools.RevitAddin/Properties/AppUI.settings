@@ -1,0 +1,19 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Adv.Tools.RevitAddin.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="RibbonName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">TemplateRibbon</Value>
+    </Setting>
+    <Setting Name="PanelName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">TemplatePanel</Value>
+    </Setting>
+    <Setting Name="PushButtonName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">TemplateButton
+</Value>
+    </Setting>
+    <Setting Name="TemplateButtonIcon" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">TemplateIcon</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

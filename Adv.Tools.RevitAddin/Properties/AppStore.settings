@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Adv.Tools.RevitAddin.Properties" GeneratedClassName="AppStore">
+  <Profiles />
+  <Settings>
+    <Setting Name="BaseUrl" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://apps.exchange.autodesk.com/</Value>
+    </Setting>
+    <Setting Name="EndPoint" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">webservices/checkentitlement</Value>
+    </Setting>
+    <Setting Name="AppId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">D8EF9571-6E04-4BAE-8ABA-B847117E6541</Value>
+    </Setting>
+    <Setting Name="GraceDateTime" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">07/09/2023 16:03:00</Value>
+    </Setting>
+    <Setting Name="GraceTime" Type="System.TimeSpan" Scope="Application">
+      <Value Profile="(Default)">01:00:00</Value>
+    </Setting>
+    <Setting Name="AuthRequired" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
