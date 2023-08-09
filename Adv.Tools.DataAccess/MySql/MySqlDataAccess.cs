@@ -10,7 +10,7 @@ using MySql.Data.MySqlClient;
 
 namespace Adv.Tools.DataAccess.MySql
 {
-    public class MySqlDataAccess : IMySqlDataAccess
+    public class MySqlDataAccess : IDbDataAccess
     {
         private readonly string _connectionString;
 
@@ -33,6 +33,38 @@ namespace Adv.Tools.DataAccess.MySql
             using (IDbConnection connection = new MySqlConnection(_connectionString))
             {
                 await connection.ExecuteAsync(sqlQuery, parameters);
+            }
+        }
+
+        public async Task DeleteData<T, U>(string sqlQuery, U parameters)
+        {
+            using (IDbConnection connection = new MySqlConnection(_connectionString))
+            {
+                await connection.ExecuteAsync(sqlQuery, parameters);
+            }
+        }
+
+        public async Task ExecuteWithTransaction(params Func<Task>[] tasks)
+        {
+            using (IDbConnection connection = new MySqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach (var task in tasks)
+                        {
+                            await task();
+                        }
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
             }
         }
     }

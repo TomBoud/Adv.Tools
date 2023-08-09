@@ -4,40 +4,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Adv.Tools.Abstractions;
-using Adv.Tools.DataAccess.MySql.Models;
+using Adv.Tools.Abstractions.Bim;
+using Adv.Tools.Abstractions.Database;
+using Adv.Tools.Abstractions.Revit;
 
-namespace Adv.Tools.RevitAddin.Reports
+namespace Adv.Tools.CoreLogic.RevitModelQuality
 {
-    public class CheckMissingWorksets : IReportTest<IWorkset, ExpectedWorkset, ReportMissingWorkset, ExpectedModel>
+    public class MissingWorksetsCheck : IReportTest
     {
-        public string ReportName { get { return nameof(CheckMissingWorksets); } set { ReportName = nameof(CheckMissingWorksets); } }
-        public string ModelName { get { return _doc?.Title ?? string.Empty; } set { ModelName = value; } }
-        public Guid ModelGuid { get { return _doc?.Guid ?? Guid.Empty; } set { ModelGuid = value; } }
-        public string Lod { get { return "100"; } set { Lod = "100"; } }
-        public IList<IWorkset> ExistingObjects { get { return _worksets.ToList(); } set => ExistingObjects = value; }
-        public IList<ExpectedWorkset> ExpectedObjects { get { return ExpectedObjects; } set => ExpectedObjects = value; }
-        public IList<ReportMissingWorkset> ResultObjects { get { return ResultObjects; } set => ResultObjects = value; }
-        public IList<ExpectedModel> ModelObjects { get { return ModelObjects; } set => ModelObjects = value; }
+        public string ReportName { get => nameof(MissingWorksetsCheck); set => ReportName = nameof(MissingWorksetsCheck); }
+        public string ModelName { get => _doc?.Title ?? string.Empty; set => ModelName = value; }
+        public Guid ModelGuid { get => _doc?.Guid ?? Guid.Empty; set => ModelGuid = value; }
+        public DisciplineType[] Disciplines { get => _disciplines; set => Disciplines = value; }
+        public LodType Lod { get => _lod; set => Lod = value; }
+        public IList<IWorkset> ExistingObjects { get => _worksets; set => ExistingObjects = value; }
+        public IList<IExpectedWorkset> ExpectedObjects { get; set; }
+        public IList<IExpectedDocument> DocumentObjects { get; set; }
+        public IList<IReportMissingWorkset> ResultObjects { get; set; }
 
+        private readonly LodType _lod;
         private readonly IDocumnet _doc;
-        private readonly IEnumerable<IWorkset> _worksets;
+        private readonly IList<IWorkset> _worksets;
+        private readonly DisciplineType[] _disciplines;
 
-        public CheckMissingWorksets(IDocumnet doc, IEnumerable<IWorkset> worksets)
+        public MissingWorksetsCheck(IDocumnet doc, IList<IWorkset> worksets)
         {
             _doc = doc;
             _worksets = worksets;
-        }
+            _lod = LodType.Lod100;
+            _disciplines = new DisciplineType[]
+            {
+                DisciplineType.Structural,
+                DisciplineType.Architectural,
+                DisciplineType.Electrical
+            };
 
-        public IList<ExpectedModel> GetModelObjects()
-        {
-            return new List<ExpectedModel>();
-        }
-
-
-        public IList<ExpectedWorkset> GetExpectedObjects()
-        {
-            return new List<ExpectedWorkset>();
+            ExpectedObjects = new List<IExpectedWorkset>();
+            DocumentObjects = new List<IExpectedDocument>();
+            ResultObjects = new List<IReportMissingWorkset>();
         }
 
         public string GetReportScore()
@@ -48,17 +52,16 @@ namespace Adv.Tools.RevitAddin.Reports
 
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
-
         public void RunReportLogic()
         {
-            ResultObjects = new List<ReportMissingWorkset>();
+            ResultObjects = new List<IReportMissingWorkset>();
 
             foreach (var exectedItem in ExpectedObjects)
             {
                 if(ExistingObjects.Any(x=>x.Name.Equals(exectedItem.WorksetName)))
                 {
                     var workset = ExpectedObjects.FirstOrDefault(x=>x.WorksetName.Equals(exectedItem.WorksetName));
-                    var report = new ReportMissingWorkset()
+                    var report = new MissingWorksetReport()
                     {
                         ModelName = workset.ModelName,
                         ModelGuid = workset.ModelGuid,
@@ -73,8 +76,8 @@ namespace Adv.Tools.RevitAddin.Reports
                 }
                 else
                 {
-                    var expectedModel = ModelObjects.FirstOrDefault(x => x.ModelGuid.Equals(ModelGuid));
-                    var report = new ReportMissingWorkset()
+                    var expectedModel = DocumentObjects.FirstOrDefault(x => x.ModelGuid.Equals(ModelGuid));
+                    var report = new MissingWorksetReport()
                     {
                         ModelName = expectedModel.ModelName,
                         ModelGuid = expectedModel.ModelGuid,

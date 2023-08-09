@@ -40,7 +40,7 @@ namespace Adv.Tools.RevitAddin.Application
 
             var panel = revitUi.GetAppRibbonPanel();
             var button = revitUi.CreateAppRibbonPushButton(panel, typeof(RevitCmd));
-            revitUi.ConfigAppRibbonPushButton(button, Properties.Resources.TemplateIcon.ToBitmap());
+            revitUi.ConfigAppRibbonPushButton(button, Properties.Resources.configs.ToBitmap());
 
             return Result.Succeeded;
         }

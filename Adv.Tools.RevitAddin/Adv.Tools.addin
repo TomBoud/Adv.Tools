@@ -8,7 +8,7 @@
 			Adv.Tools.RevitAddin\Adv.Tools.RevitAddin.dll
 		</Assembly>
 		<AddInId>
-			FEA0D675-2969-4E0E-A5CF-3D747C31A51E
+			13D34A42-F370-4E03-8C31-98DC16ADDD7B
 		</AddInId>
 		<FullClassName>
 			Adv.Tools.RevitAddin.Application.RevitApp

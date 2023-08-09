@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adv.Tools.Abstractions
+namespace Adv.Tools.DataAccess
 {
-    public interface IDocumnet
+    public interface IApiDataAccess
     {
-        string Title { get; set; }
-        Guid Guid { get; set; }
+        
     }
 }

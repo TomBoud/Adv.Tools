@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adv.Tools.DataAccess.MySql.Models
+namespace Adv.Tools.CoreLogic.RevitModelQuality
 {
-    public class ReportMissingWorkset : IReportMissingWorkset
+    public class MissingWorksetReport : IReportMissingWorkset
     {
         public string ModelName { get; set; }
         public string ModelGuid { get; set; }
@@ -17,5 +17,4 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public bool IsFound { get; set; }
         public string IsFoundHeb { get; set; }
     }
-
 }

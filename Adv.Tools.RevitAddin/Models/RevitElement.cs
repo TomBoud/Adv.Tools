@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autodesk.Revit.DB;
-using Adv.Tools.Abstractions;
+using Adv.Tools.Abstractions.Revit;
 
 namespace Adv.Tools.RevitAddin.Models
 {
