@@ -8,66 +8,75 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Adv.Tools.RevitAddin.Properties
-{
-
-
+namespace Adv.Tools.RevitAddin.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
-    internal sealed partial class AppUI : global::System.Configuration.ApplicationSettingsBase
-    {
-
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.6.0.0")]
+    internal sealed partial class AppUI : global::System.Configuration.ApplicationSettingsBase {
+        
         private static AppUI defaultInstance = ((AppUI)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new AppUI())));
-
-        public static AppUI Default
-        {
-            get
-            {
+        
+        public static AppUI Default {
+            get {
                 return defaultInstance;
             }
         }
-
+        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("TemplateRibbon")]
-        public string RibbonName
-        {
-            get
-            {
+        [global::System.Configuration.DefaultSettingValueAttribute("AdvTools")]
+        public string RibbonName {
+            get {
                 return ((string)(this["RibbonName"]));
             }
         }
-
+        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("TemplatePanel")]
-        public string PanelName
-        {
-            get
-            {
-                return ((string)(this["PanelName"]));
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
+  <string>Project Settings</string>
+  <string>Model Checker</string>
+  <string>Elemets Counter</string>
+  <string>ArcStr Correlator</string>
+  <string>Warning Scanner</string>
+  <string>Cloud Operations</string>
+  <string>Adv Automations</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection AdvTools {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["AdvTools"]));
             }
         }
-
+        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("TemplateButton\r\n")]
-        public string PushButtonName
-        {
-            get
-            {
+        public string PushButtonName {
+            get {
                 return ((string)(this["PushButtonName"]));
             }
         }
-
+        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("TemplateIcon")]
-        public string TemplateButtonIcon
-        {
-            get
-            {
+        public string TemplateButtonIcon {
+            get {
                 return ((string)(this["TemplateButtonIcon"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Setting {
+            get {
+                return ((string)(this["Setting"]));
+            }
+            set {
+                this["Setting"] = value;
             }
         }
     }

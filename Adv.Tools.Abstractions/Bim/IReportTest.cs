@@ -10,10 +10,9 @@ namespace Adv.Tools.Abstractions.Bim
     {
         string ReportName { get; set; }
         string ModelName { get; set; }
+        Guid ModelGuid { get; set; }
         LodType Lod { get; set; }
         DisciplineType[] Disciplines { get; set; }
-        Guid ModelGuid { get; set; }
-
         string GetReportScore();
         void RunReportLogic();
     }

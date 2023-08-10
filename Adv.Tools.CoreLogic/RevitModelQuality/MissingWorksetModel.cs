@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.CoreLogic.RevitModelQuality
 {
-    public class MissingWorksetReport : IReportMissingWorkset
+    public class MissingWorksetModel : IReportMissingWorkset
     {
         public string ModelName { get; set; }
         public string ModelGuid { get; set; }
