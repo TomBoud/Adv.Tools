@@ -44,7 +44,7 @@ namespace Adv.Tools.RevitAddin.Application
                 foreach (var pushButton in pushButtonTypes)
                 {
                     var pushButtonInstance = Activator.CreateInstance(pushButton) as IAppPushButton;
-                    var ribbonPanelInstance = Activator.CreateInstance(pushButtonInstance.ButtonRibbonPanel) as IAppRibbonPanel;
+                    var ribbonPanelInstance = Activator.CreateInstance(pushButtonInstance.RibbonPanelType) as IAppRibbonPanel;
 
                     var appPushButton = new AppPushButton(pushButtonInstance);
                     var appRibbonPanel = application.GetRibbonPanels(ribbonPanelInstance.TabName).FirstOrDefault(x => x.Name.Equals(ribbonPanelInstance.PanelName));

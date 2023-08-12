@@ -10,12 +10,12 @@ namespace Adv.Tools.RevitAddin.Application.Components.PushButtons
 
     public class ConfigurationsButton : IAppPushButton
     {
-        public string ButtonName => "Configurations";
-        public string ButtonDescription => "Configurations";
-        public Type ButtonRibbonPanel => typeof(ProjectSettings);
-        public string AssemblyPath => ClassToTrigger.Assembly.Location;
-        public string TriggerClassName => ClassToTrigger.FullName;
-        public Icon ButtonIcon => Properties.Resources.configs;
-        public Type ClassToTrigger => typeof(RevitCmd);
+        public string Name => "Configurations";
+        public string Description => "Configurations";
+        public Type RibbonPanelType => typeof(ProjectSettings);
+        public string AssemblyPath => TriggerClassType.Assembly.Location;
+        public string TriggerClassName => TriggerClassType.FullName;
+        public Icon Icon => Properties.Resources.configs;
+        public Type TriggerClassType => typeof(RevitCmd);
     }
 }

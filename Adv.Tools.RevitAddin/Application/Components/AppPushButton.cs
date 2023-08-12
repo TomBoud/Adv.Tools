@@ -26,13 +26,13 @@ namespace Adv.Tools.RevitAddin.Application.Components
         {
 
             // Required
-            string buttonName = _appPushButton.ButtonName;
-            string Description = _appPushButton.ButtonDescription;
+            string buttonName = _appPushButton.Name;
+            string Description = _appPushButton.Description;
             string AssemplyPath = _appPushButton.AssemblyPath;
             string ClassName = _appPushButton.TriggerClassName;
 
             // Icon
-            var bitMapicon = _appPushButton.ButtonIcon.ToBitmap().GetHbitmap();
+            var bitMapicon = _appPushButton.Icon.ToBitmap().GetHbitmap();
             var options = BitmapSizeOptions.FromEmptyOptions();
             var imgSource = Imaging.CreateBitmapSourceFromHBitmap(bitMapicon, IntPtr.Zero, Int32Rect.Empty, options);
 

@@ -13,12 +13,12 @@ namespace Adv.Tools.RevitAddin.Application.Components
 {
     public interface IAppPushButton
     {
-        string ButtonName { get; }
-        string ButtonDescription { get; }
+        string Name { get; }
+        string Description { get; }
         string AssemblyPath { get; }
         string TriggerClassName { get; }
-        Icon ButtonIcon { get; }
-        Type ClassToTrigger { get; }
-        Type ButtonRibbonPanel { get; }
+        Icon Icon { get; }
+        Type TriggerClassType { get; }
+        Type RibbonPanelType { get; }
     }
 }
