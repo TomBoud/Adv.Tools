@@ -5,14 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Adv.Tools.Abstractions.Bim;
+using Adv.Tools.Abstractions.Bim.Enums;
 using Adv.Tools.Abstractions.Database;
 using Adv.Tools.Abstractions.Revit;
 
 namespace Adv.Tools.CoreLogic.RevitModelQuality
 {
-    public class MissingWorksetsCheck : IReportTest
+    public class MissingWorksetsReport : IReportResults
     {
-        public string ReportName { get => nameof(MissingWorksetsCheck); set => ReportName = nameof(MissingWorksetsCheck); }
+        public string ReportName { get => nameof(MissingWorksetsReport); set => ReportName = nameof(MissingWorksetsReport); }
         public string ModelName { get => _doc?.Title ?? string.Empty; set => ModelName = value; }
         public Guid ModelGuid { get => _doc?.Guid ?? Guid.Empty; set => ModelGuid = value; }
         public DisciplineType[] Disciplines { get => _disciplines; set => Disciplines = value; }
@@ -27,7 +28,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality
         private readonly IList<IWorkset> _worksets;
         private readonly DisciplineType[] _disciplines;
 
-        public MissingWorksetsCheck(IDocumnet doc, IList<IWorkset> worksets)
+        public MissingWorksetsReport(IDocumnet doc, IList<IWorkset> worksets)
         {
             _doc = doc;
             _worksets = worksets;

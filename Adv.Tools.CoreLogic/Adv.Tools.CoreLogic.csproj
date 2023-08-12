@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RevitModelQuality\MissingWorksetsCheck.cs" />
+    <Compile Include="RevitModelQuality\MissingWorksetsReport.cs" />
     <Compile Include="RevitModelQuality\MissingWorksetModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,7 +59,10 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="PowerBiDashboards\" />
     <Folder Include="RevitGeoCorrelation\" />
+    <Folder Include="RevitObjectsCopy\" />
+    <Folder Include="RevitWarningsScan\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using Adv.Tools.Abstractions.Bim.Enums;
 
 namespace Adv.Tools.Abstractions.Bim
 {
-    public interface IReportTest
+    public interface IReportResults
     {
         string ReportName { get; set; }
         string ModelName { get; set; }
