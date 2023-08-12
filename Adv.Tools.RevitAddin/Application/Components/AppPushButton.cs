@@ -4,39 +4,42 @@ using System.Windows.Media.Imaging;
 using System.Windows;
 using Autodesk.Revit.UI;
 using System.Drawing;
-
+using System.Configuration.Assemblies;
+using System.Windows.Controls.Primitives;
+using System.Security.Policy;
 
 namespace Adv.Tools.RevitAddin.Application.Components
 {
-    public class AppPushButton : IAppPushButton
+    public class AppPushButton
     {
-        public string AssemblyPath => _classToTrigger.Assembly.Location;
 
-        public string TriggerClassName => _classToTrigger.FullName;
+        public PushButtonData ButtonData { get { return CreateNewPushButtonData(); } }
+        
+        private readonly IAppPushButton _appPushButton;
 
-        private readonly Type _classToTrigger;
-        private readonly Icon _icon;
-
-        public AppPushButton(Type classToTrigger, Icon icon)
+        public AppPushButton(IAppPushButton appPushButton)
         {
-            _classToTrigger = classToTrigger;
-            _icon = icon;
+            _appPushButton = appPushButton;
         }
 
-        public void SetIcon(PushButton button)
+        private PushButtonData CreateNewPushButtonData()
         {
-            var bitMapicon = _icon.ToBitmap().GetHbitmap();
+
+            // Required
+            string buttonName = _appPushButton.ButtonName;
+            string Description = _appPushButton.ButtonDescription;
+            string AssemplyPath = _appPushButton.AssemblyPath;
+            string ClassName = _appPushButton.TriggerClassName;
+
+            // Icon
+            var bitMapicon = _appPushButton.ButtonIcon.ToBitmap().GetHbitmap();
             var options = BitmapSizeOptions.FromEmptyOptions();
             var imgSource = Imaging.CreateBitmapSourceFromHBitmap(bitMapicon, IntPtr.Zero, Int32Rect.Empty, options);
-            button.LargeImage = imgSource;
-        }
 
-        public PushButton AddToPanel(RibbonPanel panel, string buttonName, string buttonDescription)
-        {
-            var data = new PushButtonData(buttonName, buttonDescription, AssemblyPath, TriggerClassName);
-            return panel.AddItem(data) as PushButton;
+            return new PushButtonData(buttonName, Description, AssemplyPath, ClassName)
+            { 
+                 LargeImage = imgSource,
+            };
         }
-
-      
     }
 }

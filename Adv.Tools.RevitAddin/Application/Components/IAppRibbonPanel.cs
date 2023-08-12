@@ -10,6 +10,6 @@ namespace Adv.Tools.RevitAddin.Application.Components
     internal interface IAppRibbonPanel
     {
         string TabName { get; }
-        RibbonPanel CreateNewPanel(string panelName);
+        string  PanelName { get; }
     }
 }
