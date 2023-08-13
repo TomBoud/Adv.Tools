@@ -155,6 +155,8 @@
     <Compile Include="MySql\Models\ReportElementsWorkset.cs" />
     <Compile Include="MySql\Models\ReportFileReference.cs" />
     <Compile Include="MySql\Models\ReportGenericModel.cs" />
+    <Compile Include="MySql\Models\ReportHeadRoomClearence.cs" />
+    <Compile Include="MySql\Models\ReportInternalClash.cs" />
     <Compile Include="MySql\Models\ReportMissingWorkset.cs" />
     <Compile Include="MySql\Models\ExpectedWorkset.cs" />
     <Compile Include="MySql\MySqlDataAccess.cs" />
