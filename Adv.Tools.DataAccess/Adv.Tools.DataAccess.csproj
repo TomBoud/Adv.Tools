@@ -157,8 +157,11 @@
     <Compile Include="MySql\Models\ReportGenericModel.cs" />
     <Compile Include="MySql\Models\ReportHeadRoomClearence.cs" />
     <Compile Include="MySql\Models\ReportInternalClash.cs" />
+    <Compile Include="MySql\Models\ReportLevelsGrids.cs" />
+    <Compile Include="MySql\Models\ReportMidpSheet.cs" />
     <Compile Include="MySql\Models\ReportMissingWorkset.cs" />
     <Compile Include="MySql\Models\ExpectedWorkset.cs" />
+    <Compile Include="MySql\Models\ReportModelGroup.cs" />
     <Compile Include="MySql\MySqlDataAccess.cs" />
     <Compile Include="MySql\Procedures\ExpectedModelData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
