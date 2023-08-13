@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Adv.Tools.Abstractions.Bim.Enums
+namespace Adv.Tools.Abstractions.Common.Enums
 {
     public enum LodType
     {

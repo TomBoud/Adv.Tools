@@ -50,10 +50,6 @@
       <Project>{9cc965ac-3c4a-46cc-a0ff-0eaa1f767c2c}</Project>
       <Name>Adv.Tools.Abstractions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Adv.Tools.DataAccess\Adv.Tools.DataAccess.csproj">
-      <Project>{0d4f0645-1361-4f3c-8d7b-eb253f4af4b2}</Project>
-      <Name>Adv.Tools.DataAccess</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

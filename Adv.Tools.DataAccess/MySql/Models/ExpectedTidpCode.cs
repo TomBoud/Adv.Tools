@@ -5,17 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adv.Tools.CoreLogic.RevitModelQuality
+namespace Adv.Tools.DataAccess.MySql.Models
 {
-    public class MissingWorksetModel : IReportMissingWorkset
+    public class ExpectedTidpCode : IExpectedTidpCode
     {
         public int Id { get; set; }
         public string ModelName { get; set; }
         public string ModelGuid { get; set; }
         public string Disicpline { get; set; }
-        public string WorksetName { get; set; }
-        public string ObjectId { get; set; }
-        public bool IsFound { get; set; }
-        public bool IsFoundHeb { get; set; }      
+        public string Position { get; set; }
+        public string UsageType { get; set; }
+        public string Name { get; set; }
+        public string Guid { get; set; }
     }
 }

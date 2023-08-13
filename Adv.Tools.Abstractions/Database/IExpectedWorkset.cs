@@ -6,6 +6,7 @@ namespace Adv.Tools.Abstractions.Database
 {
     public interface IExpectedWorkset
     {
+        int Id { get; set; }
         string ModelName { get; set; }
         string ModelGuid { get; set; }
         string Disicpline { get; set; }

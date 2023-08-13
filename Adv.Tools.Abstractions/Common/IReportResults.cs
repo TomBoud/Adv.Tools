@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-using Adv.Tools.Abstractions.Bim.Enums;
+using Adv.Tools.Abstractions.Common.Enums;
 
-namespace Adv.Tools.Abstractions.Bim
+namespace Adv.Tools.Abstractions.Common
 {
     public interface IReportResults
     {
