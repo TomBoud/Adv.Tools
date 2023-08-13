@@ -162,6 +162,15 @@
     <Compile Include="MySql\Models\ReportMissingWorkset.cs" />
     <Compile Include="MySql\Models\ExpectedWorkset.cs" />
     <Compile Include="MySql\Models\ReportModelGroup.cs" />
+    <Compile Include="MySql\Models\ReportModelPlace.cs" />
+    <Compile Include="MySql\Models\ReportModelSheet.cs" />
+    <Compile Include="MySql\Models\ReportProjectBasePoint.cs" />
+    <Compile Include="MySql\Models\ReportProjectInfo.cs" />
+    <Compile Include="MySql\Models\ReportProjectWarning.cs" />
+    <Compile Include="MySql\Models\ReportRoomData.cs" />
+    <Compile Include="MySql\Models\ReportServiceSystem.cs" />
+    <Compile Include="MySql\Models\ReportSharedParameter.cs" />
+    <Compile Include="MySql\Models\ReportSpaceData.cs" />
     <Compile Include="MySql\MySqlDataAccess.cs" />
     <Compile Include="MySql\Procedures\ExpectedModelData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
