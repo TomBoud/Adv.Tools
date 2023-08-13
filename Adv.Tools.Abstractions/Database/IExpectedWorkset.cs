@@ -12,6 +12,6 @@ namespace Adv.Tools.Abstractions.Database
         string Disicpline { get; set; }
         string WorksetName { get; set; }
         string CategoryName { get; set; }
-        string CategoryId { get; set; }
+        int CategoryId { get; set; }
     }
 }

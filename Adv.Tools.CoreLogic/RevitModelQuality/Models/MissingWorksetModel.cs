@@ -1,11 +1,7 @@
-﻿using Adv.Tools.Abstractions.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Adv.Tools.Abstractions.Database;
 
-namespace Adv.Tools.CoreLogic.RevitModelQuality
+namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
 {
     public class MissingWorksetModel : IReportMissingWorkset
     {
@@ -16,6 +12,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality
         public string WorksetName { get; set; }
         public string ObjectId { get; set; }
         public bool IsFound { get; set; }
-        public bool IsFoundHeb { get; set; }      
+        public string IsFoundHeb { get; set; }      
     }
 }

@@ -8,37 +8,32 @@ using Adv.Tools.Abstractions.Common;
 using Adv.Tools.Abstractions.Common.Enums;
 using Adv.Tools.Abstractions.Database;
 using Adv.Tools.Abstractions.Revit;
+using Adv.Tools.CoreLogic.RevitModelQuality.Models;
 
-namespace Adv.Tools.CoreLogic.RevitModelQuality
+namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 {
-    public class MissingWorksetsReport : IReportResults
+    public class MissingWorksetsReport : IReportResults<IReportMissingWorkset>
     {
         public string ReportName { get => nameof(MissingWorksetsReport); set => ReportName = nameof(MissingWorksetsReport); }
         public string ModelName { get => _doc?.Title ?? string.Empty; set => ModelName = value; }
         public Guid ModelGuid { get => _doc?.Guid ?? Guid.Empty; set => ModelGuid = value; }
-        public DisciplineType[] Disciplines { get => _disciplines; set => Disciplines = value; }
-        public LodType Lod { get => _lod; set => Lod = value; }
+        public string Discipline { get => DocumentObjects.FirstOrDefault(x => x.ModelGuid.Equals(_doc.Guid.ToString())).Disicpline; set => Discipline = value; }
+        public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
+        public LodType Lod { get => LodType.Lod100; set => Lod = value; }
         public IList<IWorkset> ExistingObjects { get => _worksets; set => ExistingObjects = value; }
         public IList<IExpectedWorkset> ExpectedObjects { get; set; }
         public IList<IExpectedDocument> DocumentObjects { get; set; }
         public IList<IReportMissingWorkset> ResultObjects { get; set; }
+        
 
         private readonly LodType _lod;
         private readonly IDocumnet _doc;
         private readonly IList<IWorkset> _worksets;
-        private readonly DisciplineType[] _disciplines;
 
         public MissingWorksetsReport(IDocumnet doc, IList<IWorkset> worksets)
         {
             _doc = doc;
             _worksets = worksets;
-            _lod = LodType.Lod100;
-            _disciplines = new DisciplineType[]
-            {
-                DisciplineType.Structural,
-                DisciplineType.Architectural,
-                DisciplineType.Electrical
-            };
 
             ExpectedObjects = new List<IExpectedWorkset>();
             DocumentObjects = new List<IExpectedDocument>();
@@ -53,9 +48,9 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality
 
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
-        public void RunReportLogic()
+        public Task RunReportLogic()
         {
-            ResultObjects = new List<IReportMissingWorkset>();
+            ResultObjects.Clear();
 
             foreach (var exectedItem in ExpectedObjects)
             {
@@ -92,6 +87,21 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality
                     ResultObjects.Add(report);
                 }
             }
+
+            return Task.CompletedTask;
+        }
+
+        public DisciplineType[] GetDisciplines()
+        {
+            return new DisciplineType[]
+            {
+                DisciplineType.Structural,
+                DisciplineType.Architectural,
+                DisciplineType.Electrical,
+                DisciplineType.Mechanical,
+                DisciplineType.Plumbing,
+                DisciplineType.Landscape,
+            };
         }
     }
 }

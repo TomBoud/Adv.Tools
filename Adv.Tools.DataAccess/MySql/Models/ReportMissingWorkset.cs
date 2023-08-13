@@ -16,7 +16,7 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public string WorksetName { get; set; }
         public string ObjectId { get; set; }
         public bool IsFound { get; set; }
-        public bool IsFoundHeb { get; set; }
+        public string IsFoundHeb { get; set; }
     }
 
 }

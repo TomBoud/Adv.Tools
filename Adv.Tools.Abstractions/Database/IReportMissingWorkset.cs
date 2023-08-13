@@ -13,6 +13,6 @@ namespace Adv.Tools.Abstractions.Database
         string WorksetName { get; set; }
         string ObjectId { get; set; }
         bool IsFound { get; set; }
-        bool IsFoundHeb { get; set; }
+        string IsFoundHeb { get; set; }
     }
 }
