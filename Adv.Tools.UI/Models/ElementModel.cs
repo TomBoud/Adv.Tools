@@ -67,6 +67,6 @@ namespace Adv.Tools.UI.Models
         [Required(ErrorMessage = "Category Name is required")]
         public string CategoryName
         { get => categoryName; set => categoryName = value; }
-        
+        long IElement.CategoryId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

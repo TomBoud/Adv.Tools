@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Adv.Tools.Abstractions.Common.Enums
+namespace Adv.Tools.Abstractions.Enums
 {
     public enum DiscAbbrType
     {

@@ -16,6 +16,6 @@ namespace Adv.Tools.RevitAddin.Application.Components.PushButtons
         public string AssemblyPath => TriggerClassType.Assembly.Location;
         public string TriggerClassName => TriggerClassType.FullName;
         public Icon Icon => Properties.Resources.configs;
-        public Type TriggerClassType => typeof(RevitCmd);
+        public Type TriggerClassType => typeof(RevitModelQuality);
     }
 }

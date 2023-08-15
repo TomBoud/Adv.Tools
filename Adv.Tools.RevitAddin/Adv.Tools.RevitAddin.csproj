@@ -117,6 +117,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\Adv.Tools.Abstractions\Adv.Tools.Abstractions.csproj" />
+    <ProjectReference Include="..\Adv.Tools.CoreLogic\Adv.Tools.CoreLogic.csproj" />
     <ProjectReference Include="..\Adv.Tools.DataAccess\Adv.Tools.DataAccess.csproj" />
     <ProjectReference Include="..\Adv.Tools.UI\Adv.Tools.UI.csproj" />
   </ItemGroup>

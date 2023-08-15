@@ -16,6 +16,6 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public string Disicpline { get; set; }
         public string WorksetName { get; set; }
         public string CategoryName { get; set; }
-        public int CategoryId { get; set; }
+        public string CategoryId { get; set; }
     }
 }

@@ -12,12 +12,10 @@ namespace Adv.Tools.Abstractions.Revit
         string LevelName { get; set; }
         string DocumentName { get; set; }
         string CategoryName { get; set; }
-        int CategoryId { get; set; }
+        long CategoryId { get; set; }
         string WorksetName { get; set; }
 
         long ElementId { get; set; }
         long LevelId { get; set; }
-
-        Guid Guid { get; set; }
     }
 }

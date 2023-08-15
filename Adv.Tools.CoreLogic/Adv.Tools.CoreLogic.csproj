@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Adv.Tools.CoreLogic</RootNamespace>
     <AssemblyName>Adv.Tools.CoreLogic</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RevitModelQuality\IReportModelQuality.cs" />
     <Compile Include="RevitModelQuality\Models\ElementsWorksetModel.cs" />
     <Compile Include="RevitModelQuality\Reports\MissingWorksetsReport.cs" />
     <Compile Include="RevitModelQuality\Models\MissingWorksetModel.cs" />
