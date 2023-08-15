@@ -43,22 +43,21 @@ namespace Adv.Tools.RevitAddin.Commands
 
             //Refrence to Adv.Tools.UI input objects
             var reports = new List<IReportModelQuality>();
-            var expectedDocumnets = new List<IExpectedDocument>();
 
-            //Aquire the Revit models for which the reports be excuted
-            foreach (Document model in app.Documents)
+            //Aquire the Revit models for which the reports to be excuted
+            foreach (Document linkedModel in app.Documents)
             {
-                if (model.IsLinked)
+                if (linkedModel.IsLinked)
                 {
-                    string Guid = model.GetCloudModelPath().GetModelGUID().ToString();
-                    if(expectedDocumnets.Any(x=>x.ModelGuid.Equals(Guid)))
+                    string guid = linkedModel.GetCloudModelPath().GetModelGUID().ToString();
+                    if(reports.Any(x=>x.ReportDocumnet.Guid.Equals(guid)))
                     {
-                        links.Add(model);
+                        links.Add(linkedModel);
                     }
                 }
             }
 
-
+            //Aquire the data needed for the reports logic
             foreach (var report in reports)
             {
                 var userExpectedData = new ModelQualityUserData(report);
@@ -67,29 +66,14 @@ namespace Adv.Tools.RevitAddin.Commands
 
                 var revitObjectsData = new ModelQualityRevitData(report, doc);
                 report.ExistingObjects = revitObjectsData.ExistingObjects;
-               
-
-
-
-                
-
-
-
             }
 
-
-
+            
             var tasks = new List<Task>();
-
             foreach(var item in reports)
             {
                 tasks.Add(item.RunReportLogic());
             }
-
-
-
-
-
 
             return Result.Succeeded;
         }

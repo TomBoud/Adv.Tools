@@ -10,5 +10,6 @@ namespace Adv.Tools.Abstractions.Revit
     {
         string Title { get; set; }
         Guid Guid { get; set; }
+        string MySqlDb { get; set; }
     }
 }
