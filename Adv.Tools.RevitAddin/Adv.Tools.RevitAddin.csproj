@@ -133,6 +133,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AppUI.settings</DependentUpon>
     </Compile>
+    <Compile Update="Properties\DataAccess.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DataAccess.settings</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -158,6 +163,10 @@
     <None Update="Properties\AppUI.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>AppUI.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="Properties\DataAccess.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>DataAccess.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
 

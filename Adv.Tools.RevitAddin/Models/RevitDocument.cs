@@ -21,15 +21,15 @@ namespace Adv.Tools.RevitAddin.Models
         #region Public Properties
         public string Title { get { return _document.Title; } set { Title = value; } }
         public Guid  Guid { get { return _document.GetCloudModelPath().GetModelGUID(); } set { Guid = value; } }
-        public string MySqlDb { get => GetDocumentGuidAsValidDbName(); set => MySqlDb = value; }
+        public string ProjectId { get => GetDocumentGuidAsValidDbName(); set => ProjectId = value; }
         #endregion
 
         #region Public Properties
         private string GetDocumentGuidAsValidDbName()
         {
-            string modelGuid = _document.GetCloudModelPath().GetModelGUID().ToString();
-            string cleanName = Regex.Replace(modelGuid, "[^a-zA-Z0-9_]", "");
-            return cleanName;
+            string ProjectGuid = _document.GetCloudModelPath().GetProjectGUID().ToString();
+            string ProjectId = Regex.Replace(ProjectGuid, "[^a-zA-Z0-9_]", "");
+            return ProjectId;
         }
         #endregion
     }

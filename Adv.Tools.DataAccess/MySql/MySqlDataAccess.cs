@@ -18,7 +18,7 @@ namespace Adv.Tools.DataAccess.MySql
         {
             _connectionString = connectionString;
         }
-
+        
         public async Task<List<T>> LoadData<T, U>(string sqlQuery, U parameters)
         {
             using (IDbConnection connection = new MySqlConnection(_connectionString))
@@ -27,7 +27,6 @@ namespace Adv.Tools.DataAccess.MySql
                 return rows.ToList();
             }
         }
-
         public async Task SaveData<T>(string sqlQuery, T parameters)
         {
             using (IDbConnection connection = new MySqlConnection(_connectionString))
@@ -35,7 +34,6 @@ namespace Adv.Tools.DataAccess.MySql
                 await connection.ExecuteAsync(sqlQuery, parameters);
             }
         }
-
         public async Task DeleteData<T, U>(string sqlQuery, U parameters)
         {
             using (IDbConnection connection = new MySqlConnection(_connectionString))
@@ -43,7 +41,6 @@ namespace Adv.Tools.DataAccess.MySql
                 await connection.ExecuteAsync(sqlQuery, parameters);
             }
         }
-
         public async Task ExecuteWithTransaction(params Func<Task>[] tasks)
         {
             using (IDbConnection connection = new MySqlConnection(_connectionString))

@@ -42,18 +42,34 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="Xunit.Extensions.Ordering">
+      <Version>1.4.5</Version>
+    </PackageReference>
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
     <PackageReference Include="coverlet.collector" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Autodesk\AppStore\EntitlementApiTests.cs" />
+    <Compile Include="MySql\ExpectedModelDataTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\DataAccess.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>DataAccess.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Adv.Tools.DataAccess\Adv.Tools.DataAccess.csproj">
       <Project>{0d4f0645-1361-4f3c-8d7b-eb253f4af4b2}</Project>
       <Name>Adv.Tools.DataAccess</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\DataAccess.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>DataAccess.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
