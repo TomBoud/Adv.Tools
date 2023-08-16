@@ -8,10 +8,10 @@
 			Adv.Tools.RevitAddin\Adv.Tools.RevitAddin.dll
 		</Assembly>
 		<AddInId>
-			13D34A42-F370-4E03-8C31-98DC16ADDD7B
+			7BD8BA6A-FAAC-4CB1-9E86-0655275729FC
 		</AddInId>
 		<FullClassName>
-			Adv.Tools.RevitAddin.Application.RevitApp
+			Adv.Tools.RevitAddin.Application.ExternalApplication
 		</FullClassName>
 		<Text>
 			This is a template for a Revit Plugin

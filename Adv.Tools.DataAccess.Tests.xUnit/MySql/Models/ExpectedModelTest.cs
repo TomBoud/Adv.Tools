@@ -1,5 +1,4 @@
 ﻿using Adv.Tools.DataAccess.MySql.Models;
-using Adv.Tools.DataAccess.MySql.Procedures;
 using Adv.Tools.DataAccess.MySql;
 using System;
 using System.Collections.Generic;
@@ -11,21 +10,20 @@ using System.Net;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
-namespace Adv.Tools.DataAccess.Tests.xUnit.MySql
+namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
 {
-    public class ExpectedModelDataTest
+    public class ExpectedModelTest
     {
         
         private readonly MySqlDataAccess _access = new MySqlDataAccess(Properties.DataAccess.Default.DevDb);
         private readonly string TestDataBaseName = Properties.DataAccess.Default.DatabaseName;
 
         [Fact, Order(1)]
-        public async void TestDeleteTableIfExists_Successful()
+        public async void TestDeleteTable_Successful()
         {
             //Stage
-            var expectedModel = new ExpectedModelData(_access, TestDataBaseName, nameof(ExpectedModel));
+            var task = _access.DeleteTableIfExists(TestDataBaseName, nameof(ExpectedModel));
             //Act
-            var task = expectedModel.DeleteTableIfExist();
             await task;
             //Assert
             Assert.True(task.IsCompleted);
@@ -36,9 +34,9 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql
         public async void TestCreateTable_Successful()
         {
             //Stage
-            var expectedModel = new ExpectedModelData(_access, TestDataBaseName, nameof(ExpectedModel));
+            var query = new ExpectedModel().GetMySqlTableMapping(TestDataBaseName,nameof(ExpectedModel));
+            var task = _access.ExecuteSqlQueryAsync(query);
             //Act
-            var task = expectedModel.CreateTableIfNotExists();
             await task;
             //Assert
             Assert.True(task.IsCompleted);
@@ -64,20 +62,20 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql
                 }
             };
             //Act
-            var expectedModel = new ExpectedModelData(_access, TestDataBaseName, nameof(ExpectedModel));
-            var task = expectedModel.InsertAsync(models);
+            var task = _access.SaveDataByPropertiesMappping(TestDataBaseName, nameof(ExpectedModel), models);
             await task;
             //Assert
-            Assert.True(task.Status.Equals(TaskStatus.RanToCompletion));
+            Assert.True(task.IsCompleted);
+            Assert.False(task.IsFaulted);
         }
 
         [Fact, Order(4)]
         public async void TestDataBaseLoad_Successful()
         {
             //Stage
-            var expectedModel = new ExpectedModelData(_access, TestDataBaseName, nameof(ExpectedModel));
+            var task = _access.LoadDataSelectAll<ExpectedModel>(TestDataBaseName, nameof(ExpectedModel));
             //Act
-            var models = await expectedModel.SelectAllAsync();
+            var models = await task;
             //Assert
             Assert.NotNull(models); 
             Assert.True(models?.Count() > 0);

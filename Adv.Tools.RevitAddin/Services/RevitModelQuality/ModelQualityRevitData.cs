@@ -23,14 +23,15 @@ namespace Adv.Tools.RevitAddin.Services.RevitModelQuality
 
         private readonly Document _documnet;
         private readonly IReportModelQuality _report;
+        private readonly IEnumerable _expected;
         
         public IEnumerable ExistingObjects { get => GetReportDataFromRevitModel(); }
-        public IEnumerable ExpectedObjects { get; set; }
 
-        public ModelQualityRevitData(IReportModelQuality report, Document documnet)
+        public ModelQualityRevitData(IReportModelQuality report, Document documnet, IEnumerable expectedObjects)
         {
             _report = report;
             _documnet = documnet;
+            _expected = expectedObjects;
         }
 
         public IEnumerable GetReportDataFromRevitModel()
@@ -53,7 +54,7 @@ namespace Adv.Tools.RevitAddin.Services.RevitModelQuality
         private IEnumerable<IElement> GetExistingElementsByExpectedCategoryId()
         {
             //Cast expected objects to the relevant context
-            var expectedWorksets = ExpectedObjects.Cast<IExpectedWorkset>().ToList();
+            var expectedWorksets = _expected.Cast<IExpectedWorkset>().ToList();
             //Filter workset which are not relevant for the documnet
             var documnetWorksets = expectedWorksets.Where(x => x.ModelGuid.Equals(_documnet.GetCloudModelPath().GetModelGUID().ToString()));
             //Get distinct list of Category Ids

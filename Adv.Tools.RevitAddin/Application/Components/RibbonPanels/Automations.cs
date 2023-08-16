@@ -9,7 +9,7 @@ namespace Adv.Tools.RevitAddin.Application.Components.RibbonPanels
     public class Automations : IAppRibbonPanel
     {
         public string TabName => RevitAppTabs.AdvToolsTab.TabName;
-
         public string PanelName => "Automations";
+        public int Position => 7;
     }
 }

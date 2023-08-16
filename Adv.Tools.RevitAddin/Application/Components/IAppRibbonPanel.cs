@@ -11,5 +11,6 @@ namespace Adv.Tools.RevitAddin.Application.Components
     {
         string TabName { get; }
         string  PanelName { get; }
+        int Position { get; }
     }
 }

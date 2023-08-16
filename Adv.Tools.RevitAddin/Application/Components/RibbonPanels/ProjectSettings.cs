@@ -12,5 +12,6 @@ namespace Adv.Tools.RevitAddin.Application.Components.RibbonPanels
     {
         public string TabName => AdvToolsTab.TabName;
         public string PanelName => "Project Settings";
+        public int Position => 1;
     }
 }

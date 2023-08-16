@@ -11,5 +11,6 @@ namespace Adv.Tools.RevitAddin.Application.Components.RibbonPanels
         public string TabName => RevitAppTabs.AdvToolsTab.TabName;
 
         public string PanelName => "Cloud Operations";
+        public int Position => 6;
     }
 }

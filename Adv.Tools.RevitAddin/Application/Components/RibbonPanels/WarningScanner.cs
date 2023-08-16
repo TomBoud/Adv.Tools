@@ -10,5 +10,6 @@ namespace Adv.Tools.RevitAddin.Application.Components.RibbonPanels
     {
         public string TabName => RevitAppTabs.AdvToolsTab.TabName;
         public string PanelName => "Warning Scanner";
+        public int Position => 5;
     }
 }

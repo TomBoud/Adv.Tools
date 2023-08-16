@@ -7,21 +7,23 @@ using System.Text;
 using System.Threading.Tasks;
 using Adv.Tools.CoreLogic.RevitModelQuality;
 using Adv.Tools.CoreLogic.RevitModelQuality.Reports;
+using Adv.Tools.DataAccess;
 using Adv.Tools.DataAccess.MySql;
 using Adv.Tools.DataAccess.MySql.Models;
-using Adv.Tools.DataAccess.MySql.Procedures;
 
 namespace Adv.Tools.RevitAddin.Services.RevitModelQuality
 {
     public class ModelQualityUserData
     {
-        public IEnumerable ExpectedObjects { get; set; }
+        public IEnumerable ExpectedObjects { get => GetReportDataFromDatabase(); }
 
         private readonly IReportModelQuality _report;
+        private readonly IDbDataAccess _dbAccess;
         
-        public ModelQualityUserData(IReportModelQuality report)
+        public ModelQualityUserData(IReportModelQuality report, IDbDataAccess access)
         {
             _report = report;
+            _dbAccess = access;
         }
 
         public IEnumerable GetReportDataFromDatabase()
@@ -40,10 +42,7 @@ namespace Adv.Tools.RevitAddin.Services.RevitModelQuality
 
         private IEnumerable GetExpectedWorksetsFromMySql() 
         {
-            var access = new MySqlDataAccess(Properties.DataAccess.Default.ProdDb);
-            var expected = new ExpectedWorksetData(access, _report.ReportDocumnet.ProjectId, nameof(ExpectedWorkset));
-
-            return expected.SelectAllAsync().Result;
+            return _dbAccess.LoadDataSelectAll<ExpectedWorkset>(_report.ReportDocumnet.ProjectId, nameof(ExpectedWorkset)).Result;
         }
 
     }

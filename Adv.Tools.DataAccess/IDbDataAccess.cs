@@ -10,6 +10,8 @@ namespace Adv.Tools.DataAccess
     {
         Task<List<T>> LoadData<T, U>(string sqlQuery, U parameters);
         Task SaveData<T>(string sqlQuery, T parameters);
+        Task<List<T>> LoadDataSelectAll<T>(string databaseName, string tableName);
+
         Task DeleteData<T, U>(string sqlQuery, U parameters);
         Task ExecuteWithTransaction(params Func<Task>[] tasks);
     }

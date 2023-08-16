@@ -9,7 +9,7 @@ namespace Adv.Tools.RevitAddin.Application.Components.RibbonPanels
     public class ArcStrCorrelator : IAppRibbonPanel
     {
         public string TabName => RevitAppTabs.AdvToolsTab.TabName;
-
         public string PanelName => "ArcStr Correlator";
+        public int Position => 4;
     }
 }

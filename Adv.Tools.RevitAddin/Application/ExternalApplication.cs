@@ -32,11 +32,11 @@ namespace Adv.Tools.RevitAddin.Application
                 application.CreateRibbonTab(Components.RevitAppTabs.AdvToolsTab.TabName);
 
                 var ribbonPanelTypes = Assembly.GetExecutingAssembly().GetTypes().Where(t => typeof(IAppRibbonPanel).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract).ToList();
+                var ribbonPanels = ribbonPanelTypes.Select(ribbonPanelType => Activator.CreateInstance(ribbonPanelType) as IAppRibbonPanel).OrderBy(panel => panel.Position).ToList();
 
-                foreach (var ribbonPanel in ribbonPanelTypes)
+                foreach (var ribbonPanel in ribbonPanels)
                 {
-                    var ribbonPanelInstance = Activator.CreateInstance(ribbonPanel) as IAppRibbonPanel;
-                    application.CreateRibbonPanel(ribbonPanelInstance.TabName, ribbonPanelInstance.PanelName);
+                    application.CreateRibbonPanel(ribbonPanel.TabName, ribbonPanel.PanelName);
                 }
 
                 var pushButtonTypes = Assembly.GetExecutingAssembly().GetTypes().Where(t => typeof(IAppPushButton).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract).ToList();

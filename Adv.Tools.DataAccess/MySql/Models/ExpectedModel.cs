@@ -19,5 +19,23 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public string Disicpline { get; set; }
         public string PositionSource { get; set; }
         public string PositionSourceGuid { get; set; }
+
+        public string GetMySqlTableMapping(string databaseName, string tableName)
+        {
+            string sqlQuery =
+                $"CREATE TABLE IF NOT EXISTS {databaseName}.{tableName} " +
+                $"(`{nameof(Id)}` int NOT NULL AUTO_INCREMENT, " +
+                $"`{nameof(ModelName)}` text, " +
+                $"`{nameof(ModelGuid)}` text, " +
+                $"`{nameof(HubId)}` text, " +
+                $"`{nameof(ProjectId)}` text, " +
+                $"`{nameof(FolderId)}` text, " +
+                $"`{nameof(Disicpline)}` text, " +
+                $"`{nameof(PositionSource)}` text, " +
+                $"`{nameof(PositionSourceGuid)}` text, " +
+                $"PRIMARY KEY (`{nameof(Id)}`))";
+
+            return sqlQuery;
+        }
     }
 }

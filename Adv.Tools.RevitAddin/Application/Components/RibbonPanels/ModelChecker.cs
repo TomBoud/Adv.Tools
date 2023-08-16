@@ -11,6 +11,7 @@ namespace Adv.Tools.RevitAddin.Application.Components.RibbonPanels
     {
         public string TabName => AdvToolsTab.TabName;
         public string PanelName => "Model Checker";
+        public int Position => 2;
     }
 
 }

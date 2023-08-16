@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 using Adv.Tools.CoreLogic.RevitModelQuality;
 using Adv.Tools.RevitAddin.Services.RevitModelQuality;
 using Adv.Tools.Abstractions.Database;
+using Adv.Tools.DataAccess.MySql;
+using Adv.Tools.CoreLogic.RevitModelQuality.Reports;
 
 /// <summary>
 /// Represents a namesapce for managing the scripts to be executed in Autodesk Revit.
@@ -43,6 +45,10 @@ namespace Adv.Tools.RevitAddin.Commands
 
             //Refrence to Adv.Tools.UI input objects
             var reports = new List<IReportModelQuality>();
+            reports.Add(new ElementsWorksetsReport()
+            {
+                 ReportDocumnet = new RevitDocument(doc)
+            });
 
             //Aquire the Revit models for which the reports to be excuted
             foreach (Document linkedModel in app.Documents)
@@ -60,19 +66,26 @@ namespace Adv.Tools.RevitAddin.Commands
             //Aquire the data needed for the reports logic
             foreach (var report in reports)
             {
-                var userExpectedData = new ModelQualityUserData(report);
-
-
-
-                var revitObjectsData = new ModelQualityRevitData(report, doc);
+                var userExpectedData = new ModelQualityUserData(report, new MySqlDataAccess(Properties.DataAccess.Default.ProdDb));
+                var revitObjectsData = new ModelQualityRevitData(report, doc, userExpectedData.ExpectedObjects);
+                
                 report.ExistingObjects = revitObjectsData.ExistingObjects;
+                report.ExpectedObjects = userExpectedData.ExpectedObjects;
             }
 
-            
-            var tasks = new List<Task>();
+            //Run Reports Logic Algoritem
             foreach(var item in reports)
             {
-                tasks.Add(item.RunReportLogic());
+                item.RunReportLogic();
+            }
+
+            //Save Results in the Database
+            foreach (var report in reports)
+            {
+                var dataAccess = new MySqlDataAccess(Properties.DataAccess.Default.ProdDb);
+                var reportResults = new ModelQualityResultsData(report, dataAccess);
+
+                reportResults.SaveResultsToDatabase();
             }
 
             return Result.Succeeded;

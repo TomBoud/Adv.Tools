@@ -50,7 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Autodesk\AppStore\EntitlementApiTests.cs" />
-    <Compile Include="MySql\ExpectedModelDataTest.cs" />
+    <Compile Include="MySql\Models\ExpectedModelTest.cs" />
+    <Compile Include="MySql\MySqlDataAccessTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\DataAccess.Designer.cs">
       <AutoGen>True</AutoGen>
