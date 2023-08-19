@@ -26,7 +26,7 @@ namespace Adv.Tools.RevitAddin.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;Port=3306;user id=Admin;\"password=QAZ56okm;CharSet=utf8;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;Port=3306;user id=Admin;password=QAZ56okm;CharSet=utf8;")]
         public string ProdDb {
             get {
                 return ((string)(this["ProdDb"]));

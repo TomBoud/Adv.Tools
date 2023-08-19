@@ -8,9 +8,10 @@ namespace Adv.Tools.Abstractions
 {
     public interface IDbDataAccess
     {
-        Task<List<T>> LoadData<T, U>(string sqlQuery, U parameters);
+        Task<List<T>> LoadDataAsync<T, U>(string sqlQuery, U parameters);
         Task SaveData<T>(string sqlQuery, T parameters);
-        Task<List<T>> LoadDataSelectAll<T>(string databaseName);
+        Task<List<T>> LoadDataSelectAllAsync<T>(string databaseName);
+        List<T> LoadDataSelectAll<T>(string databaseName);
 
         Task DeleteData<T, U>(string sqlQuery, U parameters);
         Task ExecuteWithTransaction(params Func<Task>[] tasks);

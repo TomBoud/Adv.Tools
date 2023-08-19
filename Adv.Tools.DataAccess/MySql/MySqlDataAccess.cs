@@ -22,8 +22,8 @@ namespace Adv.Tools.DataAccess.MySql
         {
             _connectionString = connectionString;
         }
-        
-        public async Task<List<T>> LoadData<T, U>(string sqlQuery, U parameters)
+
+        public async Task<List<T>> LoadDataAsync<T, U>(string sqlQuery, U parameters)
         {
             using (IDbConnection connection = new MySqlConnection(_connectionString))
             {
@@ -31,13 +31,37 @@ namespace Adv.Tools.DataAccess.MySql
                 return rows.ToList();
             }
         }
-        public async Task<List<T>> LoadDataSelectAll<T>(string databaseName)
+
+        public List<T> LoadData<T, U>(string sqlQuery, U parameters)
+        {
+            using (IDbConnection connection = new MySqlConnection(_connectionString))
+            {
+                var rows = connection.Query<T>(sqlQuery, parameters);
+                return rows.ToList();
+            }
+        }
+
+        public List<T> LoadDataSelectAll<T>(string databaseName)
         {
             string sqlQuery = $"SELECT * FROM {databaseName}.{typeof(T).Name}";
 
             try
             {
-                return await LoadData<T, dynamic>(sqlQuery, new { });
+                return LoadData<T, dynamic>(sqlQuery, new { });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<T>> LoadDataSelectAllAsync<T>(string databaseName)
+        {
+            string sqlQuery = $"SELECT * FROM {databaseName}.{typeof(T).Name}";
+
+            try
+            {
+                return await LoadDataAsync<T, dynamic>(sqlQuery, new { });
             }
             catch (Exception ex)
             {
@@ -64,7 +88,7 @@ namespace Adv.Tools.DataAccess.MySql
             PropertyInfo[] props = typeof(T).GetProperties();
 
             string sqlQuery =
-                $"INSERT INTO {databaseName}.{nameof(T)} " +
+                $"INSERT INTO {databaseName}.{typeof(T).Name} " +
                 $"({string.Join(",", props.Select(x => x.Name))}) " +
                 $"VALUES ({string.Join(",", props.Select(x => $"@{x.Name}"))})";
 

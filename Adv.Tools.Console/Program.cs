@@ -19,13 +19,13 @@ namespace Adv.Tools.Console
             Application.EnableVisualStyles();
 
             //This is for testing only
-            var mySql = new MySqlDataAccess("Server=localhost;Port=3306;user id=Admin;password=QAZ56okm;CharSet=utf8;");
+            var mySql = new MySqlDataAccess("Server=192.168.10.1;Port=3306;user id=Admin;password=QAZ56okm;CharSet=utf8;");
             var databaseName = "b4f912b9ef6ab43578c73e05d7e9a13d7";
 
             IConfigReportView view = new ConfigReportView();
             IConfigReportRepo repo = new ConfigReportRepo(mySql, databaseName);
 
-            new ConfigReportPresenter(view, repo);
+            _ = new ConfigReportPresenter(view, repo);
 
             view.RunUIApplication();
         }

@@ -8,6 +8,7 @@ using Adv.Tools.Abstractions;
 using Adv.Tools.Abstractions.Database;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.Models;
 using Adv.Tools.UI.DataModels.RevitModelQuality;
+using Adv.Tools.DataAccess.MySql;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.Repository
 {
@@ -40,17 +41,27 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.Repository
 
         public IEnumerable<ConfigReportModel> GetAll()
         {
-           var results = _dataAccess.LoadDataSelectAll<ReportCheckScore>(_databaseName).Result;
-           
+
+
+            //var results = await _dataAccess.LoadDataSelectAll<ReportCheckScore>(_databaseName);
+
+            var mySql = new MySqlDataAccess("Server=192.168.10.1;Port=3306;user id=Admin;password=QAZ56okm;CharSet=utf8;");
+            var databaseName = "b4f912b9ef6ab43578c73e05d7e9a13d7";
+
+            var results = mySql.LoadDataSelectAll<ReportCheckScore>(databaseName);
+            var reports = new List<ConfigReportModel>();
+
             foreach (var report in results.OrderByDescending(x => x.Id).ToList())
             {
-                yield return new ConfigReportModel(report);
+                reports.Add(new ConfigReportModel(report));
             }
+
+            return reports;
         }
 
         public IEnumerable<ConfigReportModel> GetByValue(string value)
         {
-            var results = _dataAccess.LoadDataSelectAll<ReportCheckScore>(_databaseName).Result;
+            var results = _dataAccess.LoadDataSelectAllAsync<ReportCheckScore>(_databaseName).Result;
 
             var uniqueReports = new HashSet<int>();
             var filteredResults = results.Where(result =>

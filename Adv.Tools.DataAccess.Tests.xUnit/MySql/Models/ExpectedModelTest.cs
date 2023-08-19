@@ -73,7 +73,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
         public async void TestDataBaseLoad_Successful()
         {
             //Stage
-            var task = _access.LoadDataSelectAll<ExpectedModel>(TestDataBaseName);
+            var task = _access.LoadDataSelectAllAsync<ExpectedModel>(TestDataBaseName);
             //Act
             var models = await task;
             //Assert

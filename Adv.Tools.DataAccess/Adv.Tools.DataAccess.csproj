@@ -149,6 +149,7 @@
     <Compile Include="MySql\Models\ExpectedProjectInfo.cs" />
     <Compile Include="MySql\Models\ExpectedSharedPara.cs" />
     <Compile Include="MySql\Models\ExpectedTidpCode.cs" />
+    <Compile Include="MySql\Models\ReportCheckScore.cs" />
     <Compile Include="MySql\Models\ReportCleanView.cs" />
     <Compile Include="MySql\Models\ReportElementsWorkset.cs" />
     <Compile Include="MySql\Models\ReportFileReference.cs" />

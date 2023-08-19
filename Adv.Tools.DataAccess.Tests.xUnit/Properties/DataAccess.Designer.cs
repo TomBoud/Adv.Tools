@@ -25,20 +25,20 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;Port=3306;user id=root;password=$QAZ56okm$;CharSet=utf8;")]
-        public string DevDb {
+        [global::System.Configuration.DefaultSettingValueAttribute("b908b0a4c8a1a457e97cfd4617c54301d")]
+        public string DatabaseName {
             get {
-                return ((string)(this["DevDb"]));
+                return ((string)(this["DatabaseName"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("b908b0a4c8a1a457e97cfd4617c54301d")]
-        public string DatabaseName {
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;Port=3306;user id=root;password=$QAZ56okm$;CharSet=utf8;")]
+        public string DevDb {
             get {
-                return ((string)(this["DatabaseName"]));
+                return ((string)(this["DevDb"]));
             }
         }
     }

@@ -46,8 +46,23 @@
     <PackageReference Include="coverlet.collector" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RevitModelQuality\ConfigReportRepoTest.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Adv.Tools.Abstractions\Adv.Tools.Abstractions.csproj">
+      <Project>{9CC965AC-3C4A-46CC-A0FF-0EAA1F767C2C}</Project>
+      <Name>Adv.Tools.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Adv.Tools.DataAccess\Adv.Tools.DataAccess.csproj">
+      <Project>{0d4f0645-1361-4f3c-8d7b-eb253f4af4b2}</Project>
+      <Name>Adv.Tools.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Adv.Tools.UI\Adv.Tools.UI.csproj">
+      <Project>{46cbf741-b2c2-4917-9aba-9e353d79ecd1}</Project>
+      <Name>Adv.Tools.UI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
