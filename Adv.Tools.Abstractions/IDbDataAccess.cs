@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adv.Tools.DataAccess
+namespace Adv.Tools.Abstractions
 {
     public interface IDbDataAccess
     {

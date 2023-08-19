@@ -9,6 +9,7 @@ using Dapper;
 using MySql.Data.MySqlClient;
 using Adv.Tools.DataAccess.MySql.Models;
 using System.Reflection;
+using Adv.Tools.Abstractions;
 
 namespace Adv.Tools.DataAccess.MySql
 {

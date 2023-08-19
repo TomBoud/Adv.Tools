@@ -8,7 +8,7 @@ using System.Windows.Forms;
 /// <summary>
 /// Represents a namesapce which contains all the app specific custom UI Views.
 /// </summary>
-namespace Adv.Tools.UI.Views
+namespace Adv.Tools.UI.Example.Views
 {
     /// <summary>
     /// Wrapper for the UI <see cref="ElementView" /> according to the MVP pattern.

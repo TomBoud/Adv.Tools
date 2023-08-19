@@ -142,8 +142,6 @@
   <ItemGroup>
     <Compile Include="Autodesk\AppStore\EntitlementApi.cs" />
     <Compile Include="Autodesk\AppStore\EntitlementModel.cs" />
-    <Compile Include="IApiDataAccess.cs" />
-    <Compile Include="IDbDataAccess.cs" />
     <Compile Include="MySql\Models\ExpectedCleanView.cs" />
     <Compile Include="MySql\Models\ExpectedLevelsGrids.cs" />
     <Compile Include="MySql\Models\ExpectedMidpSheet.cs" />

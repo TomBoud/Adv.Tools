@@ -1,4 +1,4 @@
-﻿namespace Adv.Tools.UI.Views
+﻿namespace Adv.Tools.UI.Example.Views
 {
     partial class ElementView
     {

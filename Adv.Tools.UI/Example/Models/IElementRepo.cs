@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adv.Tools.UI.Models
+namespace Adv.Tools.UI.Example.Models
 {
     public interface IElementRepo
     {

@@ -1,4 +1,4 @@
-﻿using Adv.Tools.UI.Models;
+﻿using Adv.Tools.UI.Example.Models;
 using Adv.Tools.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adv.Tools.UI.Repositories
+namespace Adv.Tools.UI.Example.Repositories
 {
     /// <summary>
     /// This class represenets the implementaion of <see cref="IElementRepo"/> for this UI operations.

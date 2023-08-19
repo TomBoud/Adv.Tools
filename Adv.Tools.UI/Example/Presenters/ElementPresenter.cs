@@ -1,5 +1,5 @@
-﻿using Adv.Tools.UI.Models;
-using Adv.Tools.UI.Views;
+﻿using Adv.Tools.UI.Example.Models;
+using Adv.Tools.UI.Example.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Windows.Forms;
 /// <summary>
 /// Represents a namesapce which contains all the Presenters of this UI project
 /// </summary>
-namespace Adv.Tools.UI.Presenters
+namespace Adv.Tools.UI.Example.Presenters
 {
     /// <summary>
     /// Coupler between <see cref="IElementView" /> and <see cref="IElementRepo" /> for the UI consuming app.

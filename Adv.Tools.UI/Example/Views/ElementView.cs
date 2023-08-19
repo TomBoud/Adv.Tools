@@ -1,4 +1,4 @@
-﻿using Adv.Tools.UI.Presenters;
+﻿using Adv.Tools.UI.Example.Presenters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +12,7 @@ using System.Windows.Forms;
 /// <summary>
 /// Represents a namesapce which contains all the app specific UI Views.
 /// </summary>
-namespace Adv.Tools.UI.Views
+namespace Adv.Tools.UI.Example.Views
 {
     /// <summary>
     /// Win-Form UI code implementation of the <see cref="IElementView"/>

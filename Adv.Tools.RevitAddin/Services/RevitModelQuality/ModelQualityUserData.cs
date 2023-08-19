@@ -10,6 +10,7 @@ using Adv.Tools.CoreLogic.RevitModelQuality.Reports;
 using Adv.Tools.DataAccess;
 using Adv.Tools.DataAccess.MySql;
 using Adv.Tools.DataAccess.MySql.Models;
+using Adv.Tools.Abstractions;
 
 namespace Adv.Tools.RevitAddin.Services.RevitModelQuality
 {

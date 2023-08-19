@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{46CBF741-B2C2-4917-9ABA-9E353D79ECD1}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>Adv.Tools.UI</RootNamespace>
     <AssemblyName>Adv.Tools.UI</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -50,19 +50,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\ElementModel.cs" />
-    <Compile Include="Models\IElementRepo.cs" />
-    <Compile Include="Presenters\ElementPresenter.cs" />
+    <Compile Include="Example\Models\ElementModel.cs" />
+    <Compile Include="Example\Models\IElementRepo.cs" />
+    <Compile Include="Example\Presenters\ElementPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\ElementRepo.cs" />
-    <Compile Include="Views\ElementView.cs">
+    <Compile Include="Example\Repositories\ElementRepo.cs" />
+    <Compile Include="Example\Views\ElementView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\ElementView.Designer.cs">
+    <Compile Include="Example\Views\ElementView.Designer.cs">
       <DependentUpon>ElementView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\IElementView.cs" />
+    <Compile Include="Example\Views\IElementView.cs" />
+    <Compile Include="RevitModelQuality\Models\ConfigReportModel.cs" />
+    <Compile Include="RevitModelQuality\Models\IConfigReportRepo.cs" />
+    <Compile Include="RevitModelQuality\Presenters\ConfigReportPresenter.cs" />
+    <Compile Include="RevitModelQuality\Repository\ConfigReportRepo.cs" />
+    <Compile Include="RevitModelQuality\Views\ConfigReportView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RevitModelQuality\Views\ConfigReportView.Designer.cs">
+      <DependentUpon>ConfigReportView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RevitModelQuality\Views\IConfigReportView.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -72,8 +83,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Views\ElementView.resx">
+    <EmbeddedResource Include="Example\Views\ElementView.resx">
       <DependentUpon>ElementView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RevitModelQuality\Views\ConfigReportView.resx">
+      <DependentUpon>ConfigReportView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -93,6 +107,11 @@
       <Project>{9cc965ac-3c4a-46cc-a0ff-0eaa1f767c2c}</Project>
       <Name>Adv.Tools.Abstractions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Adv.Tools.DataAccess\Adv.Tools.DataAccess.csproj">
+      <Project>{0d4f0645-1361-4f3c-8d7b-eb253f4af4b2}</Project>
+      <Name>Adv.Tools.DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
