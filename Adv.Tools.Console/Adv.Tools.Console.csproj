@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +49,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Adv.Tools.Abstractions\Adv.Tools.Abstractions.csproj">
+      <Project>{9cc965ac-3c4a-46cc-a0ff-0eaa1f767c2c}</Project>
+      <Name>Adv.Tools.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Adv.Tools.DataAccess\Adv.Tools.DataAccess.csproj">
+      <Project>{0d4f0645-1361-4f3c-8d7b-eb253f4af4b2}</Project>
+      <Name>Adv.Tools.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Adv.Tools.UI\Adv.Tools.UI.csproj">
+      <Project>{46cbf741-b2c2-4917-9aba-9e353d79ecd1}</Project>
+      <Name>Adv.Tools.UI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

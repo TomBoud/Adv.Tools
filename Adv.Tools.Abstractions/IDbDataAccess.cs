@@ -10,7 +10,7 @@ namespace Adv.Tools.Abstractions
     {
         Task<List<T>> LoadData<T, U>(string sqlQuery, U parameters);
         Task SaveData<T>(string sqlQuery, T parameters);
-        Task<List<T>> LoadDataSelectAll<T>(string databaseName, string tableName);
+        Task<List<T>> LoadDataSelectAll<T>(string databaseName);
 
         Task DeleteData<T, U>(string sqlQuery, U parameters);
         Task ExecuteWithTransaction(params Func<Task>[] tasks);

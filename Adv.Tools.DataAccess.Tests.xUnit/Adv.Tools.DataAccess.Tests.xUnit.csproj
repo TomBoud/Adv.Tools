@@ -60,17 +60,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Adv.Tools.DataAccess\Adv.Tools.DataAccess.csproj">
-      <Project>{0d4f0645-1361-4f3c-8d7b-eb253f4af4b2}</Project>
-      <Name>Adv.Tools.DataAccess</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="Properties\DataAccess.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>DataAccess.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Adv.Tools.DataAccess\Adv.Tools.DataAccess.csproj">
+      <Project>{0d4f0645-1361-4f3c-8d7b-eb253f4af4b2}</Project>
+      <Name>Adv.Tools.DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

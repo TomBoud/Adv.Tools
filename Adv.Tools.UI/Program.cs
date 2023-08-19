@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Adv.Tools.UI.RevitModelQuality.Views;
-using Adv.Tools.UI.RevitModelQuality.Models;
-using Adv.Tools.UI.RevitModelQuality.Repository;
-using Adv.Tools.UI.RevitModelQuality.Presenters;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.Views;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.Models;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.Repository;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.Presenters;
 //This is for testing only
 using Adv.Tools.DataAccess.MySql;
 
@@ -25,10 +25,9 @@ namespace Adv.Tools.UI.Example
             //This is for testing only
             var mySql = new MySqlDataAccess("Server=localhost;Port=3306;user id=Admin;password=QAZ56okm;CharSet=utf8;");
             var databaseName = "b4f912b9ef6ab43578c73e05d7e9a13d7";
-            var tableName = "reportcheckscore";
 
             IConfigReportView view = new ConfigReportView();
-            IConfigReportRepo repo = new ConfigReportRepo(mySql,databaseName,tableName);
+            IConfigReportRepo repo = new ConfigReportRepo(mySql,databaseName);
 
             new ConfigReportPresenter(view, repo);
 

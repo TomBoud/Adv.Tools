@@ -10,6 +10,7 @@ using MySql.Data.MySqlClient;
 using Adv.Tools.DataAccess.MySql.Models;
 using System.Reflection;
 using Adv.Tools.Abstractions;
+using System.Threading;
 
 namespace Adv.Tools.DataAccess.MySql
 {
@@ -30,9 +31,9 @@ namespace Adv.Tools.DataAccess.MySql
                 return rows.ToList();
             }
         }
-        public async Task<List<T>> LoadDataSelectAll<T>(string databaseName, string tableName)
+        public async Task<List<T>> LoadDataSelectAll<T>(string databaseName)
         {
-            string sqlQuery = $"SELECT * FROM {databaseName}.{tableName}";
+            string sqlQuery = $"SELECT * FROM {databaseName}.{typeof(T).Name}";
 
             try
             {
@@ -58,12 +59,12 @@ namespace Adv.Tools.DataAccess.MySql
                 throw ex;
             }
         }
-        public async Task SaveDataByPropertiesMappping<T>(string databaseName,string tableName, List<T> data)
+        public async Task SaveDataByPropertiesMappping<T>(string databaseName, List<T> data)
         {
             PropertyInfo[] props = typeof(T).GetProperties();
 
             string sqlQuery =
-                $"INSERT INTO {databaseName}.{tableName} " +
+                $"INSERT INTO {databaseName}.{nameof(T)} " +
                 $"({string.Join(",", props.Select(x => x.Name))}) " +
                 $"VALUES ({string.Join(",", props.Select(x => $"@{x.Name}"))})";
 
@@ -108,9 +109,9 @@ namespace Adv.Tools.DataAccess.MySql
                 await connection.ExecuteAsync(sqlQuery, parameters);
             }
         }
-        public async Task DeleteDataAllRows<T>(string databaseName, string tableName)
+        public async Task DeleteDataAllRows<T>(string databaseName)
         {
-            string sqlQuery = $"DELETE FROM {databaseName}.{tableName}";
+            string sqlQuery = $"DELETE FROM {databaseName}.{nameof(T)}";
 
             try
             {
@@ -121,7 +122,7 @@ namespace Adv.Tools.DataAccess.MySql
                 throw ex;
             }
         }
-        public async Task DeleteTableIfExists(string databaseName, string tableName)
+        public async Task DeleteTableIfExists(string databaseName,string tableName)
         {
             string sqlQuery = $"DROP TABLE IF EXISTS {databaseName}.{tableName}";
 

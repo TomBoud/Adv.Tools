@@ -50,30 +50,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Example\Models\ElementModel.cs" />
-    <Compile Include="Example\Models\IElementRepo.cs" />
-    <Compile Include="Example\Presenters\ElementPresenter.cs" />
+    <Compile Include="DataModels\RevitModelQuality\ReportCheckScore.cs" />
+    <Compile Include="ViewModules\Example\Models\ElementModel.cs" />
+    <Compile Include="ViewModules\Example\Models\IElementRepo.cs" />
+    <Compile Include="ViewModules\Example\Presenters\ElementPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Example\Repositories\ElementRepo.cs" />
-    <Compile Include="Example\Views\ElementView.cs">
+    <Compile Include="ViewModules\Example\Repositories\ElementRepo.cs" />
+    <Compile Include="ViewModules\Example\Views\ElementView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Example\Views\ElementView.Designer.cs">
+    <Compile Include="ViewModules\Example\Views\ElementView.Designer.cs">
       <DependentUpon>ElementView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Example\Views\IElementView.cs" />
-    <Compile Include="RevitModelQuality\Models\ConfigReportModel.cs" />
-    <Compile Include="RevitModelQuality\Models\IConfigReportRepo.cs" />
-    <Compile Include="RevitModelQuality\Presenters\ConfigReportPresenter.cs" />
-    <Compile Include="RevitModelQuality\Repository\ConfigReportRepo.cs" />
-    <Compile Include="RevitModelQuality\Views\ConfigReportView.cs">
+    <Compile Include="ViewModules\Example\Views\IElementView.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\Models\ConfigReportModel.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\Models\IConfigReportRepo.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\Presenters\ConfigReportPresenter.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\Repository\ConfigReportRepo.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\Views\ConfigReportView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RevitModelQuality\Views\ConfigReportView.Designer.cs">
+    <Compile Include="ViewModules\RevitModelQuality\Views\ConfigReportView.Designer.cs">
       <DependentUpon>ConfigReportView.cs</DependentUpon>
     </Compile>
-    <Compile Include="RevitModelQuality\Views\IConfigReportView.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\Views\IConfigReportView.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -83,10 +84,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Example\Views\ElementView.resx">
+    <EmbeddedResource Include="ViewModules\Example\Views\ElementView.resx">
       <DependentUpon>ElementView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RevitModelQuality\Views\ConfigReportView.resx">
+    <EmbeddedResource Include="ViewModules\RevitModelQuality\Views\ConfigReportView.resx">
       <DependentUpon>ConfigReportView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">

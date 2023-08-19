@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Adv.Tools.UI.RevitModelQuality.Views
+namespace Adv.Tools.UI.ViewModules.RevitModelQuality.Views
 {
     public partial class ConfigReportView : Form, IConfigReportView
     {
@@ -44,6 +44,12 @@ namespace Adv.Tools.UI.RevitModelQuality.Views
         {
            dataGridView.DataSource = reportsList;
         }
+
+        public void RunUIApplication()
+        {
+            Application.Run(this);
+        }
+
         private void AssociateAndRaiseViewEvents()
         {
             search_button.Click += delegate { SearchEvent?.Invoke(this, EventArgs.Empty); };

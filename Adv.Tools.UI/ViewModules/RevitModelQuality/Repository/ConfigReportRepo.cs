@@ -6,22 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using Adv.Tools.Abstractions;
 using Adv.Tools.Abstractions.Database;
-using Adv.Tools.UI.RevitModelQuality.Models;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.Models;
+using Adv.Tools.UI.DataModels.RevitModelQuality;
 
-namespace Adv.Tools.UI.RevitModelQuality.Repository
+namespace Adv.Tools.UI.ViewModules.RevitModelQuality.Repository
 {
     public class ConfigReportRepo : IConfigReportRepo
     {
         private readonly IDbDataAccess _dataAccess;
         private readonly string _databaseName;
-        private readonly string _tableName;
 
-
-        public ConfigReportRepo(IDbDataAccess dataAccess,string databaseName, string tableName)
+        public ConfigReportRepo(IDbDataAccess dataAccess,string databaseName)
         {
             _dataAccess = dataAccess;
             _databaseName = databaseName;
-            _tableName = tableName;
         }
 
 
@@ -42,17 +40,17 @@ namespace Adv.Tools.UI.RevitModelQuality.Repository
 
         public IEnumerable<ConfigReportModel> GetAll()
         {
-           var results = _dataAccess.LoadDataSelectAll<IReportCheckScore>(_databaseName, _tableName).Result;
+           var results = _dataAccess.LoadDataSelectAll<ReportCheckScore>(_databaseName).Result;
            
             foreach (var report in results.OrderByDescending(x => x.Id).ToList())
             {
-                yield return report as ConfigReportModel;
+                yield return new ConfigReportModel(report);
             }
         }
 
         public IEnumerable<ConfigReportModel> GetByValue(string value)
         {
-            var results = _dataAccess.LoadDataSelectAll<IReportCheckScore>(_databaseName, _tableName).Result;
+            var results = _dataAccess.LoadDataSelectAll<ReportCheckScore>(_databaseName).Result;
 
             var uniqueReports = new HashSet<int>();
             var filteredResults = results.Where(result =>
@@ -65,7 +63,7 @@ namespace Adv.Tools.UI.RevitModelQuality.Repository
             {
                 if (uniqueReports.Add(report.Id))
                 {
-                    yield return report as ConfigReportModel;
+                    yield return new ConfigReportModel(report);
                 }
             }
         }

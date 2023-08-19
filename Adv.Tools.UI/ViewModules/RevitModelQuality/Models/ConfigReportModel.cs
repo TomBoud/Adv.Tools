@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Adv.Tools.Abstractions.Database;
+using Adv.Tools.UI.DataModels.RevitModelQuality;
 
-namespace Adv.Tools.UI.RevitModelQuality.Models
+namespace Adv.Tools.UI.ViewModules.RevitModelQuality.Models
 {
     public class ConfigReportModel : IReportCheckScore
     {
@@ -19,6 +20,17 @@ namespace Adv.Tools.UI.RevitModelQuality.Models
         private string docName;
         private string docGuid;
         private string docDisicpline;
+
+        public ConfigReportModel(ReportCheckScore reportCheckScore)
+        {
+            id = reportCheckScore.Id;
+            name = reportCheckScore.CheckName;
+            lod = reportCheckScore.CheckLod;
+            score = reportCheckScore.CheckScore;
+            docName = reportCheckScore.ModelName;
+            docGuid = reportCheckScore.ModelGuid;
+            docDisicpline= reportCheckScore.Disicpline; 
+        }
 
         //Properties
         [DisplayName("Report ID")]

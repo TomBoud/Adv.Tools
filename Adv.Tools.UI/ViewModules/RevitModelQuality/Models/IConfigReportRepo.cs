@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adv.Tools.UI.RevitModelQuality.Models
+namespace Adv.Tools.UI.ViewModules.RevitModelQuality.Models
 {
     public interface IConfigReportRepo
     {

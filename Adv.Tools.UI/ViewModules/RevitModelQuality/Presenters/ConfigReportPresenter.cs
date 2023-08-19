@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Adv.Tools.UI.RevitModelQuality.Models;
-using Adv.Tools.UI.RevitModelQuality.Views;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.Models;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.Views;
 
 
 
-namespace Adv.Tools.UI.RevitModelQuality.Presenters
+namespace Adv.Tools.UI.ViewModules.RevitModelQuality.Presenters
 {
     public class ConfigReportPresenter
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Adv.Tools.UI.RevitModelQuality.Views
+namespace Adv.Tools.UI.ViewModules.RevitModelQuality.Views
 {
     public interface IConfigReportView
     {
@@ -31,6 +31,6 @@ namespace Adv.Tools.UI.RevitModelQuality.Views
 
         //Methods
         void SetPetListBindingSource(BindingSource reportsList);
-        void Show(); //Optional
+        void RunUIApplication();
     }
 }

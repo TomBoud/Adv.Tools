@@ -22,7 +22,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
         public async void TestDeleteTable_Successful()
         {
             //Stage
-            var task = _access.DeleteTableIfExists(TestDataBaseName, nameof(ExpectedModel));
+            var task = _access.DeleteTableIfExists(TestDataBaseName,nameof(ExpectedModel));
             //Act
             await task;
             //Assert
@@ -34,7 +34,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
         public async void TestCreateTable_Successful()
         {
             //Stage
-            var query = new ExpectedModel().GetMySqlTableMapping(TestDataBaseName,nameof(ExpectedModel));
+            var query = new ExpectedModel().GetMySqlTableMapping(TestDataBaseName);
             var task = _access.ExecuteSqlQueryAsync(query);
             //Act
             await task;
@@ -62,7 +62,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
                 }
             };
             //Act
-            var task = _access.SaveDataByPropertiesMappping(TestDataBaseName, nameof(ExpectedModel), models);
+            var task = _access.SaveDataByPropertiesMappping(TestDataBaseName, models);
             await task;
             //Assert
             Assert.True(task.IsCompleted);
@@ -73,7 +73,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
         public async void TestDataBaseLoad_Successful()
         {
             //Stage
-            var task = _access.LoadDataSelectAll<ExpectedModel>(TestDataBaseName, nameof(ExpectedModel));
+            var task = _access.LoadDataSelectAll<ExpectedModel>(TestDataBaseName);
             //Act
             var models = await task;
             //Assert

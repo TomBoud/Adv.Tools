@@ -20,10 +20,10 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public string PositionSource { get; set; }
         public string PositionSourceGuid { get; set; }
 
-        public string GetMySqlTableMapping(string databaseName, string tableName)
+        public string GetMySqlTableMapping(string databaseName)
         {
             string sqlQuery =
-                $"CREATE TABLE IF NOT EXISTS {databaseName}.{tableName} " +
+                $"CREATE TABLE IF NOT EXISTS {databaseName}.{nameof(ExpectedModel)} " +
                 $"(`{nameof(Id)}` int NOT NULL AUTO_INCREMENT, " +
                 $"`{nameof(ModelName)}` text, " +
                 $"`{nameof(ModelGuid)}` text, " +

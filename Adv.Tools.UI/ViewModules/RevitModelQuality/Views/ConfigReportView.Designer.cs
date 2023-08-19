@@ -1,4 +1,4 @@
-﻿namespace Adv.Tools.UI.RevitModelQuality.Views
+﻿namespace Adv.Tools.UI.ViewModules.RevitModelQuality.Views
 {
     partial class ConfigReportView
     {
