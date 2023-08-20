@@ -11,5 +11,15 @@ namespace Adv.Tools.Abstractions.Revit
         string Title { get; set; }
         Guid Guid { get; set; }
         string ProjectId { get; set; }
+
+        //Project Position
+        double EastWest { get; set; }
+        double NorthSouth { get; set; }
+        double Elevation { get; set; }
+        double Angle { get; set; }
+
+        //Site Location
+        double Latitude { get; set; }
+        double Longitude { get; set; }
     }
 }

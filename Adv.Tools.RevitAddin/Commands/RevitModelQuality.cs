@@ -3,8 +3,6 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Adv.Tools.DataAccess.Autodesk.AppStore;
-using Adv.Tools.UI.Example.Models;
-using Adv.Tools.UI.Example.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -19,17 +19,28 @@ namespace Adv.Tools.RevitAddin.Models
         }
 
         #region Public Properties
-        public string Title { get { return _document.Title; } set { Title = value; } }
-        public Guid  Guid { get { return _document.GetCloudModelPath().GetModelGUID(); } set { Guid = value; } }
-        public string ProjectId { get => GetDocumentGuidAsValidDbName(); set => ProjectId = value; }
+
+        //Documnet Identity
+        public string Title { get => _document.Title; set => Title = value; }
+        public Guid  Guid { get => _document.GetCloudModelPath().GetModelGUID(); set => Guid = value; }
+        public string ProjectId { get => GetDocumentProjectGuidAsValidDbName(); set => ProjectId = value; }
+
+        //Project Position
+        public double EastWest { get => _document.ActiveProjectLocation.GetProjectPosition(XYZ.Zero).EastWest; set => EastWest = value; }
+        public double NorthSouth { get => _document.ActiveProjectLocation.GetProjectPosition(XYZ.Zero).NorthSouth; set => NorthSouth = value; }
+        public double Elevation { get => _document.ActiveProjectLocation.GetProjectPosition(XYZ.Zero).Elevation; set => Elevation = value; }
+        public double Angle { get => _document.ActiveProjectLocation.GetProjectPosition(XYZ.Zero).Angle; set => Angle = value; }
+
+        //Site Location
+        public double Latitude { get => _document.SiteLocation.Latitude; set => Latitude = value; }
+        public double Longitude { get => _document.SiteLocation.Longitude; set => Longitude = value; }
         #endregion
 
         #region Public Properties
-        private string GetDocumentGuidAsValidDbName()
+        private string GetDocumentProjectGuidAsValidDbName()
         {
-            string ProjectGuid = _document.GetCloudModelPath().GetProjectGUID().ToString();
-            string ProjectId = Regex.Replace(ProjectGuid, "[^a-zA-Z0-9_]", "");
-            return ProjectId;
+            var ProjectGuid = _document.GetCloudModelPath().GetProjectGUID();
+            return Regex.Replace(ProjectGuid.ToString(), "[^a-zA-Z0-9_]", "");
         }
         #endregion
     }

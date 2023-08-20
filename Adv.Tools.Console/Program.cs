@@ -1,8 +1,8 @@
 ﻿using Adv.Tools.DataAccess.MySql;
-using Adv.Tools.UI.ViewModules.RevitModelQuality.Models;
-using Adv.Tools.UI.ViewModules.RevitModelQuality.Presenters;
-using Adv.Tools.UI.ViewModules.RevitModelQuality.Repository;
-using Adv.Tools.UI.ViewModules.RevitModelQuality.Views;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Models;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Presenters;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Repository;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;

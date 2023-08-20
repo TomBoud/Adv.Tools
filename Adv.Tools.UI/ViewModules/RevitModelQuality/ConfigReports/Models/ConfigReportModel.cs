@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using Adv.Tools.Abstractions.Database;
 using Adv.Tools.UI.DataModels.RevitModelQuality;
 
-namespace Adv.Tools.UI.ViewModules.RevitModelQuality.Models
+namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Models
 {
     public class ConfigReportModel : IReportCheckScore
     {
@@ -21,7 +21,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.Models
         private string docGuid;
         private string docDisicpline;
 
-        public ConfigReportModel(ReportCheckScore reportCheckScore)
+        public ConfigReportModel(IReportCheckScore reportCheckScore)
         {
             id = reportCheckScore.Id;
             name = reportCheckScore.CheckName;

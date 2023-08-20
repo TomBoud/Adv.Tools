@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Adv.Tools.UI.ViewModules.RevitModelQuality.Models;
-using Adv.Tools.UI.ViewModules.RevitModelQuality.Views;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Models;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Views;
 
 
 
-namespace Adv.Tools.UI.ViewModules.RevitModelQuality.Presenters
+namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Presenters
 {
     public class ConfigReportPresenter
     {
@@ -37,13 +37,13 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.Presenters
         //Methods
         private void LoadAllReportsList()
         {
-            reportsList = reposetory.GetAll();
+            reportsList = reposetory.GetAllReports();
             reportsSource.DataSource = reportsList;
         }
         private void SearchReport(object sender, EventArgs e)
         {
             if(string.IsNullOrWhiteSpace(this.view.SearchValue))
-                reportsList = reposetory.GetAll();
+                reportsList = reposetory.GetAllReports();
 
             else reportsList = reposetory.GetByValue(this.view.SearchValue);
 

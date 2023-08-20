@@ -1,5 +1,5 @@
 ﻿using Adv.Tools.DataAccess.MySql;
-using Adv.Tools.UI.ViewModules.RevitModelQuality.Repository;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +16,12 @@ namespace Adv.Tools.UI.Tests.xUnit.RevitModelQuality
 
 
         [Fact]
-        public async void TestDataBaseLoad_Successful()
+        public void TestDataBaseLoad_Successful()
         {
             //Stage
             var repo = new ConfigReportRepo(_access, TestDataBaseName);
             //Act
-            var results = repo.GetAll();
+            var results = repo.GetAllReports();
             //Assert
             Assert.NotNull(results);
             Assert.True(results?.Count() > 0);
