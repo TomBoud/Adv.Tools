@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,25 +38,25 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public string GetReportScore()
         {
             double checkScore = 0;
-            var result = ResultObjects.Cast<IReportProjectBasePoint>().FirstOrDefault() as ProjectBasePointReports;
-
-            if (result != null)
-            {
-                PropertyInfo[] boolProperties = typeof(ProjectBasePointReports).GetProperties()
+            //Cast results to valid list
+            var result = ResultObjects.Cast<IReportProjectBasePoint>().FirstOrDefault();
+            if (result is null) { return string.Empty; }
+            //Get all bool properties
+            PropertyInfo[] boolProperties = typeof(IReportProjectBasePoint).GetProperties()
                     .Where(prop => prop.PropertyType == typeof(bool)).ToArray();
-
-                foreach (PropertyInfo property in boolProperties)
+            //Check for bool properties existence (avoid zero division)
+            if (boolProperties.Length.Equals(0)) { return string.Empty; }
+            //Get and count all positive (true) values
+            foreach (PropertyInfo property in boolProperties)
+            {
+                bool propertyValue = (bool)property.GetValue(result);
+                if (propertyValue.Equals(true))
                 {
-                    bool propertyValue = (bool)property.GetValue(result);
-                    if (propertyValue.Equals(true))
-                    {
-                        checkScore++;
-                    }
+                    checkScore++;
                 }
-
-                checkScore = 100 * checkScore / boolProperties.Length;
             }
-
+            //Calculate final score and return  in a string format
+            checkScore = 100 * checkScore / boolProperties.Length;
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
 
