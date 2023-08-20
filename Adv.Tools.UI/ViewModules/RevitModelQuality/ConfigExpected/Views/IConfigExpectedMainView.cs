@@ -17,5 +17,6 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         event EventHandler ShowConfigSiteLocationView;
         event EventHandler ShowConfigTidpCodeView;
 
+        void RunUIApplication();
     }
 }

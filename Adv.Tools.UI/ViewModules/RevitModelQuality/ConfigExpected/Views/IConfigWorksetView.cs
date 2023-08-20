@@ -31,5 +31,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 
         //Methods
         void SetPetListBindingSource(BindingSource reportsList);
+
+        void ShowThisUI();
     }
 }

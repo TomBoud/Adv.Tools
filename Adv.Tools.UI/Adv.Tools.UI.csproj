@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{46CBF741-B2C2-4917-9ABA-9E353D79ECD1}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>Adv.Tools.UI</RootNamespace>
     <AssemblyName>Adv.Tools.UI</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -55,6 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\ConfigWorksetModel.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\IConfigWorksetRepo.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Presenters\ConfigExpectedMainPresenter.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Presenters\ConfigWorksetPresenter.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Repositories\ConfigWorksetRepo.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigExpectedMainView.cs">
@@ -62,6 +63,12 @@
     </Compile>
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigExpectedMainView.Designer.cs">
       <DependentUpon>ConfigExpectedMainView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigWorksetView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigWorksetView.Designer.cs">
+      <DependentUpon>ConfigWorksetView.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\IConfigExpectedMainView.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\IConfigWorksetView.cs" />
@@ -87,6 +94,9 @@
     </Compile>
     <EmbeddedResource Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigExpectedMainView.resx">
       <DependentUpon>ConfigExpectedMainView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigWorksetView.resx">
+      <DependentUpon>ConfigWorksetView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewModules\RevitModelQuality\ConfigReports\Views\ConfigReportView.resx">
       <DependentUpon>ConfigReportView.cs</DependentUpon>
