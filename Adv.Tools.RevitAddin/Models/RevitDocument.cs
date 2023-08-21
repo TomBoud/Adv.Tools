@@ -19,7 +19,6 @@ namespace Adv.Tools.RevitAddin.Models
         }
 
         #region Public Properties
-
         //Documnet Identity
         public string Title { get => _document.Title; set => Title = value; }
         public Guid  Guid { get => _document.GetCloudModelPath().GetModelGUID(); set => Guid = value; }
@@ -35,6 +34,18 @@ namespace Adv.Tools.RevitAddin.Models
         public double Latitude { get => _document.SiteLocation.Latitude; set => Latitude = value; }
         public double Longitude { get => _document.SiteLocation.Longitude; set => Longitude = value; }
         #endregion
+
+        //Project Information
+        public string Name { get => _document.ProjectInformation.Name; set=> Name=value; }
+        public string Number { get => _document.ProjectInformation.Number; set => Number = value; }
+        public string Status {  get=> _document.ProjectInformation.Status; set => Status = value; }
+        public string Address { get => _document.ProjectInformation.Address; set => Address = value; }
+        public string Author { get => _document.ProjectInformation.Author; set => Author = value; }
+        public string OrganizationName { get => _document.ProjectInformation.OrganizationName; set => OrganizationName = value; }
+        public string OrganizationDescription { get => _document.ProjectInformation.OrganizationDescription; set => OrganizationDescription = value; }      
+        public string ClientName { get => _document.ProjectInformation.ClientName; set => ClientName = value; }
+        public string BuildingName { get => _document.ProjectInformation.BuildingName; set => BuildingName = value; }
+
 
         #region Public Properties
         private string GetDocumentProjectGuidAsValidDbName()

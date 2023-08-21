@@ -46,11 +46,27 @@
     <Compile Include="RevitModelQuality\IReportModelQuality.cs" />
     <Compile Include="RevitModelQuality\Models\ElementsWorksetModel.cs" />
     <Compile Include="RevitModelQuality\Models\ProjectBasePointModel.cs" />
+    <Compile Include="RevitModelQuality\Models\CleanViewModel.cs" />
+    <Compile Include="RevitModelQuality\Models\FileReferenceModel.cs" />
+    <Compile Include="RevitModelQuality\Models\GenericObjectModel.cs" />
+    <Compile Include="RevitModelQuality\Models\HeadClearenceModel.cs" />
+    <Compile Include="RevitModelQuality\Models\InternalClashModel.cs" />
+    <Compile Include="RevitModelQuality\Models\LevelsGridsModel.cs" />
+    <Compile Include="RevitModelQuality\Models\MidpSheetModel.cs" />
+    <Compile Include="RevitModelQuality\Models\ObjectGroupModel.cs" />
+    <Compile Include="RevitModelQuality\Models\InPlaceModel.cs" />
+    <Compile Include="RevitModelQuality\Models\SheetObjectModel.cs" />
+    <Compile Include="RevitModelQuality\Models\ProjectInfoModel.cs" />
+    <Compile Include="RevitModelQuality\Models\ProjectWarningModel.cs" />
+    <Compile Include="RevitModelQuality\Models\RoomDataModel.cs" />
+    <Compile Include="RevitModelQuality\Models\ServiceSystemModel.cs" />
+    <Compile Include="RevitModelQuality\Models\SpaceDataModel.cs" />
     <Compile Include="RevitModelQuality\Models\SharedParameterModel.cs" />
     <Compile Include="RevitModelQuality\Reports\MissingWorksetsReport.cs" />
     <Compile Include="RevitModelQuality\Models\MissingWorksetModel.cs" />
     <Compile Include="RevitModelQuality\Reports\ElementsWorksetsReport.cs" />
     <Compile Include="RevitModelQuality\Reports\ProjectBasePointReports.cs" />
+    <Compile Include="RevitModelQuality\Reports\ProjectInfoReport.cs" />
     <Compile Include="RevitModelQuality\Reports\SharedParameterReport.cs" />
   </ItemGroup>
   <ItemGroup>
