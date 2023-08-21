@@ -47,13 +47,14 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 
         public Task RunReportLogic()
         {
-            var _doc = DocumentObjects.Cast<IExpectedDocument>().FirstOrDefault(x => x.ModelGuid.Equals(ReportDocumnet.Guid.ToString()));
+            var expectedDocumnet = DocumentObjects.Cast<IExpectedDocument>()
+                .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocumnet.Guid.ToString()));
 
-            var _expectedWorksets = ExpectedObjects.Cast<IExpectedWorkset>();
+            var expectedWorksets = ExpectedObjects.Cast<IExpectedWorkset>();
             var _existingWorksets = ExistingObjects.Cast<IWorkset>();
             var _resultObjects = new List<IReportMissingWorkset>();
 
-            var distinctExpectedWorksets = _expectedWorksets.GroupBy(workset => workset.WorksetName).Select(group => group.First()).ToList();
+            var distinctExpectedWorksets = expectedWorksets.GroupBy(workset => workset.WorksetName).Select(group => group.First()).ToList();
             foreach (var distinctWorkset in distinctExpectedWorksets)
             {
                 if(_existingWorksets.Any(x=>x.Name.Equals(distinctWorkset.WorksetName)))
@@ -62,9 +63,9 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 
                     var report = new MissingWorksetModel()
                     {
-                        ModelName = _doc.ModelName,
-                        ModelGuid = _doc.ModelGuid,
-                        Disicpline = _doc.Disicpline,
+                        ModelName = expectedDocumnet.ModelName,
+                        ModelGuid = expectedDocumnet.ModelGuid,
+                        Disicpline = expectedDocumnet.Disicpline,
                         WorksetName = existingWorkset.Name,
                         ObjectId = existingWorkset.Id.ToString(),
                         IsFound = true,
@@ -77,9 +78,9 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 {
                     var report = new MissingWorksetModel()
                     {
-                        ModelName = _doc.ModelName,
-                        ModelGuid = _doc.ModelGuid,
-                        Disicpline = _doc.Disicpline,
+                        ModelName = expectedDocumnet.ModelName,
+                        ModelGuid = expectedDocumnet.ModelGuid,
+                        Disicpline = expectedDocumnet.Disicpline,
                         WorksetName = distinctWorkset.WorksetName,
                         ObjectId = string.Empty,
                         IsFound = false,

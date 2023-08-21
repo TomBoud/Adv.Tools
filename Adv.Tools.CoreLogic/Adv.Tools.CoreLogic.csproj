@@ -62,11 +62,13 @@
     <Compile Include="RevitModelQuality\Models\ServiceSystemModel.cs" />
     <Compile Include="RevitModelQuality\Models\SpaceDataModel.cs" />
     <Compile Include="RevitModelQuality\Models\SharedParameterModel.cs" />
+    <Compile Include="RevitModelQuality\Reports\LevelsGridsReport.cs" />
     <Compile Include="RevitModelQuality\Reports\MissingWorksetsReport.cs" />
     <Compile Include="RevitModelQuality\Models\MissingWorksetModel.cs" />
     <Compile Include="RevitModelQuality\Reports\ElementsWorksetsReport.cs" />
     <Compile Include="RevitModelQuality\Reports\ProjectBasePointReports.cs" />
     <Compile Include="RevitModelQuality\Reports\ProjectInfoReport.cs" />
+    <Compile Include="RevitModelQuality\Reports\ProjectWarningReport.cs" />
     <Compile Include="RevitModelQuality\Reports\SharedParameterReport.cs" />
   </ItemGroup>
   <ItemGroup>

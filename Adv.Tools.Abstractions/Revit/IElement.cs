@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Adv.Tools.Abstractions.Revit
 {
@@ -17,5 +18,9 @@ namespace Adv.Tools.Abstractions.Revit
 
         long ElementId { get; set; }
         long LevelId { get; set; }
+
+        bool IsMonitoring { get; set; }
+        long MonitoredId { get; set; }
+        IDocumnet MonitoredDoc { get; set; }
     }
 }

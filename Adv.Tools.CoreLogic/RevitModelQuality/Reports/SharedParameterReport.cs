@@ -41,30 +41,25 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public string GetReportScore()
         {
             double checkScore = 0;
-            int totalProperties = 0;
             //Cast results to valid list
-            var results = ResultObjects.Cast<IReportSharedParameter>();
-            if (results is null) { return string.Empty; }
+            var result = ResultObjects.Cast<IReportSharedParameter>().FirstOrDefault();
+            if (result is null) { return string.Empty; }
             //Get all bool properties
             PropertyInfo[] boolProperties = typeof(IReportSharedParameter).GetProperties()
-                .Where(prop => prop.PropertyType == typeof(bool)).ToArray();
-            //Check for bool properties existence
-            totalProperties = boolProperties.Length * results.Count();
-            if (totalProperties.Equals(0)) { return string.Empty; }
+                    .Where(prop => prop.PropertyType == typeof(bool)).ToArray();
+            //Check for bool properties existence (avoid zero division)
+            if (boolProperties.Length.Equals(0)) { return string.Empty; }
             //Get and count all positive (true) values
-            foreach (var report in results)
+            foreach (PropertyInfo property in boolProperties)
             {
-                foreach (PropertyInfo property in boolProperties)
+                bool propertyValue = (bool)property.GetValue(result);
+                if (propertyValue.Equals(true))
                 {
-                    bool propertyValue = (bool)property.GetValue(report);
-                    if (propertyValue.Equals(true))
-                    {
-                        checkScore++;
-                    }
+                    checkScore++;
                 }
             }
             //Calculate final score and return  in a string format
-            checkScore = 100 * checkScore / totalProperties;
+            checkScore = 100 * checkScore / boolProperties.Length;
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
 
