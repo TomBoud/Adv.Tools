@@ -38,25 +38,28 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public string GetReportScore()
         {
             double checkScore = 0;
-            //Cast results to valid list
-            var result = ResultObjects.Cast<IReportProjectBasePoint>().FirstOrDefault();
-            if (result is null) { return string.Empty; }
+            //Cast results property to a valid list
+            var results = ResultObjects.Cast<IReportProjectBasePoint>();
+            if (results is null) { return string.Empty; }
             //Get all bool properties
             PropertyInfo[] boolProperties = typeof(IReportProjectBasePoint).GetProperties()
                     .Where(prop => prop.PropertyType == typeof(bool)).ToArray();
             //Check for bool properties existence (avoid zero division)
             if (boolProperties.Length.Equals(0)) { return string.Empty; }
-            //Get and count all positive (true) values
-            foreach (PropertyInfo property in boolProperties)
+            //Count all positive (true) values for all the results
+            foreach (var result in results)
             {
-                bool propertyValue = (bool)property.GetValue(result);
-                if (propertyValue.Equals(true))
+                foreach (PropertyInfo property in boolProperties)
                 {
-                    checkScore++;
+                    bool propertyValue = (bool)property.GetValue(result);
+                    if (propertyValue.Equals(true))
+                    {
+                        checkScore++;
+                    }
                 }
             }
             //Calculate final score and return  in a string format
-            checkScore = 100 * checkScore / boolProperties.Length;
+            checkScore = 100 * checkScore / (boolProperties.Length * results.Count());
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
 

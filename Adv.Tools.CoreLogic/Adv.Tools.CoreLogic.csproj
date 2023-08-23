@@ -62,6 +62,7 @@
     <Compile Include="RevitModelQuality\Models\ServiceSystemModel.cs" />
     <Compile Include="RevitModelQuality\Models\SpaceDataModel.cs" />
     <Compile Include="RevitModelQuality\Models\SharedParameterModel.cs" />
+    <Compile Include="RevitModelQuality\Reports\FileReferenceReport.cs" />
     <Compile Include="RevitModelQuality\Reports\LevelsGridsReport.cs" />
     <Compile Include="RevitModelQuality\Reports\MissingWorksetsReport.cs" />
     <Compile Include="RevitModelQuality\Models\MissingWorksetModel.cs" />
