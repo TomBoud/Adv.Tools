@@ -2,12 +2,11 @@
 
 namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
 {
-    public class SheetObjectModel : IReportModelSheet
+    public class ReportModelSheet : IReportModelSheet
     {
         public int Id { get; set; }
         public string ModelName { get; set; }
         public string ModelGuid { get; set; }
-        public string Disicpline { get; set; }
         public string ProjBrowSheetName { get; set; }
         public string ProjBrowSheetNumber { get; set; }
         public string SheetTidpCodeValue { get; set; }
@@ -24,5 +23,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
         public bool HasSharedParamValues { get; set; }
         public bool HasScale { get; set; }
         public bool HasHebName { get; set; }
+        public string Discipline { get; set; }
     }
 }

@@ -68,11 +68,11 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 {
                     if (!allowedCategoryIds.Any(x => x.CategoryId.Equals(element.CategoryId)))
                     {
-                        var report = new ElementsWorksetModel()
+                        var report = new ReportElementsWorkset()
                         {
                             ModelName = _doc.ModelName,
                             ModelGuid = _doc.ModelGuid,
-                            Disicpline = _doc.Discipline,
+                            Discipline = _doc.Discipline,
                             ObjectCategory = element.CategoryName,
                             ObjectId = element.ElementId.ToString(),
                             ObjectName = element.Name,

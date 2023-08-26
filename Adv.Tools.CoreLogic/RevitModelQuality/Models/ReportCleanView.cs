@@ -2,7 +2,7 @@
 
 namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
 {
-    public class CleanViewModel : IReportCleanView
+    public class ReportCleanView : IReportCleanView
     {
         public int Id { get; set; }
         public string ModelName { get; set; }

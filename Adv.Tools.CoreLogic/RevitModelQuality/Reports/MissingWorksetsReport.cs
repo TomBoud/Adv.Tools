@@ -61,7 +61,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 {
                     var existingWorkset = _existingWorksets.FirstOrDefault(x => x.Name.Equals(distinctWorkset.WorksetName));
 
-                    var report = new MissingWorksetModel()
+                    var report = new ReportMissingWorkset()
                     {
                         ModelName = expectedDocumnet.ModelName,
                         ModelGuid = expectedDocumnet.ModelGuid,
@@ -76,7 +76,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 }
                 else
                 {
-                    var report = new MissingWorksetModel()
+                    var report = new ReportMissingWorkset()
                     {
                         ModelName = expectedDocumnet.ModelName,
                         ModelGuid = expectedDocumnet.ModelGuid,

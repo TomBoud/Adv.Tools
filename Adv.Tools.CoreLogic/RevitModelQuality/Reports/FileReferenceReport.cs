@@ -84,7 +84,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             {
                 var linkFileType = existingRevitLinks.FirstOrDefault(x => x.FileGuid.ToString().Equals(file.ModelGuid));
 
-                var report = new FileReferenceModel()
+                var report = new ReportFileReference()
                 {
                     ModelName = expectedDoc.ModelName,
                     Disicpline = expectedDoc.Disicpline,

@@ -83,7 +83,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             {
                 foreach (var element in docLevelsGrids)
                 {
-                    var report = new GridsMonitorModel()
+                    var report = new ReportGridsMonitor()
                     {
                         ModelName = expectedDocumnet.ModelName,
                         Discipline = expectedDocumnet.Discipline,

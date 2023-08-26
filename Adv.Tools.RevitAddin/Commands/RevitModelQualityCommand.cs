@@ -10,7 +10,7 @@ using System.Reflection;
 using Adv.Tools.Abstractions.Revit;
 using System.Threading.Tasks;
 using Adv.Tools.CoreLogic.RevitModelQuality;
-using Adv.Tools.RevitAddin.Services.RevitModelQuality;
+using Adv.Tools.RevitAddin.Handlers;
 using Adv.Tools.Abstractions.Database;
 using Adv.Tools.DataAccess.MySql;
 using Adv.Tools.CoreLogic.RevitModelQuality.Reports;
@@ -24,7 +24,7 @@ namespace Adv.Tools.RevitAddin.Commands
     /// Represents the RevitCmd class for executing a specific function in Autodesk Revit.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    public class RevitModelQuality : IExternalCommand
+    public class RevitModelQualityCommand : IExternalCommand
     {
         /// <summary>
         /// Main entrance to the class when called by the Revit.exe UI.
@@ -35,54 +35,47 @@ namespace Adv.Tools.RevitAddin.Commands
         /// <returns>The Result object.</returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            //Reffrence to Revit.exe application objects
+            //Reference to Revit.exe application objects
             var app = commandData.Application.Application;
             var doc = commandData.Application.ActiveUIDocument.Document;
-            var links = new List<Document>();
 
-            //Refrence to Adv.Tools.UI input objects
+            //Acquire the Revit models for which the reports to be executed
+            var links = new List<Document>();
+            foreach (Document linkedModel in app.Documents)
+            {
+                if (linkedModel.IsLinked) { links.Add(linkedModel); }
+            }
+
+            //Reference the Adv.Tools.UI input objects
             var reports = new List<IReportModelQuality>();
             reports.Add(new ElementsWorksetsReport()
             {
                  ReportDocument = new RevitDocument(doc)
             });
 
-            //Aquire the Revit models for which the reports to be excuted
-            foreach (Document linkedModel in app.Documents)
-            {
-                if (linkedModel.IsLinked)
-                {
-                    string guid = linkedModel.GetCloudModelPath().GetModelGUID().ToString();
-                    if(reports.Any(x=>x.ReportDocument.Guid.Equals(guid)))
-                    {
-                        links.Add(linkedModel);
-                    }
-                }
-            }
-
-            //Aquire the data needed for the reports logic
+            //Acquire the data needed for the reports logic
             foreach (var report in reports)
             {
-                var userExpectedData = new ModelQualityUserData(report, new MySqlDataAccess(Properties.DataAccess.Default.ProdDb));
-                var revitObjectsData = new ModelQualityRevitData(report, doc, userExpectedData.ExpectedObjects);
-                
-                report.ExistingObjects = revitObjectsData.ExistingObjects;
-                report.ExpectedObjects = userExpectedData.ExpectedObjects;
+                var document = links.FirstOrDefault(x => x.GetCloudModelPath().GetModelGUID().Equals(report.ReportDocument.Guid));
+                var databaseName = report.ReportDocument.ProjectId.ToString();
+
+                var dataHandler = new ModelQualityDataHandler(new MySqlDataAccess(Properties.DataAccess.Default.ProdDb), document, databaseName);
+                dataHandler.InitializeReportData(report);
             }
 
             //Run Reports Logic Algoritem
-            foreach(var item in reports)
+            foreach(var report in reports)
             {
-                item.RunReportBusinessLogic();
+                report.RunReportBusinessLogic();
             }
 
             //Save Results in the Database
             foreach (var report in reports)
             {
                 var dataAccess = new MySqlDataAccess(Properties.DataAccess.Default.ProdDb);
-                var reportResults = new ModelQualityResultsData(report, dataAccess);
+                //var reportResults = new ModelQualityResultsData(report, dataAccess);
 
-                reportResults.SaveResultsToDatabase();
+               // reportResults.SaveResultsToDatabase();
             }
 
             return Result.Succeeded;

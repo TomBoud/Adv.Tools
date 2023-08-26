@@ -67,7 +67,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 var documnetProperty = documnetProps.FirstOrDefault(x => x.Name.Equals(expectedProperty.Name));
                 if (expectedProperty is null) { continue; }
 
-                var report = new ProjectInfoModel()
+                var report = new ReportProjectInfo()
                 {
                     ModelName = expectedModel.ModelName,
                     ModelGuid = expectedModel.ModelGuid,

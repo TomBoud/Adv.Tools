@@ -12,7 +12,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
         public int Id { get; set; }
         public string ModelName { get; set; }
         public string ModelGuid { get; set; }
-        public string Disicpline { get; set; }
         public string LinkedEastWest { get; set; }
         public string LinkedNorthSouth { get; set; }
         public string LinkedElevation { get; set; }
@@ -31,5 +30,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
         public string IsCorrectHeb { get; set; }
         public string IsLocationHeb { get; set; }
         public string IsBasePointHeb { get; set; }
+        public string Discipline { get; set; }
     }
 }

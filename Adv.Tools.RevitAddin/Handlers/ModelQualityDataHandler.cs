@@ -1,78 +1,78 @@
-﻿using Adv.Tools.CoreLogic.RevitModelQuality;
+﻿using Adv.Tools.Abstractions;
+using Adv.Tools.Abstractions.Database;
+using Adv.Tools.Abstractions.Revit;
+using Adv.Tools.CoreLogic.RevitModelQuality;
+using Adv.Tools.CoreLogic.RevitModelQuality.Reports;
+using Adv.Tools.DataAccess.MySql.Models;
+using Adv.Tools.RevitAddin.Models;
+using Autodesk.Revit.DB;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
-using Adv.Tools.CoreLogic.RevitModelQuality.Reports;
-using Adv.Tools.RevitAddin.Models;
-using System.Collections;
-using Adv.Tools.Abstractions.Revit;
-using Adv.Tools.Abstractions.Database;
+using System.Windows.Shapes;
 
-namespace Adv.Tools.RevitAddin.Services.RevitModelQuality
+namespace Adv.Tools.RevitAddin.Handlers
 {
-    public class ModelQualityRevitData
+    public class ModelQualityDataHandler
     {
-
         private readonly Document _document;
-        private readonly IReportModelQuality _report;
-        private readonly IEnumerable _expected;
-        
-        public IEnumerable ExistingObjects { get => GetReportDataFromRevitModel(); }
+        private readonly IDbDataAccess _dbAccess;
+        private readonly string _databaseName;
 
-        public ModelQualityRevitData(IReportModelQuality report, Document document, IEnumerable expectedObjects)
+        public ModelQualityDataHandler(IDbDataAccess dbAccess, Document document, string databaseName)
         {
-            _report = report;
             _document = document;
-            _expected = expectedObjects;
+            _dbAccess = dbAccess;
+            _databaseName = databaseName;
         }
 
-        /// <summary>
-        /// Mapping function for data query based on the Report type
-        /// </summary>
-        public IEnumerable GetReportDataFromRevitModel()
+        public Task InitializeReportData(IReportModelQuality report)
         {
-            
-            if (_report is ElementsWorksetsReport)
+            if (report is ElementsWorksetsReport)
             {
-                return GetElementsByExpectedCategoryId();
+                report.ExpectedObjects = _dbAccess.LoadDataSelectAll<ExpectedWorkset>(_databaseName);
+                report.ExistingObjects = GetElementsByExpectedCategoryId(report.ExpectedObjects);
             }
-            if (_report is MissingWorksetsReport)
+            else if (report is MissingWorksetsReport)
             {
-                return GetUserCreatedWorksets();
+                report.ExpectedObjects = _dbAccess.LoadDataSelectAll<ExpectedWorkset>(_databaseName);
+                report.ExistingObjects = GetUserCreatedWorksets();
             }
-            if (_report is FileReferenceReport)
+            else if (report is FileReferenceReport)
             {
-                return GetRevitLinkTypes();
+                report.ExpectedObjects = Enumerable.Empty<object>();
+                report.ExistingObjects = GetRevitLinkTypes();
             }
-            if (_report is LevelsMonitorReport)
+            else if (report is LevelsMonitorReport)
             {
-                return GetLevelsAsElements();
+                report.ExpectedObjects = _dbAccess.LoadDataSelectAll<ExpectedLevelsGrids>(_databaseName);
+                report.ExistingObjects = GetLevelsAsElements();
             }
-            if (_report is GridsMonitorReport)
+            else if (report is GridsMonitorReport)
             {
-                return GetGridsAsElements();
+                report.ExpectedObjects = _dbAccess.LoadDataSelectAll<ExpectedLevelsGrids>(_databaseName);
+                report.ExistingObjects = GetGridsAsElements();
             }
-            if(_report is ProjectWarningReport)
+            else if (report is ProjectWarningReport)
             {
-                return GetDocumnetFailureMessages();
+                report.ExpectedObjects = Enumerable.Empty<object>();
+                report.ExistingObjects = GetDocumnetFailureMessages();
             }
 
-            return null;
+            return Task.CompletedTask;
         }
-       
+
+
         /// <summary>
         /// Get all the Elements which associated with the Allowed Category Ids of IExpectedWorkset
         /// </summary>
-        private IEnumerable<IElement> GetElementsByExpectedCategoryId()
+        private IEnumerable GetElementsByExpectedCategoryId(IEnumerable expectedObjects)
         {
             //Cast expected objects to the relevant context
-            var expectedWorksets = _expected.Cast<IExpectedWorkset>().ToList();
+            var expectedWorksets = expectedObjects.OfType<IExpectedWorkset>().ToList();
             //Filter workset which are not relevant for the document
             var documnetWorksets = expectedWorksets.Where(x => x.ModelGuid.Equals(_document.GetCloudModelPath().GetModelGUID().ToString()));
             //Get distinct list of Category Ids
@@ -88,12 +88,12 @@ namespace Adv.Tools.RevitAddin.Services.RevitModelQuality
             var multicategoryfilter = new ElementMulticategoryFilter(allowedCategories);
             var collection = collector.WherePasses(multicategoryfilter).WhereElementIsNotElementType().ToElements().ToArray();
             //Yield Return the elements
-            for(int i=0; i<collection.Length;i++)
+            for (int i = 0; i < collection.Length; i++)
             {
                 yield return new RevitElement(collection[i]);
             }
         }
-       
+
         /// <summary>
         /// Get all User defined worksets in the Revit Model
         /// </summary>
@@ -107,7 +107,7 @@ namespace Adv.Tools.RevitAddin.Services.RevitModelQuality
                 yield return new RevitWorkset(workset);
             }
         }
-      
+
         /// <summary>
         /// Get all RevitLinkType file References in the Revit Model
         /// </summary>
@@ -139,7 +139,7 @@ namespace Adv.Tools.RevitAddin.Services.RevitModelQuality
             }
 
         }
-        
+
         /// <summary>
         /// Get All Grids in the Revit Model
         /// </summary>
@@ -163,7 +163,7 @@ namespace Adv.Tools.RevitAddin.Services.RevitModelQuality
         {
             var warnings = _document.GetWarnings().ToList();
 
-            foreach(var warning in warnings)
+            foreach (var warning in warnings)
             {
                 yield return new RevitFailureMessage(warning);
             }

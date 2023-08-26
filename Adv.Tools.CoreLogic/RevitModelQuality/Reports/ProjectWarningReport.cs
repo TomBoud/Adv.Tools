@@ -56,7 +56,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
  
             foreach (var failure in documnetFailures)
             {
-                var report = new ProjectWarningModel()
+                var report = new ReportProjectWarning()
                 {
                     ModelName = expectedModel.ModelName,
                     Discipline = expectedModel.Discipline,

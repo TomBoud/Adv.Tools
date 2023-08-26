@@ -2,11 +2,10 @@
 
 namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
 {
-    public class MidpSheetModel : IReportMidpSheet
+    public class ReportMidpSheet : IReportMidpSheet
     {
         public string ModelName { get; set; }
         public string ModelGuid { get; set; }
-        public string Disicpline { get; set; }
         public string ProjBrowSheetName { get; set; }
         public string ProjBrowSheetNumber { get; set; }
         public string SheetRevDate { get; set; }
@@ -26,5 +25,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
         public string SheetCodeHeb { get; set; }
         public bool IsSheetTidp { get; set; }
         public string SheetTidpHeb { get; set; }
+        public string Discipline { get; set; }
     }
 }

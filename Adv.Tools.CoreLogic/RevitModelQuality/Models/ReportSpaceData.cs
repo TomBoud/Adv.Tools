@@ -2,12 +2,11 @@
 
 namespace Adv.Tools.DataAccess.MySql.Models
 {
-    public class SpaceDataModel : IReportSpaceData
+    public class ReportSpaceData : IReportSpaceData
     {
         public int Id { get; set; }
         public string ModelName { get; set; }
         public string ModelGuid { get; set; }
-        public string Disicpline { get; set; }
         public string SpaceName { get; set; }
         public string SpaceNumber { get; set; }
         public string RoomName { get; set; }
@@ -23,5 +22,6 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public bool HasDefaultName { get; set; }
         public bool HasName { get; set; }
         public bool HasNumber { get; set; }
+        public string Discipline { get; set; }
     }
 }

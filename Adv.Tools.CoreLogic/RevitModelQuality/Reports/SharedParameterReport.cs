@@ -77,7 +77,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 
             foreach (var param in _expectedSharedParams)
             {
-                var report = new SharedParameterModel()
+                var report = new ReportSharedParameter()
                 {
                     ModelName = param.ModelName,
                     Disicpline = param.Disicpline,

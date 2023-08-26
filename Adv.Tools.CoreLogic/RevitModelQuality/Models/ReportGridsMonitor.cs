@@ -8,7 +8,7 @@ using Adv.Tools.Abstractions.Database;
 
 namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
 {
-    public class GridsMonitorModel : IReportGridsMonitor
+    public class ReportGridsMonitor : IReportGridsMonitor
     {
         public int Id { get; set; }
         public string ModelName { get; set; }

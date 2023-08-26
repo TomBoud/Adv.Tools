@@ -3,7 +3,7 @@ using Adv.Tools.Abstractions.Database;
 
 namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
 {
-    public class InternalClashModel : IReportInternalClash
+    public class ReportInternalClash : IReportInternalClash
     {
         public int Id { get; set; }
         public string ModelName { get; set; }
