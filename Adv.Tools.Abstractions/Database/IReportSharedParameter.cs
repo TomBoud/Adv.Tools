@@ -2,7 +2,7 @@
 {
     public interface IReportSharedParameter
     {
-        string Disicpline { get; set; }
+        string Discipline { get; set; }
         string GUID { get; set; }
         int Id { get; set; }
         bool IsFound { get; set; }

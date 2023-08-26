@@ -7,7 +7,7 @@
         string BaseOffset { get; set; }
         string CeilingFinish { get; set; }
         string Department { get; set; }
-        string Disicpline { get; set; }
+        string Discipline { get; set; }
         string FloorFinish { get; set; }
         bool HasBaseFinish { get; set; }
         bool HasCeilingFinish { get; set; }

@@ -18,7 +18,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public string ReportName { get => nameof(ProjectWarningReport); set => ReportName = nameof(ProjectWarningReport); }
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
-        public IDocumnet ReportDocumnet { get; set; }
+        public IDocumnet ReportDocument { get; set; }
         public IEnumerable ExistingObjects { get; set; }
         public IEnumerable ExpectedObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
@@ -45,10 +45,10 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
 
-        public Task RunReportLogic()
+        public Task RunReportBusinessLogic()
         {
             var expectedModel = DocumentObjects.Cast<IExpectedDocument>()
-              .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocumnet.Guid.ToString()));
+              .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
 
             var documnetFailures = ExistingObjects.Cast<IFailureMessage>();
             var resultObjects = new List<IReportProjectWarning>();
@@ -59,7 +59,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 var report = new ProjectWarningModel()
                 {
                     ModelName = expectedModel.ModelName,
-                    Disicpline = expectedModel.Disicpline,
+                    Discipline = expectedModel.Discipline,
                     ModelGuid = expectedModel.ModelGuid,
                     Description = failure.Description,
                     Items = failure.ItemsCount.ToString(),

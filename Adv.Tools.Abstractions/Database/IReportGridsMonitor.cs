@@ -1,8 +1,8 @@
 ﻿namespace Adv.Tools.Abstractions.Database
 {
-    public interface IReportLevelsGrids
+    public interface IReportGridsMonitor
     {
-        string Disicpline { get; set; }
+        string Discipline { get; set; }
         int Id { get; set; }
         bool IsCopyMonitor { get; set; }
         string IsCopyMonitorHeb { get; set; }
@@ -13,6 +13,5 @@
         string ObjectId { get; set; }
         string ObjectName { get; set; }
         string ObjectOrigin { get; set; }
-        string ObjectType { get; set; }
     }
 }

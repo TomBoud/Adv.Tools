@@ -2,7 +2,7 @@
 {
     public interface IReportModelGroup
     {
-        string Disicpline { get; set; }
+        string Discipline { get; set; }
         string GroupedGroups { get; set; }
         string GroupedObjects { get; set; }
         int Id { get; set; }

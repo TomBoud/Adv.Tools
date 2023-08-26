@@ -8,10 +8,10 @@ namespace Adv.Tools.Abstractions.Database
     {
         string ModelName { get; set; }
         string ModelGuid { get; set; }
-        string Disicpline { get; set; }
+        string Discipline { get; set; }
         string LinkName { get; set; }
         string Status { get; set; }
-        string Reffrence { get; set; }
+        string Reference { get; set; }
         bool IsReffOk { get; set; }
         string IsReffOkHeb { get; set; }
         bool IsStatusOk { get; set; }

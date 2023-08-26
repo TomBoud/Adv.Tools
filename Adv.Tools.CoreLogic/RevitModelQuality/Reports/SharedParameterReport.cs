@@ -19,7 +19,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public string ReportName { get => nameof(SharedParameterReport); set => ReportName = nameof(SharedParameterReport); }
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
-        public IDocumnet ReportDocumnet { get; set; }
+        public IDocumnet ReportDocument { get; set; }
         public IEnumerable ExistingObjects { get; set; }
         public IEnumerable ExpectedObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
@@ -66,10 +66,10 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
 
-        public Task RunReportLogic()
+        public Task RunReportBusinessLogic()
         {
             var _doc = DocumentObjects.Cast<IExpectedDocument>()
-                .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocumnet.Guid.ToString()));
+                .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
 
             var _expectedSharedParams = ExpectedObjects.Cast<IExpectedSharedPara>();
             var _existingSharedParams = ExistingObjects.Cast<ISharedParameterElement>();

@@ -43,7 +43,7 @@ namespace Adv.Tools.RevitAddin.Services.RevitModelQuality
 
         private IEnumerable GetExpectedWorksetsFromMySql() 
         {
-            return _dbAccess.LoadDataSelectAllAsync<ExpectedWorkset>(_report.ReportDocumnet.ProjectId).Result;
+            return _dbAccess.LoadDataSelectAllAsync<ExpectedWorkset>(_report.ReportDocument.ProjectId).Result;
         }
 
     }

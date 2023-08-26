@@ -2,7 +2,7 @@
 {
     public interface IReportModelSheet
     {
-        string Disicpline { get; set; }
+        string Discipline { get; set; }
         bool HasHebName { get; set; }
         bool HasRevisionDate { get; set; }
         bool HasRevisionDescription { get; set; }
@@ -11,11 +11,11 @@
         bool HasSharedParamValues { get; set; }
         bool HasTitleBlock { get; set; }
         int Id { get; set; }
-        bool IsDeafultApprovedBy { get; set; }
-        bool IsDeafultCheckedBy { get; set; }
-        bool IsDeafultDrawnBy { get; set; }
-        bool IsDeafultName { get; set; }
-        bool IsDeafultNumber { get; set; }
+        bool IsDefaultApprovedBy { get; set; }
+        bool IsDefaultCheckedBy { get; set; }
+        bool IsDefaultDrawnBy { get; set; }
+        bool IsDefaultName { get; set; }
+        bool IsDefaultNumber { get; set; }
         bool IsDefaultDesignedBy { get; set; }
         string ModelGuid { get; set; }
         string ModelName { get; set; }

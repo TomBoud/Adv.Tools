@@ -9,7 +9,7 @@ namespace Adv.Tools.Abstractions.Database
         int Id { get; set; }
         string ModelName { get; set; }
         string ModelGuid { get; set; }
-        string Disicpline { get; set; }
+        string Discipline { get; set; }
         string EastWest { get; set; }
         string NorthSouth { get; set; }
         string Elevation { get; set; }

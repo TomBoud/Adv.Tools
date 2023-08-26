@@ -2,7 +2,7 @@
 {
     public interface IReportProjectBasePoint
     {
-        string Disicpline { get; set; }
+        string Discipline { get; set; }
         string ExpectedAngle { get; set; }
         string ExpectedEastWest { get; set; }
         string ExpectedElevation { get; set; }

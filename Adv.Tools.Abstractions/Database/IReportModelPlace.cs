@@ -2,7 +2,7 @@
 {
     public interface IReportModelPlace
     {
-        string Disicpline { get; set; }
+        string Discipline { get; set; }
         int Id { get; set; }
         string LevelName { get; set; }
         string ModelGuid { get; set; }

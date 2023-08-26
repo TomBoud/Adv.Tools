@@ -4,7 +4,7 @@ namespace Adv.Tools.Abstractions.Database
     public interface IReportMidpSheet
     {
         string DateHeb { get; set; }
-        string Disicpline { get; set; }
+        string Discipline { get; set; }
         string HebNameHeb { get; set; }
         bool IsDateOk { get; set; }
         bool IsHebNameOk { get; set; }

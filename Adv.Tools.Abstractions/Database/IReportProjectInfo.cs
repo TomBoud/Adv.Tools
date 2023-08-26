@@ -2,7 +2,7 @@
 {
     public interface IReportProjectInfo
     {
-        string Disicpline { get; set; }
+        string Discipline { get; set; }
         string ExpectedValue { get; set; }
         string InfoName { get; set; }
         string InfoValue { get; set; }

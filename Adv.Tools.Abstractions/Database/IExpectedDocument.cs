@@ -12,7 +12,7 @@ namespace Adv.Tools.Abstractions.Database
         string HubId { get; set; }
         string ProjectId { get; set; }
         string FolderId { get; set; }
-        string Disicpline { get; set; }
+        string Discipline { get; set; }
         string PositionSource { get; set; }
         string PositionSourceGuid { get; set; }
     }

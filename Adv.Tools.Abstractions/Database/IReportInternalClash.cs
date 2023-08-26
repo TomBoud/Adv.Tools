@@ -7,7 +7,7 @@
         string ClashElementId { get; set; }
         string ClashElementName { get; set; }
         string ClashLevelName { get; set; }
-        string Disicpline { get; set; }
+        string Discipline { get; set; }
         string ModelGuid { get; set; }
         string ModelName { get; set; }
         string SourceCategory { get; set; }

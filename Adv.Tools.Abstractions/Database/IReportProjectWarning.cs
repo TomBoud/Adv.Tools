@@ -3,7 +3,7 @@
     public interface IReportProjectWarning
     {
         string Description { get; set; }
-        string Disicpline { get; set; }
+        string Discipline { get; set; }
         int Id { get; set; }
         string Items { get; set; }
         string ModelGuid { get; set; }

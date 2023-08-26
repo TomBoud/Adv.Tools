@@ -44,7 +44,7 @@ namespace Adv.Tools.RevitAddin.Commands
             var reports = new List<IReportModelQuality>();
             reports.Add(new ElementsWorksetsReport()
             {
-                 ReportDocumnet = new RevitDocument(doc)
+                 ReportDocument = new RevitDocument(doc)
             });
 
             //Aquire the Revit models for which the reports to be excuted
@@ -53,7 +53,7 @@ namespace Adv.Tools.RevitAddin.Commands
                 if (linkedModel.IsLinked)
                 {
                     string guid = linkedModel.GetCloudModelPath().GetModelGUID().ToString();
-                    if(reports.Any(x=>x.ReportDocumnet.Guid.Equals(guid)))
+                    if(reports.Any(x=>x.ReportDocument.Guid.Equals(guid)))
                     {
                         links.Add(linkedModel);
                     }
@@ -73,7 +73,7 @@ namespace Adv.Tools.RevitAddin.Commands
             //Run Reports Logic Algoritem
             foreach(var item in reports)
             {
-                item.RunReportLogic();
+                item.RunReportBusinessLogic();
             }
 
             //Save Results in the Database

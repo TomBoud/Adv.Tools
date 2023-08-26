@@ -15,12 +15,12 @@ using System.Xml.Linq;
 
 namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 {
-    public class LevelsGridsReport : IReportModelQuality
+    public class GridsMonitorReport : IReportModelQuality
     {
-        public string ReportName { get => nameof(LevelsGridsReport); set => ReportName = nameof(LevelsGridsReport); }
+        public string ReportName { get => nameof(GridsMonitorReport); set => ReportName = nameof(GridsMonitorReport); }
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
-        public IDocumnet ReportDocumnet { get; set; }
+        public IDocumnet ReportDocument { get; set; }
         public IEnumerable ExistingObjects { get; set; }
         public IEnumerable ExpectedObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
@@ -43,10 +43,10 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         {
             double checkScore = 0;
             //Cast results property to a valid list
-            var results = ResultObjects.Cast<IReportLevelsGrids>();
+            var results = ResultObjects.Cast<IReportGridsMonitor>();
             if (results is null) { return string.Empty; }
             //Get all bool properties
-            PropertyInfo[] boolProperties = typeof(IReportLevelsGrids).GetProperties()
+            PropertyInfo[] boolProperties = typeof(IReportGridsMonitor).GetProperties()
                     .Where(prop => prop.PropertyType == typeof(bool)).ToArray();
             //Check for bool properties existence (avoid zero division)
             if (boolProperties.Length.Equals(0)) { return string.Empty; }
@@ -67,30 +67,29 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
 
-        public Task RunReportLogic()
+        public Task RunReportBusinessLogic()
         {
 
             var expectedDocumnet = DocumentObjects.Cast<IExpectedDocument>()
-               .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocumnet.Guid.ToString()));
+               .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
 
             var expectedLevelsGrids = ExpectedObjects.Cast<IExpectedLevelsGrids>()
-                .Where(x => x.ModelGuid.Equals(ReportDocumnet.Guid.ToString())).ToList();
+                .Where(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString())).ToList();
 
             var docLevelsGrids = ExistingObjects.Cast<IElement>();
-            var resultObjects = new List<IReportLevelsGrids>();
-            
+            var resultObjects = new List<IReportGridsMonitor>();
+
             foreach (var expectedLevelGrid in expectedLevelsGrids)
             {
                 foreach (var element in docLevelsGrids)
                 {
-                    var report = new LevelsGridsModel()
+                    var report = new GridsMonitorModel()
                     {
                         ModelName = expectedDocumnet.ModelName,
-                        Disicpline = expectedDocumnet.Disicpline,
+                        Discipline = expectedDocumnet.Discipline,
                         ModelGuid = expectedDocumnet.ModelGuid,
                         ObjectId = element?.ElementId.ToString() ?? string.Empty,
                         ObjectName = element?.Name ?? string.Empty,
-                        ObjectType = element?.CategoryName ?? string.Empty,
                         IsCopyMonitor = element.IsMonitoring,
                         IsCopyMonitorHeb = string.Empty,
                         IsOriginValid = false,

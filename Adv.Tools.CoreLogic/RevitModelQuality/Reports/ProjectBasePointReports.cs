@@ -16,7 +16,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public string ReportName { get => nameof(ProjectBasePointReports); set => ReportName = nameof(ProjectBasePointReports); }
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
-        public IDocumnet ReportDocumnet { get; set; }
+        public IDocumnet ReportDocument { get; set; }
         public IEnumerable ExistingObjects { get; set; }
         public IEnumerable ExpectedObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
@@ -63,12 +63,12 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
 
-        public Task RunReportLogic()
+        public Task RunReportBusinessLogic()
         {
             decimal ratio = 30.48M; // Conversion from native API feet standard to metric standard
             var _compareDocument = ExistingObjects.Cast<IDocumnet>().FirstOrDefault();
             var _expectedLocation = ExpectedObjects.Cast<IExpectedSiteLocation>()
-                .FirstOrDefault(x=>x.ModelGuid.Equals(ReportDocumnet.Guid.ToString()));
+                .FirstOrDefault(x=>x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
            
 
             var report = new ProjectBasePointReport()

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Adv.Tools.Abstractions;
 using Adv.Tools.Abstractions.Database;
 using Adv.Tools.Abstractions.Enums;
 using Adv.Tools.Abstractions.Revit;
@@ -18,12 +19,12 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public string ReportName { get => nameof(ElementsWorksetsReport); set => ReportName = nameof(ElementsWorksetsReport); }
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
-        public IDocumnet ReportDocumnet { get; set; }
+        public IDocumnet ReportDocument { get; set; }
         public IEnumerable ExistingObjects { get; set; }
         public IEnumerable ExpectedObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
         public IEnumerable ResultObjects { get; set; }
-        
+
         public DisciplineType[] GetDisciplines()
         {
             return new DisciplineType[]
@@ -48,14 +49,14 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 
         }
 
-        public Task RunReportLogic()
+        public Task RunReportBusinessLogic()
         {
 
             var _resultObjects = new List<IReportElementsWorkset>();
             var _expectedWorksets = ExpectedObjects.Cast<IExpectedWorkset>();
             var _elements = ExistingObjects.Cast<IElement>();
             var _doc = DocumentObjects.Cast<IExpectedDocument>()
-                .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocumnet.Guid.ToString()));
+                .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
 
             // Get Collection of the elements foreach workset if they should not be related to it
             foreach (var worksetName in _expectedWorksets.Select(x => x.WorksetName).Distinct().ToList())
@@ -71,7 +72,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                         {
                             ModelName = _doc.ModelName,
                             ModelGuid = _doc.ModelGuid,
-                            Disicpline = _doc.Disicpline,
+                            Disicpline = _doc.Discipline,
                             ObjectCategory = element.CategoryName,
                             ObjectId = element.ElementId.ToString(),
                             ObjectName = element.Name,

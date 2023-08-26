@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
+using Adv.Tools.Abstractions;
 using Adv.Tools.Abstractions.Database;
 using Adv.Tools.Abstractions.Enums;
 using Adv.Tools.Abstractions.Revit;
@@ -19,10 +20,10 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality
         IEnumerable ExistingObjects { get; set; }
         IEnumerable ExpectedObjects { get; set; }
         IEnumerable DocumentObjects { get; set; }
-        IDocumnet ReportDocumnet { get; set; }
+        IDocumnet ReportDocument { get; set; }
 
         string GetReportScore();
-        Task RunReportLogic();
+        Task RunReportBusinessLogic();
         DisciplineType[] GetDisciplines();
 
     }

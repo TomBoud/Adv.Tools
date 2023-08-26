@@ -9,7 +9,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
         public string Disicpline { get; set; }
         public string LinkName { get; set; }
         public string Status { get; set; }
-        public string Reffrence { get; set; }
+        public string Reference { get; set; }
         public bool IsReffOk { get; set; }
         public string IsReffOkHeb { get; set; }
         public bool IsStatusOk { get; set; }

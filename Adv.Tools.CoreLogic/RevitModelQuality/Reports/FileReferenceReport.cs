@@ -19,7 +19,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public string ReportName { get => nameof(FileReferenceReport); set => ReportName = nameof(FileReferenceReport); }
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
-        public IDocumnet ReportDocumnet { get; set; }
+        public IDocumnet ReportDocument { get; set; }
         public IEnumerable ExistingObjects { get; set; }
         public IEnumerable ExpectedObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
@@ -67,7 +67,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
 
-        public Task RunReportLogic()
+        public Task RunReportBusinessLogic()
         {
             //Initizlize the expected results List<T>
             var resultObjects = new List<IReportFileReference>();
@@ -75,10 +75,10 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             var existingRevitLinks = ExistingObjects.Cast<IRevitLinkType>();
             //Get all the revit files which should to be found as linked to the parent
             var expectedRevitLinks = ExpectedObjects.Cast<IExpectedDocument>()
-                .Where(x => x.ModelGuid.Equals(ReportDocumnet.Guid.ToString()) is false);
+                .Where(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()) is false);
             //Get the the reported model as a IExpectedDocument object
             var expectedDoc = DocumentObjects.Cast<IExpectedDocument>()
-                .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocumnet.Guid.ToString()));
+                .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
 
             foreach (var file in expectedRevitLinks)
             {
@@ -91,13 +91,13 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                     ModelGuid = expectedDoc.ModelGuid,
                     LinkName = linkFileType?.FileName ?? string.Empty,
                     Status = linkFileType?.LinkedFileStatus ?? string.Empty,
-                    Reffrence = linkFileType?.AttachmentType ?? string.Empty,
+                    Reference = linkFileType?.AttachmentType ?? string.Empty,
                 };
 
                 if (report.Status != "Loaded") { report.IsStatusOk = false; report.IsStatusOkHeb = "סטטוס לא תקין"; }
                 else { report.IsStatusOk = true; report.IsStatusOkHeb = "סטטוס תקין"; }
 
-                if (report.Reffrence != "Overlay") { report.IsReffOk = false; report.IsReffOkHeb = "ייחוס לא תקין"; }
+                if (report.Reference != "Overlay") { report.IsReffOk = false; report.IsReffOkHeb = "ייחוס לא תקין"; }
                 else { report.IsReffOk = true; report.IsReffOkHeb = "ייחוס תקין"; }
 
                 resultObjects.Add(report);

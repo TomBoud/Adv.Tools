@@ -4,7 +4,7 @@
     {
         string Area { get; set; }
         string BaseOffset { get; set; }
-        string Disicpline { get; set; }
+        string Discipline { get; set; }
         bool HasDefaultName { get; set; }
         bool HasName { get; set; }
         bool HasNumber { get; set; }

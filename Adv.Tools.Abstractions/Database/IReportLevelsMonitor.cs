@@ -1,17 +1,17 @@
 ﻿namespace Adv.Tools.Abstractions.Database
 {
-    public interface IReportServiceSystem
+    public interface IReportLevelsMonitor
     {
         string Discipline { get; set; }
         int Id { get; set; }
-        string IsValueAcceptable { get; set; }
-        string LevelName { get; set; }
+        bool IsCopyMonitor { get; set; }
+        string IsCopyMonitorHeb { get; set; }
+        bool IsOriginValid { get; set; }
+        string IsOriginValidHeb { get; set; }
         string ModelGuid { get; set; }
         string ModelName { get; set; }
         string ObjectId { get; set; }
         string ObjectName { get; set; }
-        string ObjectType { get; set; }
-        string ParameterName { get; set; }
-        string ParameterValue { get; set; }
+        string ObjectOrigin { get; set; }
     }
 }

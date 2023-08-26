@@ -1,13 +1,14 @@
-﻿using Adv.Tools.Abstractions.Database;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adv.Tools.DataAccess.MySql.Models
+using Adv.Tools.Abstractions.Database;
+
+namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
 {
-    public class ReportLevelsGrids : IReportLevelsMonitor
+    public class GridsMonitorModel : IReportGridsMonitor
     {
         public int Id { get; set; }
         public string ModelName { get; set; }
@@ -23,3 +24,4 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public string IsOriginValidHeb { get; set; }
     }
 }
+
