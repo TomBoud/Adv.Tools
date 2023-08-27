@@ -50,7 +50,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             var expectedModel = DocumentObjects.Cast<IExpectedDocument>()
                 .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
 
-            var documnetProps = ExistingObjects.Cast<IDocument>()
+            var documentProps = ExistingObjects.Cast<IDocument>()
                 .FirstOrDefault(x => x.Guid.Equals(ReportDocument.Guid))
                 .GetType().GetProperties().ToList();
 
@@ -62,7 +62,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 
             foreach (var expectedProperty in expectedInformation)
             {
-                var documnetProperty = documnetProps.FirstOrDefault(x => x.Name.Equals(expectedProperty.Name));
+                var documentProperty = documentProps.FirstOrDefault(x => x.Name.Equals(expectedProperty.Name));
                 if (expectedProperty is null) { continue; }
 
                 var report = new ProjectInfoModel()
@@ -71,8 +71,8 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                     ModelGuid = expectedModel.ModelGuid,
                     Discipline = expectedModel.Discipline,
                     ExpectedValue = (string)expectedProperty?.GetValue(expectedProperty.Name,null) ?? string.Empty,
-                    InfoName = documnetProperty.Name,
-                    InfoValue = (string)documnetProperty?.GetValue(documnetProperty.Name,null) ?? string.Empty,
+                    InfoName = documentProperty.Name,
+                    InfoValue = (string)documentProperty?.GetValue(documentProperty.Name,null) ?? string.Empty,
                 };
 
                 if (report.ExpectedValue.Equals(report.InfoValue))

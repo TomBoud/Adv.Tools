@@ -11,7 +11,7 @@ namespace Adv.Tools.DataAccess.MySql.Models
     {
         public string ModelName { get; set; }
         public string ModelGuid { get; set; }
-        public string Disicpline { get; set; }
+        public string Discipline { get; set; }
         public string InfoName { get; set; }
         public string InfoValue { get; set; }
         public string ExpectedValue { get; set; }

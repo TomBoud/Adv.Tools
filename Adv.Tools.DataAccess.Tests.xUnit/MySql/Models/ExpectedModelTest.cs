@@ -52,7 +52,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
                 new ExpectedModel()
                 {
                     ModelName = "testModel",
-                    Disicpline = "testDiscipline",
+                    Discipline = "testDiscipline",
                     FolderId = "testFolderId",
                     HubId = "testHubId",
                     ModelGuid = "testGuid",

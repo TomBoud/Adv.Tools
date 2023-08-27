@@ -16,7 +16,7 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public string HubId { get; set; }
         public string ProjectId { get; set; }
         public string FolderId { get; set; }
-        public string Disicpline { get; set; }
+        public string Discipline { get; set; }
         public string PositionSource { get; set; }
         public string PositionSourceGuid { get; set; }
 
@@ -30,7 +30,7 @@ namespace Adv.Tools.DataAccess.MySql.Models
                 $"`{nameof(HubId)}` text, " +
                 $"`{nameof(ProjectId)}` text, " +
                 $"`{nameof(FolderId)}` text, " +
-                $"`{nameof(Disicpline)}` text, " +
+                $"`{nameof(Discipline)}` text, " +
                 $"`{nameof(PositionSource)}` text, " +
                 $"`{nameof(PositionSourceGuid)}` text, " +
                 $"PRIMARY KEY (`{nameof(Id)}`))";

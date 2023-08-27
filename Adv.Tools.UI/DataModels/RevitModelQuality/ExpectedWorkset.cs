@@ -13,7 +13,7 @@ namespace Adv.Tools.UI.DataModels.RevitModelQuality
         public int Id { get; set; }
         public string ModelName { get; set; }
         public string ModelGuid { get; set; }
-        public string Disicpline { get; set; }
+        public string Discipline { get; set; }
         public string WorksetName { get; set; }
         public string CategoryName { get; set; }
         public string CategoryId { get; set; }

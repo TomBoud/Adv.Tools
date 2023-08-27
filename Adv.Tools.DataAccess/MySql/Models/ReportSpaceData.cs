@@ -12,7 +12,7 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public int Id { get; set; }
         public string ModelName { get; set; }
         public string ModelGuid { get; set; }
-        public string Disicpline { get; set; }
+        public string Discipline { get; set; }
         public string SpaceName { get; set; }
         public string SpaceNumber { get; set; }
         public string RoomName { get; set; }

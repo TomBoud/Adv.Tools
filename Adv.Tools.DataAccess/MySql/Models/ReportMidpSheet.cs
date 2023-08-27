@@ -11,7 +11,7 @@ namespace Adv.Tools.DataAccess.MySql.Models
     {
         public string ModelName { get; set; }
         public string ModelGuid { get; set; }
-        public string Disicpline { get; set; }
+        public string Discipline { get; set; }
         public string ProjBrowSheetName { get; set; }
         public string ProjBrowSheetNumber { get; set; }
         public string SheetRevDate { get; set; }

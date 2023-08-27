@@ -53,8 +53,12 @@
     <Compile Include="DataModels\RevitModelQuality\ExpectedWorkset.cs" />
     <Compile Include="DataModels\RevitModelQuality\ReportCheckScore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\ConfigLevelsModel.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\ConfigProjectInfoModel.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\ConfigWorksetModel.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\ConfigDocumentModel.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\IConfigWorksetRepo.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\IConfigDocumentRepo.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Presenters\ConfigExpectedMainPresenter.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Presenters\ConfigWorksetPresenter.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Repositories\ConfigWorksetRepo.cs" />

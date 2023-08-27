@@ -18,7 +18,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         private string catId;
         private string docName;
         private string docGuid;
-        private string docDisicpline;
+        private string docDiscipline;
         
         //Constructor
         public ConfigWorksetModel(IExpectedWorkset workset)
@@ -29,12 +29,12 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
             catId = workset.CategoryId;
             docName = workset.ModelName;
             docGuid = workset.ModelGuid;
-            docDisicpline = workset.Disicpline;
+            docDiscipline = workset.Discipline;
         }
 
         //Properties
-        [DisplayName("Report ID")]
-        [Required(ErrorMessage = "Revit Model Name is required")]
+        [DisplayName("ID")]
+        [Required(ErrorMessage = "Id is required")]
         public int Id { get => id; set => id = value; }
         
         [DisplayName("Model Name")]
@@ -45,9 +45,9 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         [Required(ErrorMessage = "Revit Model GUID is required")]
         public string ModelGuid { get => docGuid; set => docGuid = value; }
 
-        [DisplayName("Model Disicpline")]
-        [Required(ErrorMessage = "Revit Model Disicpline is required")]
-        public string Disicpline { get => docDisicpline; set => docDisicpline = value; }
+        [DisplayName("Model Discipline")]
+        [Required(ErrorMessage = "Revit Model Discipline is required")]
+        public string Discipline { get => docDiscipline; set => docDiscipline = value; }
 
         [DisplayName("Workset Name")]
         [Required(ErrorMessage = "Workset Name is required")]

@@ -12,7 +12,7 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public int Id { get; set; }
         public string ModelName { get; set; }
         public string ModelGuid { get; set; }
-        public string Disicpline { get; set; }
+        public string Discipline { get; set; }
         public string WorksetName { get; set; }
         public string ObjectId { get; set; }
         public bool IsFound { get; set; }
@@ -26,7 +26,7 @@ namespace Adv.Tools.DataAccess.MySql.Models
                $"(`{nameof(Id)}` int NOT NULL AUTO_INCREMENT, " +
                $"`{nameof(ModelName)}` text, " +
                $"`{nameof(ModelGuid)}` text, " +
-               $"`{nameof(Disicpline)}` text, " +
+               $"`{nameof(Discipline)}` text, " +
                $"`{nameof(WorksetName)}` text, " +
                $"`{nameof(ObjectId)}` text, " +
                $"`{nameof(IsFoundHeb)}` text, " +

@@ -54,11 +54,13 @@ namespace Adv.Tools.RevitAddin.Commands
             }
 
             //Reference the Adv.Tools.UI input objects
-            var reports = new List<IReportModelQuality>();
-            reports.Add(new ElementsWorksetsReport()
+            var reports = new List<IReportModelQuality>
             {
-                 ReportDocument = new RevitDocument(doc)
-            });
+                new ElementsWorksetsReport()
+                {
+                    ReportDocument = new RevitDocument(doc)
+                }
+            };
 
             //Acquire the data needed for the reports logic
             foreach (var report in reports)
@@ -69,7 +71,7 @@ namespace Adv.Tools.RevitAddin.Commands
                 tasks.Add(Task.Run(async () =>
                 {
                     await dataHandler.InitializeReportDataAsync(report);
-                }).ContinueWith(async _ =>
+                }).ContinueWith(async _=>
                 {
                     await dataHandler.ActivateReportBusinessLogicAsync(report);
                 }).ContinueWith(async _=> 
