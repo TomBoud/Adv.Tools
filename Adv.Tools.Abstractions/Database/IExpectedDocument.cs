@@ -14,6 +14,5 @@ namespace Adv.Tools.Abstractions.Database
         string FolderId { get; set; }
         string Discipline { get; set; }
         string PositionSource { get; set; }
-        string PositionSourceGuid { get; set; }
     }
 }

@@ -15,17 +15,19 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         public ConfigExpectedMainView()
         {
             InitializeComponent();
+
+            models_button.Click += delegate { ShowConfigDocumentsView?.Invoke(this, EventArgs.Empty); };
             worksets_button.Click += delegate { ShowConfigWorksetsView?.Invoke(this, EventArgs.Empty); };
+            
         }
 
         public event EventHandler ShowConfigDocumentsView;
         public event EventHandler ShowConfigWorksetsView;
-        public event EventHandler ShowConfigLevelsGridsView;
-        public event EventHandler ShowConfigMidpSheetsView;
+        public event EventHandler ShowConfigLevelsMonitorView;
+        public event EventHandler ShowConfigGridsMonitorView;
         public event EventHandler ShowConfigProjectInfoView;
         public event EventHandler ShowConfigSharedParaView;
         public event EventHandler ShowConfigSiteLocationView;
-        public event EventHandler ShowConfigTidpCodeView;
 
         public void RunUIApplication()
         {

@@ -30,11 +30,13 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.worksets_button = new System.Windows.Forms.Button();
+            this.models_button = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.models_button);
             this.panel1.Controls.Add(this.worksets_button);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -45,12 +47,22 @@
             // worksets_button
             // 
             this.worksets_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.worksets_button.Location = new System.Drawing.Point(3, 12);
+            this.worksets_button.Location = new System.Drawing.Point(3, 92);
             this.worksets_button.Name = "worksets_button";
             this.worksets_button.Size = new System.Drawing.Size(138, 34);
             this.worksets_button.TabIndex = 0;
             this.worksets_button.Text = "Worksets";
             this.worksets_button.UseVisualStyleBackColor = true;
+            // 
+            // models_button
+            // 
+            this.models_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.models_button.Location = new System.Drawing.Point(3, 52);
+            this.models_button.Name = "models_button";
+            this.models_button.Size = new System.Drawing.Size(138, 34);
+            this.models_button.TabIndex = 1;
+            this.models_button.Text = "Models";
+            this.models_button.UseVisualStyleBackColor = true;
             // 
             // ConfigExpectedMainView
             // 
@@ -70,5 +82,6 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button worksets_button;
+        private System.Windows.Forms.Button models_button;
     }
 }

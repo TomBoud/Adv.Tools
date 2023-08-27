@@ -16,7 +16,7 @@ namespace Adv.Tools.DevConsole
                 Console.WriteLine("ADV Tools Dev Console, please select a routine");
                 Console.Write(Environment.NewLine);
                 Console.WriteLine("1. Run Main Model Quality View UI");
-                Console.WriteLine("2. Exit");
+                Console.WriteLine("2. Run Config Report View UI");
                 Console.WriteLine("3. Exit");
                 Console.Write(Environment.NewLine);
                 Console.Write("Enter your choice: ");
@@ -29,7 +29,7 @@ namespace Adv.Tools.DevConsole
                         new RunMainModelQualityView();
                         break;
                     case 2:
-                        Console.WriteLine("Exiting the application. Goodbye!");
+                        new RunConfigReportView();
                         return;
                     case 3:
                         Console.WriteLine("Exiting the application. Goodbye!");

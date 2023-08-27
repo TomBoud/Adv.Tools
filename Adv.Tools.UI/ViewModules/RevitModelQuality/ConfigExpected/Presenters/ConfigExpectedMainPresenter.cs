@@ -24,7 +24,9 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
             this.databaseName = databaseName;
 
             //Subscribe delegated events to private methods
+            this.mainView.ShowConfigDocumentsView += ShowConfigDocumentsView;
             this.mainView.ShowConfigWorksetsView += ShowConfigWorksetsView;
+            
         }
 
         //Delegated Methods
@@ -33,6 +35,14 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
             IConfigWorksetView view = ConfigWorksetView.GetInstance((Form)mainView);
             IConfigWorksetsRepo repo = new ConfigWorksetRepo(dataAccess, databaseName);
             new ConfigWorksetPresenter(view, repo);
+            view.ShowThisUI();
+        }
+
+        private void ShowConfigDocumentsView(object sender, EventArgs e)
+        {
+            IConfigDocumentView view = ConfigDocumentView.GetInstance((Form)mainView);
+            IConfigDocumentsRepo repo = new ConfigDocumentRepo(dataAccess, databaseName);
+            new ConfigDocumentPresenter(view, repo);
             view.ShowThisUI();
         }
     }

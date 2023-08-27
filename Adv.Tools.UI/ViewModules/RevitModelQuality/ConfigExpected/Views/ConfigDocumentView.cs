@@ -10,13 +10,13 @@ using System.Windows.Forms;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 {
-    public partial class ConfigWorksetView : Form, IConfigWorksetView
+    public partial class ConfigDocumentView : Form, IConfigDocumentView
     {
         //Singleton
-        private static ConfigWorksetView instance;
+        private static ConfigDocumentView instance;
 
         //Constructor
-        public ConfigWorksetView()
+        public ConfigDocumentView()
         {
             InitializeComponent();
             AssociateAndRaiseViewEvents();
@@ -27,9 +27,11 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         public string ModelName { get; set; }
         public string ModelGuid { get; set; }
         public string Discipline { get; set; }
-        public string WorksetName { get; set; }
-        public string CategoryName { get; set; }
-        public string CategoryId { get; set; }
+        public string HubId { get; set; }
+        public string ProjectId { get; set; }
+        public string FolderId { get; set; }
+        public string PositionSource { get; set; }
+        public string PositionSourceGuid { get; set; }
 
 
         public string SearchValue { get => search_textBox.Text; set => search_textBox.Text = value; }
@@ -37,7 +39,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         public bool IsEnabled { get; set; }
         public bool IsSuccessful { get; set; }
         public string Message { get; set; }
-       
+        
 
         //Events
         public event EventHandler SearchEvent;
@@ -46,7 +48,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         public event EventHandler DeleteEvent;
 
         //Methods
-        public void SetPetListBindingSource(BindingSource itemsList)
+        public void SetBindingSource(BindingSource itemsList)
         {
             dataGridView.DataSource = itemsList;
         }
@@ -56,11 +58,11 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
             this.Show();
         }
 
-        public static ConfigWorksetView GetInstance(Form parentMdiContainer)
+        public static ConfigDocumentView GetInstance(Form parentMdiContainer)
         {
-            if(instance is null || instance.IsDisposed)
+            if (instance is null || instance.IsDisposed)
             {
-                instance = new ConfigWorksetView();
+                instance = new ConfigDocumentView();
                 instance.MdiParent = parentMdiContainer;
                 instance.FormBorderStyle = FormBorderStyle.None;
                 instance.Dock = DockStyle.Fill;

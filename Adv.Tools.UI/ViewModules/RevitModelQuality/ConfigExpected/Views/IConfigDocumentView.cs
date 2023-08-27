@@ -7,16 +7,16 @@ using System.Windows.Forms;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 {
-    public interface IConfigWorksetView
+    public interface IConfigDocumentView 
     {
-        //Properties - Fields
         int Id { get; set; }
         string ModelName { get; set; }
         string ModelGuid { get; set; }
         string Discipline { get; set; }
-        string WorksetName { get; set; }
-        string CategoryName { get; set; }
-        string CategoryId { get; set; }
+        string HubId { get; set; }
+        string ProjectId { get; set; }
+        string FolderId { get; set; }
+        string PositionSource { get; set; }
 
         string SearchValue { get; set; }
         bool IsEdit { get; set; }
@@ -30,7 +30,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         event EventHandler DeleteEvent;
 
         //Methods
-        void SetPetListBindingSource(BindingSource reportsList);
+        void SetBindingSource(BindingSource bindingList);
 
         void ShowThisUI();
     }

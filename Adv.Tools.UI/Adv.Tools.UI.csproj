@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModels\RevitModelQuality\ExpectedDocument.cs" />
     <Compile Include="DataModels\RevitModelQuality\ExpectedWorkset.cs" />
     <Compile Include="DataModels\RevitModelQuality\ReportCheckScore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,9 +68,17 @@
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\IConfigSharedParamsRepo.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\IConfigWorksetsRepo.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\IConfigDocumentsRepo.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Presenters\ConfigDocumentPresenter.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Presenters\ConfigExpectedMainPresenter.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Presenters\ConfigWorksetPresenter.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Repositories\ConfigDocumentRepo.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Repositories\ConfigWorksetRepo.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigDocumentView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigDocumentView.Designer.cs">
+      <DependentUpon>ConfigDocumentView.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigExpectedMainView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +91,7 @@
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigWorksetView.Designer.cs">
       <DependentUpon>ConfigWorksetView.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\IConfigDocumentView.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\IConfigExpectedMainView.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\IConfigWorksetView.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigReports\Models\ConfigReportModel.cs" />
@@ -104,6 +114,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigDocumentView.resx">
+      <DependentUpon>ConfigDocumentView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigExpectedMainView.resx">
       <DependentUpon>ConfigExpectedMainView.cs</DependentUpon>
     </EmbeddedResource>

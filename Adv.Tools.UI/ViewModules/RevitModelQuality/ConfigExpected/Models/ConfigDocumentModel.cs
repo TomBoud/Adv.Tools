@@ -20,20 +20,18 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         private string projectId;
         private string folderId;
         private string positionSource;
-        private string positionSourceGuid;
 
         //Constructor
         public ConfigDocumentModel(IExpectedDocument document)
         {
-            document.Id = id;
-            document.ModelName = modelName;
-            document.ModelGuid = modelGuid;
-            document.Discipline = discipline;
-            document.HubId = hubId;
-            document.ProjectId = projectId;
-            document.FolderId = folderId;
-            document.PositionSource = positionSource;
-            document.PositionSourceGuid = positionSourceGuid;
+            id = document.Id;
+            modelName = document.ModelName;
+            modelGuid = document.ModelGuid;
+            discipline = document.Discipline;
+            hubId = document.HubId;
+            projectId = document.ProjectId;
+            folderId = document.FolderId;
+            positionSource = document.PositionSource;
         }
 
         //Properties
@@ -61,8 +59,5 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 
         [DisplayName("URS Name")]
         public string PositionSource { get => positionSource; set => positionSource = value; }
-
-        [DisplayName("URS Guid")]
-        public string PositionSourceGuid { get => positionSourceGuid; set => positionSourceGuid = value; }
     }
 }

@@ -11,7 +11,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         void Add(ConfigDocumentModel model);
         void Edit(ConfigDocumentModel model);
         void Delete(int id);
-        IEnumerable<ConfigDocumentModel> GetAllWorksets();
+        IEnumerable<ConfigDocumentModel> GetAllDocuments();
         IEnumerable<ConfigDocumentModel> GetByValue(string value);
     }
 }

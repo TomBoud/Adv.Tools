@@ -1,6 +1,6 @@
 ﻿namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 {
-    partial class ConfigWorksetView
+    partial class ConfigDocumentView
     {
         /// <summary>
         /// Required designer variable.
@@ -32,14 +32,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.save_button = new System.Windows.Forms.Button();
+            this.default_button = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.search_button = new System.Windows.Forms.Button();
             this.search_textBox = new System.Windows.Forms.TextBox();
             this.import_button = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.export_button = new System.Windows.Forms.Button();
-            this.default_button = new System.Windows.Forms.Button();
-            this.save_button = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -61,9 +61,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(4, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(183, 20);
+            this.label1.Size = new System.Drawing.Size(167, 20);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Worksets Configurations";
+            this.label1.Text = "Models Configurations";
             // 
             // tabControl1
             // 
@@ -92,6 +92,26 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Active Settings";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // save_button
+            // 
+            this.save_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.save_button.Location = new System.Drawing.Point(782, 395);
+            this.save_button.Name = "save_button";
+            this.save_button.Size = new System.Drawing.Size(175, 40);
+            this.save_button.TabIndex = 5;
+            this.save_button.Text = "Save";
+            this.save_button.UseVisualStyleBackColor = true;
+            // 
+            // default_button
+            // 
+            this.default_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.default_button.Location = new System.Drawing.Point(782, 180);
+            this.default_button.Name = "default_button";
+            this.default_button.Size = new System.Drawing.Size(175, 40);
+            this.default_button.TabIndex = 4;
+            this.default_button.Text = "Restore Default";
+            this.default_button.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -153,27 +173,7 @@
             this.export_button.Text = "Export Data";
             this.export_button.UseVisualStyleBackColor = true;
             // 
-            // default_button
-            // 
-            this.default_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.default_button.Location = new System.Drawing.Point(782, 180);
-            this.default_button.Name = "default_button";
-            this.default_button.Size = new System.Drawing.Size(175, 40);
-            this.default_button.TabIndex = 4;
-            this.default_button.Text = "Restore Default";
-            this.default_button.UseVisualStyleBackColor = true;
-            // 
-            // save_button
-            // 
-            this.save_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.save_button.Location = new System.Drawing.Point(782, 395);
-            this.save_button.Name = "save_button";
-            this.save_button.Size = new System.Drawing.Size(175, 40);
-            this.save_button.TabIndex = 5;
-            this.save_button.Text = "Save";
-            this.save_button.UseVisualStyleBackColor = true;
-            // 
-            // ConfigWorksetView
+            // ConfigDocumentView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -182,8 +182,8 @@
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "ConfigWorksetView";
-            this.Text = "ConfigWorksetView";
+            this.Name = "ConfigDocumentView";
+            this.Text = "ConfigDocumentView";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
