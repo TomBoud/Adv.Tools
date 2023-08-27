@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 {
-    public interface IConfigWorksetRepo
+    public interface IConfigWorksetsRepo
     {
         void Add(ConfigWorksetModel model);
         void Edit(ConfigWorksetModel model);

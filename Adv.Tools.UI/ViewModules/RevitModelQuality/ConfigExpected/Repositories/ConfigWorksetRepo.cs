@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Repositories
 {
-    public class ConfigWorksetRepo : IConfigWorksetRepo
+    public class ConfigWorksetRepo : IConfigWorksetsRepo
     {
         private readonly IDbDataAccess _dataAccess;
         private readonly string _databaseName;

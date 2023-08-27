@@ -15,12 +15,12 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
     {
         //Fields
         private IConfigWorksetView view;
-        private IConfigWorksetRepo reposetory;
+        private IConfigWorksetsRepo reposetory;
         private BindingSource reportsSource;
         private IEnumerable<ConfigWorksetModel> reportsList;
 
         //Constructor
-        public ConfigWorksetPresenter(IConfigWorksetView view, IConfigWorksetRepo repo)
+        public ConfigWorksetPresenter(IConfigWorksetView view, IConfigWorksetsRepo repo)
         {
             //Construct the presenter
             this.reportsSource = new BindingSource();

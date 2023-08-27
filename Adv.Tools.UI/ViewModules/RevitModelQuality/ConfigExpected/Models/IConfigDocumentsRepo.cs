@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 {
-    public interface IConfigDocumentRepo
+    public interface IConfigDocumentsRepo
     {
         void Add(ConfigDocumentModel model);
         void Edit(ConfigDocumentModel model);

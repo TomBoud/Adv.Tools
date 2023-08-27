@@ -31,7 +31,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
         private void ShowConfigWorksetsView(object sender, EventArgs e)
         {
             IConfigWorksetView view = ConfigWorksetView.GetInstance((Form)mainView);
-            IConfigWorksetRepo repo = new ConfigWorksetRepo(dataAccess, databaseName);
+            IConfigWorksetsRepo repo = new ConfigWorksetRepo(dataAccess, databaseName);
             new ConfigWorksetPresenter(view, repo);
             view.ShowThisUI();
         }

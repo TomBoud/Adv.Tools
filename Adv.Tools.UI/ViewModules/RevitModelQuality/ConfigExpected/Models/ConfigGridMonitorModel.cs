@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 {
-    public class ConfigLevelsModel : IExpectedLevelsMonitor
+    public class ConfigGridMonitorModel : IExpectedGridsMonitor
     {
         private int id;
         private string modelName;
@@ -18,14 +18,14 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         private string sourceModelName;
         private string sourceModelGuid;
 
-        public ConfigLevelsModel(IExpectedLevelsMonitor levelMonitor)
+        public ConfigGridMonitorModel(IExpectedGridsMonitor gridMonitor)
         {
-            levelMonitor.Id = id;
-            levelMonitor.ModelName = modelName;
-            levelMonitor.ModelGuid = modelGuid;
-            levelMonitor.Discipline = discipline;
-            levelMonitor.SourceModelName = sourceModelName;
-            levelMonitor.SourceModelGuid = sourceModelGuid;
+            gridMonitor.Id = id;
+            gridMonitor.ModelName = modelName;
+            gridMonitor.ModelGuid = modelGuid;
+            gridMonitor.Discipline = discipline;
+            gridMonitor.SourceModelName = sourceModelName;
+            gridMonitor.SourceModelGuid = sourceModelGuid;
         }
 
         [DisplayName("ID")]

@@ -10,12 +10,11 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
     {
         event EventHandler ShowConfigDocumentsView;
         event EventHandler ShowConfigWorksetsView;
-        event EventHandler ShowConfigLevelsGridsView;
-        event EventHandler ShowConfigMidpSheetsView;
+        event EventHandler ShowConfigLevelsMonitorView;
+        event EventHandler ShowConfigGridsMonitorView;
         event EventHandler ShowConfigProjectInfoView;
         event EventHandler ShowConfigSharedParaView;
         event EventHandler ShowConfigSiteLocationView;
-        event EventHandler ShowConfigTidpCodeView;
 
         void RunUIApplication();
     }
