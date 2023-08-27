@@ -18,7 +18,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public string ReportName { get => nameof(ProjectInfoReport); set => ReportName = nameof(ProjectInfoReport); }
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
-        public IDocumnet ReportDocument { get; set; }
+        public IDocument ReportDocument { get; set; }
         public IEnumerable ExistingObjects { get; set; }
         public IEnumerable ExpectedObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
@@ -36,7 +36,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 DisciplineType.Landscape,
             };
         }
-
         public string GetReportScore()
         {
             double totalObjects = ResultObjects.Cast<IReportProjectInfo>().Count();
@@ -46,13 +45,12 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
-
-        public Task RunReportBusinessLogic()
+        public void RunReportBusinessLogic()
         {
             var expectedModel = DocumentObjects.Cast<IExpectedDocument>()
                 .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
 
-            var documnetProps = ExistingObjects.Cast<IDocumnet>()
+            var documnetProps = ExistingObjects.Cast<IDocument>()
                 .FirstOrDefault(x => x.Guid.Equals(ReportDocument.Guid))
                 .GetType().GetProperties().ToList();
 
@@ -67,11 +65,11 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 var documnetProperty = documnetProps.FirstOrDefault(x => x.Name.Equals(expectedProperty.Name));
                 if (expectedProperty is null) { continue; }
 
-                var report = new ReportProjectInfo()
+                var report = new ProjectInfoModel()
                 {
                     ModelName = expectedModel.ModelName,
                     ModelGuid = expectedModel.ModelGuid,
-                    Disicpline = expectedModel.Disicpline,
+                    Discipline = expectedModel.Discipline,
                     ExpectedValue = (string)expectedProperty?.GetValue(expectedProperty.Name,null) ?? string.Empty,
                     InfoName = documnetProperty.Name,
                     InfoValue = (string)documnetProperty?.GetValue(documnetProperty.Name,null) ?? string.Empty,
@@ -92,7 +90,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             }
 
             ResultObjects = _resultObjects;
-            return Task.CompletedTask;
         }
     }
 }

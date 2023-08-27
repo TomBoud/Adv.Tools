@@ -4,13 +4,12 @@ using System.Text;
 
 namespace Adv.Tools.Abstractions.Database
 {
-    public interface IExpectedLevelsGrids
+    public interface IExpectedLevelsMonitor
     {
         int Id { get; set; }
         string ModelName { get; set; }
         string ModelGuid { get; set; }
         string Discipline { get; set; }
-        string Category { get; set; }
         string SourceModelName { get; set; }
         string SourceModelGuid { get; set; }
     }

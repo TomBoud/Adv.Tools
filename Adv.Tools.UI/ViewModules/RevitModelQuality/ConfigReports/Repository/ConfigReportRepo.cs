@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Adv.Tools.Abstractions;
 using Adv.Tools.Abstractions.Database;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Models;
 using Adv.Tools.UI.DataModels.RevitModelQuality;
 using System.Text.RegularExpressions;
+using Adv.Tools.Abstractions.Common;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Repository
 {

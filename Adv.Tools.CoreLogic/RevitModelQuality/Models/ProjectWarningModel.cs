@@ -2,7 +2,7 @@
 
 namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
 {
-    public class ReportProjectWarning : IReportProjectWarning
+    public class ProjectWarningModel : IReportProjectWarning
     {
         public int Id { get; set; }
         public string ModelName { get; set; }

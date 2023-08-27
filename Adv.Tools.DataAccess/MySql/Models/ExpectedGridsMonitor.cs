@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.DataAccess.MySql.Models
 {
-    public class ExpectedLevelsGrids : IExpectedLevelsGrids
+    public class ExpectedGridsMonitor : IExpectedGridsMonitor
     {
         public int Id { get; set; }
         public string ModelName { get; set; }
         public string ModelGuid { get; set; }
         public string Discipline { get; set; }
-        public string Category { get; set; }
         public string SourceModelName { get; set; }
         public string SourceModelGuid { get; set; }
     }

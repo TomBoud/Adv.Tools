@@ -7,7 +7,7 @@ using Adv.Tools.Abstractions.Database;
 
 namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
 {
-    public class ProjectBasePointReport : IReportProjectBasePoint
+    public class ProjectBasePointModel : IReportProjectBasePoint
     {
         public int Id { get; set; }
         public string ModelName { get; set; }

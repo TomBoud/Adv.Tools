@@ -2,7 +2,7 @@
 
 namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
 {
-    public class ReportFileReference : IReportFileReference
+    public class FileReferenceModel : IReportFileReference
     {
         public string ModelName { get; set; }   
         public string ModelGuid { get; set; }

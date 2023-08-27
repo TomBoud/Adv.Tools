@@ -7,17 +7,14 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.DataAccess.MySql.Models
 {
-    public class ReportCleanView : IReportCleanView
+    public class ExpectedLevelsMonitor : IExpectedLevelsMonitor
     {
         public int Id { get; set; }
         public string ModelName { get; set; }
         public string ModelGuid { get; set; }
-        public string ViewName { get; set; }
-        public string ObjectId { get; set; }
-        public string ViewType { get; set; }
-        public bool IsFound { get; set; }
-        public string IsFoundHeb { get; set; }
-        public bool HasAnnotations { get; set; }
         public string Discipline { get; set; }
+        public string Category { get; set; }
+        public string SourceModelName { get; set; }
+        public string SourceModelGuid { get; set; }
     }
 }

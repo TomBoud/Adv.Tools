@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace Adv.Tools.RevitAddin.Models
 {
-    public class RevitDocument : IDocumnet
+    public class RevitDocument : IDocument
     {
         private readonly Document _document;
 
@@ -19,10 +19,11 @@ namespace Adv.Tools.RevitAddin.Models
         }
 
         #region Public Properties
-        //Documnet Identity
+        //Document Identity
         public string Title { get => _document.Title; set => Title = value; }
         public Guid  Guid { get => _document.GetCloudModelPath().GetModelGUID(); set => Guid = value; }
-        public string ProjectId { get => GetDocumentProjectGuidAsValidDbName(); set => ProjectId = value; }
+        public Guid ProjectGuid { get => _document.GetCloudModelPath().GetProjectGUID(); set => ProjectGuid = value; }
+        public string DbProjectId { get => GetDocumentProjectGuidAsValidDbName(); set => DbProjectId = value; }
 
         //Project Position
         public double EastWest { get => _document.ActiveProjectLocation.GetProjectPosition(XYZ.Zero).EastWest; set => EastWest = value; }

@@ -9,8 +9,8 @@ using Dapper;
 using MySql.Data.MySqlClient;
 using Adv.Tools.DataAccess.MySql.Models;
 using System.Reflection;
-using Adv.Tools.Abstractions;
 using System.Threading;
+using Adv.Tools.Abstractions.Common;
 
 namespace Adv.Tools.DataAccess.MySql
 {
@@ -23,6 +23,7 @@ namespace Adv.Tools.DataAccess.MySql
             _connectionString = connectionString;
         }
 
+        //Load
         public async Task<List<T>> LoadDataAsync<T, U>(string sqlQuery, U parameters)
         {
             using (IDbConnection connection = new MySqlConnection(_connectionString))
@@ -31,7 +32,6 @@ namespace Adv.Tools.DataAccess.MySql
                 return rows.ToList();
             }
         }
-
         public List<T> LoadData<T, U>(string sqlQuery, U parameters)
         {
             using (IDbConnection connection = new MySqlConnection(_connectionString))
@@ -40,7 +40,6 @@ namespace Adv.Tools.DataAccess.MySql
                 return rows.ToList();
             }
         }
-
         public List<T> LoadDataSelectAll<T>(string databaseName)
         {
             string sqlQuery = $"SELECT * FROM {databaseName}.{typeof(T).Name}";
@@ -54,7 +53,6 @@ namespace Adv.Tools.DataAccess.MySql
                 throw ex;
             }
         }
-
         public async Task<List<T>> LoadDataSelectAllAsync<T>(string databaseName)
         {
             string sqlQuery = $"SELECT * FROM {databaseName}.{typeof(T).Name}";
@@ -69,6 +67,7 @@ namespace Adv.Tools.DataAccess.MySql
             }
         }
 
+        //Save
         public async Task SaveData<T>(string sqlQuery, T parameters)
         {
             try
@@ -83,7 +82,7 @@ namespace Adv.Tools.DataAccess.MySql
                 throw ex;
             }
         }
-        public async Task SaveDataByPropertiesMappping<T>(string databaseName, List<T> data)
+        public async Task SaveDataByPropertiesMapping<T>(string databaseName, List<T> data)
         {
             PropertyInfo[] props = typeof(T).GetProperties();
 
@@ -101,31 +100,27 @@ namespace Adv.Tools.DataAccess.MySql
                 throw ex;
             }
         }
-
-        public async Task UpdateAsync(List<ExpectedModel> expectedModels)
+        public async Task SaveByInsertUpdateOnDuplicateKeysAsync<T>(List<T> data, T parameters)
         {
-            if (expectedModels is null || expectedModels.Count == 0)
-                return;
-
-            string updateQuery =
-                //$"UPDATE {_databaseName}.{_tableName} " +
-                $"SET {nameof(ExpectedModel.ModelName)} = @{nameof(ExpectedModel.ModelName)} " +
-                $"WHERE {nameof(ExpectedModel.Id)} = @{nameof(ExpectedModel.Id)}";
-
-            // Create a parameter object that contains all the values
-            var parameters = expectedModels.Select(model => new { model.ModelName, model.Id });
-
-            try
+            using (IDbConnection dbConnection = new MySqlConnection(_connectionString))
             {
-                //await _dataAccess.SaveData(updateQuery, parameters);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+                var properties = typeof(T).GetProperties();
 
+                string tableName = typeof(T).Name;
+                string columns = string.Join(", ", properties.Select(p => p.Name));
+                string parametersPlaceholder = string.Join(", ", properties.Select(p => "@" + p.Name));
+                string updateAssignments = string.Join(", ", properties
+                    .Where(p => !p.GetValue(parameters).Equals(default(T)) && p.GetValue(parameters) != null)
+                    .Select(p => p.Name + " = VALUES(" + p.Name + ")"));
+
+                string query = $"INSERT INTO {tableName} ({columns}) VALUES ({parametersPlaceholder}) " +
+                               $"ON DUPLICATE KEY UPDATE {updateAssignments}";
+
+                await dbConnection.ExecuteAsync(query, data);
+            }
         }
 
+        //Delete
         public async Task DeleteData<T, U>(string sqlQuery, U parameters)
         {
             using (IDbConnection connection = new MySqlConnection(_connectionString))
@@ -159,7 +154,8 @@ namespace Adv.Tools.DataAccess.MySql
                 throw ex;
             }
         }
-       
+
+        //Execute
         public async Task<int> ExecuteSqlQueryAsync(string sqlQuery)
         {
             try
@@ -197,5 +193,7 @@ namespace Adv.Tools.DataAccess.MySql
                 }
             }
         }
+
+        
     }
 }

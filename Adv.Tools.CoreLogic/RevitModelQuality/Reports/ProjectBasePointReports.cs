@@ -16,7 +16,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public string ReportName { get => nameof(ProjectBasePointReports); set => ReportName = nameof(ProjectBasePointReports); }
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
-        public IDocumnet ReportDocument { get; set; }
+        public IDocument ReportDocument { get; set; }
         public IEnumerable ExistingObjects { get; set; }
         public IEnumerable ExpectedObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
@@ -34,7 +34,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 DisciplineType.Landscape,
             };
         }
-
         public string GetReportScore()
         {
             double checkScore = 0;
@@ -62,19 +61,18 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             checkScore = 100 * checkScore / (boolProperties.Length * results.Count());
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
-
-        public Task RunReportBusinessLogic()
+        public void RunReportBusinessLogic()
         {
             decimal ratio = 30.48M; // Conversion from native API feet standard to metric standard
-            var _compareDocument = ExistingObjects.Cast<IDocumnet>().FirstOrDefault();
+            var _compareDocument = ExistingObjects.Cast<IDocument>().FirstOrDefault();
             var _expectedLocation = ExpectedObjects.Cast<IExpectedSiteLocation>()
                 .FirstOrDefault(x=>x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
            
 
-            var report = new ProjectBasePointReport()
+            var report = new ProjectBasePointModel()
             {
                 ModelName = _expectedLocation.ModelName,
-                Disicpline = _expectedLocation.Disicpline,
+                Discipline = _expectedLocation.Discipline,
                 ModelGuid = _expectedLocation.ModelGuid,
 
                 ExpectedEastWest = (Convert.ToDecimal(_expectedLocation.EastWest) * ratio).ToString("0.00"),
@@ -104,8 +102,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             else { report.IsCorrect = true; report.IsCorrectHeb = "קורדינטות תקינות"; }
 
             ResultObjects = new List<IReportProjectBasePoint> { report };
-
-            return Task.CompletedTask;
         }
     }
 }

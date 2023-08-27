@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
 {
-    public class ReportHeadRoomClearance : IReportHeadRoomClearance
+    public class HeadClearanceModel : IReportHeadRoomClearance
     {
         public int Id {get; set;}
         public string ModelName { get; set; }

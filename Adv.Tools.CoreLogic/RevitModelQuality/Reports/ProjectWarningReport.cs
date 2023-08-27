@@ -18,7 +18,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public string ReportName { get => nameof(ProjectWarningReport); set => ReportName = nameof(ProjectWarningReport); }
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
-        public IDocumnet ReportDocument { get; set; }
+        public IDocument ReportDocument { get; set; }
         public IEnumerable ExistingObjects { get; set; }
         public IEnumerable ExpectedObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
@@ -56,7 +56,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
  
             foreach (var failure in documnetFailures)
             {
-                var report = new ReportProjectWarning()
+                var report = new ProjectWarningModel()
                 {
                     ModelName = expectedModel.ModelName,
                     Discipline = expectedModel.Discipline,

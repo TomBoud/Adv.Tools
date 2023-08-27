@@ -2,7 +2,7 @@
 
 namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
 {
-    public class ReportLevelsMonitor : IReportLevelsMonitor
+    public class LevelsMonitorModel : IReportLevelsMonitor
     {
         public int Id { get; set; }
         public string ModelName { get; set; }

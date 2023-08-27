@@ -1,7 +1,8 @@
-﻿using Adv.Tools.Abstractions;
+﻿using Adv.Tools.Abstractions.Common;
 using Adv.Tools.Abstractions.Database;
 using Adv.Tools.Abstractions.Revit;
 using Adv.Tools.CoreLogic.RevitModelQuality;
+using Adv.Tools.CoreLogic.RevitModelQuality.Models;
 using Adv.Tools.CoreLogic.RevitModelQuality.Reports;
 using Adv.Tools.DataAccess.MySql.Models;
 using Adv.Tools.RevitAddin.Models;
@@ -29,16 +30,16 @@ namespace Adv.Tools.RevitAddin.Handlers
             _databaseName = databaseName;
         }
 
-        public Task InitializeReportData(IReportModelQuality report)
+        public async Task InitializeReportDataAsync(IReportModelQuality report)
         {
             if (report is ElementsWorksetsReport)
             {
-                report.ExpectedObjects = _dbAccess.LoadDataSelectAll<ExpectedWorkset>(_databaseName);
+                report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedWorkset>(_databaseName);
                 report.ExistingObjects = GetElementsByExpectedCategoryId(report.ExpectedObjects);
             }
             else if (report is MissingWorksetsReport)
             {
-                report.ExpectedObjects = _dbAccess.LoadDataSelectAll<ExpectedWorkset>(_databaseName);
+                report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedWorkset>(_databaseName);
                 report.ExistingObjects = GetUserCreatedWorksets();
             }
             else if (report is FileReferenceReport)
@@ -48,23 +49,90 @@ namespace Adv.Tools.RevitAddin.Handlers
             }
             else if (report is LevelsMonitorReport)
             {
-                report.ExpectedObjects = _dbAccess.LoadDataSelectAll<ExpectedLevelsGrids>(_databaseName);
+                report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedGridsMonitor>(_databaseName);
                 report.ExistingObjects = GetLevelsAsElements();
             }
             else if (report is GridsMonitorReport)
             {
-                report.ExpectedObjects = _dbAccess.LoadDataSelectAll<ExpectedLevelsGrids>(_databaseName);
+                report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedGridsMonitor>(_databaseName);
                 report.ExistingObjects = GetGridsAsElements();
             }
             else if (report is ProjectWarningReport)
             {
                 report.ExpectedObjects = Enumerable.Empty<object>();
-                report.ExistingObjects = GetDocumnetFailureMessages();
+                report.ExistingObjects = GetDocumentFailureMessages();
             }
-
-            return Task.CompletedTask;
         }
 
+        public async Task SaveReportResultsDataAsync(IReportModelQuality report)
+        {
+            if (report is ElementsWorksetsReport)
+            {
+                var results = report.ResultObjects.Cast<ReportElementsWorkset>().ToList();
+                
+                var duplicaeKeys = new ReportElementsWorkset
+                {
+                    ModelName = report.ReportDocument.Name,
+                    ModelGuid = report.ReportDocument.Guid.ToString(),
+                };
+
+                await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(results, duplicaeKeys);
+                
+            }
+            else if (report is MissingWorksetsReport)
+            {
+                var results = report.ResultObjects.Cast<ReportMissingWorkset>().ToList();
+            }
+            else if (report is FileReferenceReport)
+            {
+                var results = report.ResultObjects.Cast<ReportFileReference>().ToList();
+            }
+            else if (report is LevelsMonitorReport)
+            {
+                var results = report.ResultObjects.Cast<ReportLevelsMonitor>().ToList();
+            }
+            else if (report is GridsMonitorReport)
+            {
+                var results = report.ResultObjects.Cast<ReportGridsMonitor>().ToList();
+            }
+            else if (report is ProjectWarningReport)
+            {
+                var results = report.ResultObjects.Cast<ReportProjectWarning>().ToList();
+            }
+        }
+        public async Task ActivateReportBusinessLogicAsync(IReportModelQuality report)
+        {
+            await Task.Run(() =>
+            {
+                report.RunReportBusinessLogic();
+            });
+        }
+        public async Task SaveReportScoreDataAsync(IReportModelQuality report)
+        {
+            var checkScoreData = new List<ReportCheckScore>
+            {
+                new ReportCheckScore
+                {
+                       CheckLod = ((int)report.Lod).ToString(),
+                       CheckScore = report.GetReportScore(),
+                       CheckName = report.ReportName,
+                       Discipline = string.Empty,
+                       ModelGuid = report.ReportDocument.Guid.ToString(),
+                       ModelName = report.ReportDocument.Title
+                }
+            };
+
+            var duplicateKeys = new ReportCheckScore
+            {
+                CheckLod = ((int)report.Lod).ToString(),
+                CheckName = report.ReportName,
+                ModelGuid = report.ReportDocument.Guid.ToString(),
+                ModelName = report.ReportDocument.Title
+            };
+
+
+            await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(checkScoreData, duplicateKeys);
+        }
 
         /// <summary>
         /// Get all the Elements which associated with the Allowed Category Ids of IExpectedWorkset
@@ -159,7 +227,7 @@ namespace Adv.Tools.RevitAddin.Handlers
         /// <summary>
         /// Get All FailureMessages in the Revit Model
         /// </summary>
-        private IEnumerable<IFailureMessage> GetDocumnetFailureMessages()
+        private IEnumerable<IFailureMessage> GetDocumentFailureMessages()
         {
             var warnings = _document.GetWarnings().ToList();
 

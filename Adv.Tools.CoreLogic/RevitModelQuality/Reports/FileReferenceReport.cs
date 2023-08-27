@@ -19,7 +19,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public string ReportName { get => nameof(FileReferenceReport); set => ReportName = nameof(FileReferenceReport); }
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
-        public IDocumnet ReportDocument { get; set; }
+        public IDocument ReportDocument { get; set; }
         public IEnumerable ExistingObjects { get; set; }
         public IEnumerable ExpectedObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
@@ -37,7 +37,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 DisciplineType.Landscape,
             };
         }
-
         public string GetReportScore()
         {
             double checkScore = 0;
@@ -66,8 +65,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             checkScore = 100 * checkScore / (boolProperties.Length * results.Count());
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
-
-        public Task RunReportBusinessLogic()
+        public void RunReportBusinessLogic()
         {
             //Initizlize the expected results List<T>
             var resultObjects = new List<IReportFileReference>();
@@ -84,10 +82,10 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             {
                 var linkFileType = existingRevitLinks.FirstOrDefault(x => x.FileGuid.ToString().Equals(file.ModelGuid));
 
-                var report = new ReportFileReference()
+                var report = new FileReferenceModel()
                 {
                     ModelName = expectedDoc.ModelName,
-                    Disicpline = expectedDoc.Disicpline,
+                    Discipline = expectedDoc.Discipline,
                     ModelGuid = expectedDoc.ModelGuid,
                     LinkName = linkFileType?.FileName ?? string.Empty,
                     Status = linkFileType?.LinkedFileStatus ?? string.Empty,
@@ -104,7 +102,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             }
 
             ResultObjects = resultObjects;
-            return Task.CompletedTask;
         }
     }
 }

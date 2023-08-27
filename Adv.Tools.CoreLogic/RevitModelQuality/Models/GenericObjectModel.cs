@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
 {
-    public class ReportGenericModel : IReportGenericModel
+    public class GenericObjectModel : IReportGenericModel
     {
         public int Id { get; set; }
         public string ModelName {get; set;}

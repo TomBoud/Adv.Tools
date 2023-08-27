@@ -16,7 +16,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public string ReportName { get => nameof(MissingWorksetsReport); set => ReportName = nameof(MissingWorksetsReport); }
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
-        public IDocumnet ReportDocument { get; set; }
+        public IDocument ReportDocument { get; set; }
         public IEnumerable ExistingObjects { get; set; }
         public IEnumerable ExpectedObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
@@ -34,7 +34,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 DisciplineType.Landscape,
             };
         }
-       
         public string GetReportScore()
         {
             double totalObjects = ExistingObjects.Cast<IElement>().Count();
@@ -44,8 +43,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
-
-        public Task RunReportBusinessLogic()
+        public void RunReportBusinessLogic()
         {
             var expectedDocumnet = DocumentObjects.Cast<IExpectedDocument>()
                 .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
@@ -61,11 +59,11 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 {
                     var existingWorkset = _existingWorksets.FirstOrDefault(x => x.Name.Equals(distinctWorkset.WorksetName));
 
-                    var report = new ReportMissingWorkset()
+                    var report = new MissingWorksetModel()
                     {
                         ModelName = expectedDocumnet.ModelName,
                         ModelGuid = expectedDocumnet.ModelGuid,
-                        Disicpline = expectedDocumnet.Disicpline,
+                        Discipline = expectedDocumnet.Discipline,
                         WorksetName = existingWorkset.Name,
                         ObjectId = existingWorkset.Id.ToString(),
                         IsFound = true,
@@ -76,11 +74,11 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 }
                 else
                 {
-                    var report = new ReportMissingWorkset()
+                    var report = new MissingWorksetModel()
                     {
                         ModelName = expectedDocumnet.ModelName,
                         ModelGuid = expectedDocumnet.ModelGuid,
-                        Disicpline = expectedDocumnet.Disicpline,
+                        Discipline = expectedDocumnet.Discipline,
                         WorksetName = distinctWorkset.WorksetName,
                         ObjectId = string.Empty,
                         IsFound = false,
@@ -92,7 +90,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             }
 
             ResultObjects = _resultObjects;
-            return Task.CompletedTask;
         }
     }
 }

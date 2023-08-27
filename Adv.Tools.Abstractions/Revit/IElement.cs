@@ -21,6 +21,6 @@ namespace Adv.Tools.Abstractions.Revit
 
         bool IsMonitoring { get; set; }
         long MonitoredId { get; set; }
-        IDocumnet MonitoredDoc { get; set; }
+        IDocument MonitoredDoc { get; set; }
     }
 }

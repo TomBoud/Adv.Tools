@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adv.Tools.Abstractions
+namespace Adv.Tools.Abstractions.Common
 {
     public interface IDbDataAccess
     {
@@ -15,5 +15,7 @@ namespace Adv.Tools.Abstractions
 
         Task DeleteData<T, U>(string sqlQuery, U parameters);
         Task ExecuteWithTransaction(params Func<Task>[] tasks);
+
+        Task SaveByInsertUpdateOnDuplicateKeysAsync<T>(List<T> data, T keyProperties);
     }
 }

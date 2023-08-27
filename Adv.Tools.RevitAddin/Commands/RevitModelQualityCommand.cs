@@ -26,6 +26,9 @@ namespace Adv.Tools.RevitAddin.Commands
     [Transaction(TransactionMode.Manual)]
     public class RevitModelQualityCommand : IExternalCommand
     {
+
+        private readonly string _connectionString = Properties.DataAccess.Default.ProdDb;
+
         /// <summary>
         /// Main entrance to the class when called by the Revit.exe UI.
         /// </summary>
@@ -39,8 +42,12 @@ namespace Adv.Tools.RevitAddin.Commands
             var app = commandData.Application.Application;
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            //Acquire the Revit models for which the reports to be executed
+            //Reference to support objects
+            var access = new MySqlDataAccess(_connectionString);
             var links = new List<Document>();
+            var tasks = new List<Task>();
+
+            //Acquire the Revit models for which the reports to be executed
             foreach (Document linkedModel in app.Documents)
             {
                 if (linkedModel.IsLinked) { links.Add(linkedModel); }
@@ -57,27 +64,24 @@ namespace Adv.Tools.RevitAddin.Commands
             foreach (var report in reports)
             {
                 var document = links.FirstOrDefault(x => x.GetCloudModelPath().GetModelGUID().Equals(report.ReportDocument.Guid));
-                var databaseName = report.ReportDocument.ProjectId.ToString();
+                var dataHandler = new ModelQualityDataHandler(access, document, report.ReportDocument.DbProjectId);
 
-                var dataHandler = new ModelQualityDataHandler(new MySqlDataAccess(Properties.DataAccess.Default.ProdDb), document, databaseName);
-                dataHandler.InitializeReportData(report);
+                tasks.Add(Task.Run(async () =>
+                {
+                    await dataHandler.InitializeReportDataAsync(report);
+                }).ContinueWith(async _ =>
+                {
+                    await dataHandler.ActivateReportBusinessLogicAsync(report);
+                }).ContinueWith(async _=> 
+                {
+                    await dataHandler.SaveReportResultsDataAsync(report);
+                }).ContinueWith(async _=> 
+                {
+                    await dataHandler.SaveReportScoreDataAsync(report);
+                }));
             }
 
-            //Run Reports Logic Algoritem
-            foreach(var report in reports)
-            {
-                report.RunReportBusinessLogic();
-            }
-
-            //Save Results in the Database
-            foreach (var report in reports)
-            {
-                var dataAccess = new MySqlDataAccess(Properties.DataAccess.Default.ProdDb);
-                //var reportResults = new ModelQualityResultsData(report, dataAccess);
-
-               // reportResults.SaveResultsToDatabase();
-            }
-
+            Task.WaitAll(tasks.ToArray());
             return Result.Succeeded;
         }
 

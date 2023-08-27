@@ -20,7 +20,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public string ReportName { get => nameof(LevelsMonitorReport); set => ReportName = nameof(LevelsMonitorReport); }
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
-        public IDocumnet ReportDocument { get; set; }
+        public IDocument ReportDocument { get; set; }
         public IEnumerable ExistingObjects { get; set; }
         public IEnumerable ExpectedObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
@@ -73,7 +73,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             var expectedDocumnet = DocumentObjects.Cast<IExpectedDocument>()
                .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
 
-            var expectedLevelsGrids = ExpectedObjects.Cast<IExpectedLevelsGrids>()
+            var expectedLevelsGrids = ExpectedObjects.Cast<IExpectedLevelsMonitor>()
                 .Where(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString())).ToList();
 
             var docLevelsGrids = ExistingObjects.Cast<IElement>();
@@ -83,7 +83,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             {
                 foreach (var element in docLevelsGrids)
                 {
-                    var report = new ReportLevelsMonitor()
+                    var report = new LevelsMonitorModel()
                     {
                         ModelName = expectedDocumnet.ModelName,
                         Discipline = expectedDocumnet.Discipline,

@@ -16,10 +16,10 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 {
     public class ElementsWorksetsReport : IReportModelQuality
     {
-        public string ReportName { get => nameof(ElementsWorksetsReport); set => ReportName = nameof(ElementsWorksetsReport); }
+        public string ReportName { get => nameof(ElementsWorksetsReport); set => ReportName = value; }
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
-        public IDocumnet ReportDocument { get; set; }
+        public IDocument ReportDocument { get; set; }
         public IEnumerable ExistingObjects { get; set; }
         public IEnumerable ExpectedObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
@@ -37,7 +37,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 DisciplineType.Landscape,
             };
         }
-        
         public string GetReportScore()
         {
 
@@ -48,8 +47,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
 
         }
-
-        public Task RunReportBusinessLogic()
+        public void RunReportBusinessLogic()
         {
 
             var _resultObjects = new List<IReportElementsWorkset>();
@@ -68,7 +66,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 {
                     if (!allowedCategoryIds.Any(x => x.CategoryId.Equals(element.CategoryId)))
                     {
-                        var report = new ReportElementsWorkset()
+                        var report = new ElementsWorksetModel()
                         {
                             ModelName = _doc.ModelName,
                             ModelGuid = _doc.ModelGuid,
@@ -84,7 +82,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             }
 
             ResultObjects = _resultObjects;
-            return Task.CompletedTask;
         }
     }
 }

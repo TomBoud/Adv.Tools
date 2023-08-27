@@ -2,7 +2,7 @@
 
 namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
 {
-    public class ReportModelSheet : IReportModelSheet
+    public class ModelSheetModel : IReportModelSheet
     {
         public int Id { get; set; }
         public string ModelName { get; set; }

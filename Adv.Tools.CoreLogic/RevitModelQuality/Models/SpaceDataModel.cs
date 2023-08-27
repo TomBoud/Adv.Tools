@@ -2,7 +2,7 @@
 
 namespace Adv.Tools.DataAccess.MySql.Models
 {
-    public class ReportSpaceData : IReportSpaceData
+    public class SpaceDataModel : IReportSpaceData
     {
         public int Id { get; set; }
         public string ModelName { get; set; }

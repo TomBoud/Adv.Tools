@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.DataAccess.MySql.Models
 {
-    public class ReportLevelsGrids : IReportLevelsMonitor
+    public class ReportLevelsMonitor : IReportLevelsMonitor
     {
         public int Id { get; set; }
         public string ModelName { get; set; }

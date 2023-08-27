@@ -7,11 +7,13 @@ using System.Xml.Linq;
 
 namespace Adv.Tools.Abstractions.Revit
 {
-    public interface IDocumnet
+    public interface IDocument
     {
+        //Project Identity
         string Title { get; set; }
         Guid Guid { get; set; }
-        string ProjectId { get; set; }
+        Guid ProjectGuid { get; set; }
+        string DbProjectId { get; set; }
 
         //Project Position
         double EastWest { get; set; }

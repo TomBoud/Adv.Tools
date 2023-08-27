@@ -20,10 +20,10 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality
         IEnumerable ExistingObjects { get; set; }
         IEnumerable ExpectedObjects { get; set; }
         IEnumerable DocumentObjects { get; set; }
-        IDocumnet ReportDocument { get; set; }
+        IDocument ReportDocument { get; set; }
 
         string GetReportScore();
-        Task RunReportBusinessLogic();
+        void RunReportBusinessLogic();
         DisciplineType[] GetDisciplines();
 
     }

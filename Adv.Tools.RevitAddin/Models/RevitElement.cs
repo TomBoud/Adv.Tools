@@ -32,7 +32,7 @@ namespace Adv.Tools.RevitAddin.Models
 
         public bool IsMonitoring { get => _element.IsMonitoringLinkElement(); set => IsMonitoring = value; }
         public long MonitoredId { get => GetMonitoredLinkElementIds(); set => MonitoredId = value; }
-        public IDocumnet MonitoredDoc { get => GetMonitoredDocumnet(); set=> MonitoredDoc = value; }
+        public IDocument MonitoredDoc { get => GetMonitoredDocumnet(); set=> MonitoredDoc = value; }
         #endregion
 
 
@@ -85,7 +85,7 @@ namespace Adv.Tools.RevitAddin.Models
             return _element.GetMonitoredLinkElementIds().FirstOrDefault().Value;
             #endif          
         }
-        private IDocumnet GetMonitoredDocumnet()
+        private IDocument GetMonitoredDocumnet()
         {
             //Skip the search if there is no active monitor
             if(_element.IsMonitoringLinkElement())
