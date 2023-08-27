@@ -17,13 +17,13 @@ using System.Windows.Shapes;
 
 namespace Adv.Tools.RevitAddin.Handlers
 {
-    public class ModelQualityDataHandler
+    public class RevitModelQualityDataHandler
     {
         private readonly Document _document;
         private readonly IDbDataAccess _dbAccess;
         private readonly string _databaseName;
 
-        public ModelQualityDataHandler(IDbDataAccess dbAccess, Document document, string databaseName)
+        public RevitModelQualityDataHandler(IDbDataAccess dbAccess, Document document, string databaseName)
         {
             _document = document;
             _dbAccess = dbAccess;

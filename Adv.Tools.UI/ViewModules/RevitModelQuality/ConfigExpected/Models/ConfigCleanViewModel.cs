@@ -18,12 +18,12 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 
         public ConfigCleanViewModel(IExpectedCleanView cleanView)
         {
-            cleanView.Id = id;
-            cleanView.ModelName = modelName;
-            cleanView.ModelGuid = modelGuid;
-            cleanView.Discipline = discipline;
-            cleanView.ViewType = viewType;
-            cleanView.ViewName = viewName;
+            id = cleanView.Id;
+            modelName = cleanView.ModelName;
+            modelGuid = cleanView.ModelGuid;
+            discipline = cleanView.Discipline;
+            viewType = cleanView.ViewType;
+            viewName = cleanView.ViewName;
         }
 
         public int Id { get => id; set => id = value; }

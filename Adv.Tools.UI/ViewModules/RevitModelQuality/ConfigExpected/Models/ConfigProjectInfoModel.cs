@@ -23,11 +23,11 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         //Constructor
         public ConfigProjectInfoModel(IExpectedProjectInfo projectInfo)
         {
-            projectInfo.ModelName = modelName;
-            projectInfo.ModelGuid = modelGuid;
-            projectInfo.Discipline = discipline;
-            projectInfo.Parameter = parameter;
-            projectInfo.Value = value;
+            modelName = projectInfo.ModelName;
+            modelGuid = projectInfo.ModelGuid;
+            discipline = projectInfo.Discipline;
+            parameter = projectInfo.Parameter;
+            value = projectInfo.Value;
         }
 
         //Properties
@@ -44,10 +44,10 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         [DisplayName("Discipline")]
         public string Discipline { get => discipline; set => discipline = value; }
 
-        [DisplayName("Parameter Name")]
+        [DisplayName("Parameter")]
         public string Parameter { get => parameter; set => parameter = value; }
 
-        [DisplayName("Parameter Value")]
+        [DisplayName("Value")]
         public string Value { get => value; set => this.value = value; }
     }
 }

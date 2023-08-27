@@ -18,12 +18,12 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 
         public ConfigSharedParamModel(IExpectedSharedPara sharedParam)
         {
-            sharedParam.Id = id;
-            sharedParam.ModelName = modelName;
-            sharedParam.ModelGuid = modelGuid;
-            sharedParam.Discipline = discipline;
-            sharedParam.Parameter = parameter;
-            sharedParam.GUID = guid;
+            id = sharedParam.Id;
+            modelName = sharedParam.ModelName;
+            modelGuid = sharedParam.ModelGuid;
+            discipline = sharedParam.Discipline;
+            parameter = sharedParam.Parameter;
+            guid = sharedParam.GUID;
         }
 
         public int Id { get => id; set => id = value; }

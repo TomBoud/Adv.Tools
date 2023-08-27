@@ -20,12 +20,12 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 
         public ConfigGridMonitorModel(IExpectedGridsMonitor gridMonitor)
         {
-            gridMonitor.Id = id;
-            gridMonitor.ModelName = modelName;
-            gridMonitor.ModelGuid = modelGuid;
-            gridMonitor.Discipline = discipline;
-            gridMonitor.SourceModelName = sourceModelName;
-            gridMonitor.SourceModelGuid = sourceModelGuid;
+            id = gridMonitor.Id;
+            modelName = gridMonitor.ModelName;
+            modelGuid = gridMonitor.ModelGuid;
+            discipline = gridMonitor.Discipline;
+            sourceModelName = gridMonitor.SourceModelName;
+            sourceModelGuid = gridMonitor.SourceModelGuid;
         }
 
         [DisplayName("ID")]

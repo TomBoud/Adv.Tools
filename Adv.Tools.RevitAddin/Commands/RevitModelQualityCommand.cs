@@ -1,19 +1,21 @@
-﻿using Adv.Tools.RevitAddin.Models;
+﻿
+
+
+using Adv.Tools.DataAccess.MySql;
+using Adv.Tools.CoreLogic.RevitModelQuality;
+using Adv.Tools.RevitAddin.Handlers;
+using Adv.Tools.RevitAddin.Models;
+using Adv.Tools.Abstractions.Database;
+using Adv.Tools.Abstractions.Revit;
+using Adv.Tools.CoreLogic.RevitModelQuality.Reports;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Adv.Tools.DataAccess.Autodesk.AppStore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Adv.Tools.Abstractions.Revit;
 using System.Threading.Tasks;
-using Adv.Tools.CoreLogic.RevitModelQuality;
-using Adv.Tools.RevitAddin.Handlers;
-using Adv.Tools.Abstractions.Database;
-using Adv.Tools.DataAccess.MySql;
-using Adv.Tools.CoreLogic.RevitModelQuality.Reports;
 
 /// <summary>
 /// Represents a namesapce for managing the scripts to be executed in Autodesk Revit.
@@ -66,7 +68,7 @@ namespace Adv.Tools.RevitAddin.Commands
             foreach (var report in reports)
             {
                 var document = links.FirstOrDefault(x => x.GetCloudModelPath().GetModelGUID().Equals(report.ReportDocument.Guid));
-                var dataHandler = new ModelQualityDataHandler(access, document, report.ReportDocument.DbProjectId);
+                var dataHandler = new RevitModelQualityDataHandler(access, document, report.ReportDocument.DbProjectId);
 
                 tasks.Add(Task.Run(async () =>
                 {

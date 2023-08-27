@@ -20,12 +20,12 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 
         public ConfigLevelMonitorModel(IExpectedLevelsMonitor levelMonitor)
         {
-            levelMonitor.Id = id;
-            levelMonitor.ModelName = modelName;
-            levelMonitor.ModelGuid = modelGuid;
-            levelMonitor.Discipline = discipline;
-            levelMonitor.SourceModelName = sourceModelName;
-            levelMonitor.SourceModelGuid = sourceModelGuid;
+            id = levelMonitor.Id;
+            modelName = levelMonitor.ModelName;
+            modelGuid = levelMonitor.ModelGuid;
+            discipline = levelMonitor.Discipline;
+            sourceModelName = levelMonitor.SourceModelName;
+            sourceModelGuid = levelMonitor.SourceModelGuid;
         }
 
         [DisplayName("ID")]
