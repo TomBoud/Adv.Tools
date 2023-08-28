@@ -2,10 +2,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Adv.Tools.UI.Common;
+using Adv.Tools.UI.DataModels.RevitModelQuality;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views;
 
@@ -16,38 +19,69 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
         //Fields
         private IConfigWorksetView view;
         private IConfigWorksetsRepo reposetory;
-        private BindingSource reportsSource;
-        private IEnumerable<ConfigWorksetModel> reportsList;
+        private BindingSource bindingSource;
+        private IEnumerable<ConfigWorksetModel> bindingList;
 
         //Constructor
         public ConfigWorksetPresenter(IConfigWorksetView view, IConfigWorksetsRepo repo)
         {
             //Construct the presenter
-            this.reportsSource = new BindingSource();
+            this.bindingSource = new BindingSource();
             this.view = view;
             this.reposetory = repo;
             //Subscribe event handlers
-            this.view.SearchEvent += SearchReport;
+            this.view.ExportEvent += ExportWorksets;
+            this.view.SearchEvent += SearchWorkset;
+            this.view.ImportEvent += ImportSettings;
             //Set reports binding source
-            this.view.SetPetListBindingSource(this.reportsSource);
+            this.view.SetBindingSource(this.bindingSource);
             //Load reposts list view
-            LoadAllReportsList();
+            LoadAllWorksetsList();
         }
 
         //Methods
-        private void LoadAllReportsList()
+        private void LoadAllWorksetsList()
         {
-            reportsList = reposetory.GetAllWorksets();
-            reportsSource.DataSource = reportsList;
+            bindingList = reposetory.GetAllWorksets();
+            bindingSource.DataSource = bindingList;
         }
-        private void SearchReport(object sender, EventArgs e)
+
+        private void ExportWorksets(object sender, EventArgs e)
+        {
+            var helper = new ExcelFilesHelper();
+            var source = bindingSource.List as IEnumerable<ConfigWorksetModel>;
+
+            var table = helper.ConvertListToDataTable(source.ToList());
+
+            helper.ExportDataTableAsExcelFile(table);
+        }
+
+        private void ImportSettings(object sender, EventArgs e)
+        {
+
+            var bindingList = new List<ConfigWorksetModel>();
+            var helper = new ExcelFilesHelper();
+
+            var stream = helper.GetExcelFileAsFileStream();
+            var ds = helper.GetExcelFileAsDataSet(stream);
+            var list = helper.GetFirstExcelTableAsList<ExpectedWorkset>(ds);
+           
+            foreach (var item in list)
+            {
+                bindingList.Add(new ConfigWorksetModel(item));
+            }
+
+            bindingSource.DataSource = bindingList;
+        }
+
+        private void SearchWorkset(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(this.view.SearchValue))
-                reportsList = reposetory.GetAllWorksets();
+                bindingList = reposetory.GetAllWorksets();
 
-            else reportsList = reposetory.GetByValue(this.view.SearchValue);
+            else bindingList = reposetory.GetByValue(this.view.SearchValue);
 
-            reportsSource.DataSource = reportsList;
+            bindingSource.DataSource = bindingList;
 
         }
     }

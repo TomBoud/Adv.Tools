@@ -37,16 +37,18 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         public bool IsEnabled { get; set; }
         public bool IsSuccessful { get; set; }
         public string Message { get; set; }
-       
+
 
         //Events
+        public event EventHandler ExportEvent;
+        public event EventHandler ImportEvent;
         public event EventHandler SearchEvent;
         public event EventHandler AddNewEvent;
         public event EventHandler EditedEvent;
         public event EventHandler DeleteEvent;
 
         //Methods
-        public void SetPetListBindingSource(BindingSource itemsList)
+        public void SetBindingSource(BindingSource itemsList)
         {
             dataGridView.DataSource = itemsList;
         }
@@ -77,6 +79,8 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 
         private void AssociateAndRaiseViewEvents()
         {
+            export_button.Click += delegate { ExportEvent?.Invoke(this, EventArgs.Empty); };
+            import_button.Click += delegate { ImportEvent?.Invoke(this, EventArgs.Empty); };
             search_button.Click += delegate { SearchEvent?.Invoke(this, EventArgs.Empty); };
             search_textBox.KeyUp += (s, e) =>
             {

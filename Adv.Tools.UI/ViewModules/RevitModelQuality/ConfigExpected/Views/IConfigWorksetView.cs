@@ -24,13 +24,15 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         string Message { get; set; }
 
         //Event
+        event EventHandler ExportEvent;
+        event EventHandler ImportEvent;
         event EventHandler SearchEvent;
         event EventHandler AddNewEvent;
         event EventHandler EditedEvent;
         event EventHandler DeleteEvent;
 
         //Methods
-        void SetPetListBindingSource(BindingSource reportsList);
+        void SetBindingSource(BindingSource bindingList);
 
         void ShowThisUI();
     }

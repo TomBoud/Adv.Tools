@@ -8,6 +8,7 @@ namespace Adv.Tools.DevConsole
 {
     internal class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
             while (true)
