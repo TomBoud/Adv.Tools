@@ -130,7 +130,6 @@ namespace Adv.Tools.RevitAddin.Handlers
                 ModelName = report.ReportDocument.Title
             };
 
-
             await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(checkScoreData, duplicateKeys);
         }
 

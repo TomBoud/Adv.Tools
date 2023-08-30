@@ -9,10 +9,10 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 {
     public interface IConfigWorksetsRepo
     {
-        void Add(ConfigWorksetModel model);
-        void Edit(ConfigWorksetModel model);
+        void Add(ExpectedWorkset model);
+        void Edit(ExpectedWorkset model);
         void Delete(int id);
-        IEnumerable<ConfigWorksetModel> GetAllWorksets();
-        IEnumerable<ConfigWorksetModel> GetByValue(string value);
+        IEnumerable<ExpectedWorkset> GetAllWorksets();
+        IEnumerable<ExpectedWorkset> GetByValue(string value);
     }
 }

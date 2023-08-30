@@ -8,6 +8,7 @@ using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Repositories;
 using Adv.Tools.Abstractions.Common;
+using System.Collections;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
 {
@@ -16,13 +17,14 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
         private IConfigExpectedMainView mainView;
         private IDbDataAccess dataAccess;
         private readonly string databaseName;
+        private readonly IEnumerable revitObjects;
         
-        public ConfigExpectedMainPresenter(IConfigExpectedMainView mainView, IDbDataAccess dataAccess, string databaseName)
+        public ConfigExpectedMainPresenter(IConfigExpectedMainView mainView,IEnumerable revitObjects, IDbDataAccess dataAccess, string databaseName)
         {
             this.mainView = mainView;
             this.dataAccess = dataAccess;
             this.databaseName = databaseName;
-
+            this.revitObjects = revitObjects;
             //Subscribe delegated events to private methods
             this.mainView.ShowConfigDocumentsView += ShowConfigDocumentsView;
             this.mainView.ShowConfigWorksetsView += ShowConfigWorksetsView;
@@ -42,7 +44,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
         {
             IConfigDocumentView view = ConfigDocumentView.GetInstance((Form)mainView);
             IConfigDocumentsRepo repo = new ConfigDocumentRepo(dataAccess, databaseName);
-            new ConfigDocumentPresenter(view, repo);
+            new ConfigDocumentPresenter(view, repo, revitObjects);
             view.ShowThisUI();
         }
     }

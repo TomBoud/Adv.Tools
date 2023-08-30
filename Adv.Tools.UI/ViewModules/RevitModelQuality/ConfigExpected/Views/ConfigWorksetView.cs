@@ -37,9 +37,11 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         public bool IsEnabled { get; set; }
         public bool IsSuccessful { get; set; }
         public string Message { get; set; }
+        public List<string> Disciplines { get; set; }
 
 
         //Events
+        public event EventHandler DefaultEvent;
         public event EventHandler ExportEvent;
         public event EventHandler ImportEvent;
         public event EventHandler SearchEvent;
@@ -79,6 +81,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 
         private void AssociateAndRaiseViewEvents()
         {
+            default_button.Click += delegate { DefaultEvent?.Invoke(this, EventArgs.Empty); };
             export_button.Click += delegate { ExportEvent?.Invoke(this, EventArgs.Empty); };
             import_button.Click += delegate { ImportEvent?.Invoke(this, EventArgs.Empty); };
             search_button.Click += delegate { SearchEvent?.Invoke(this, EventArgs.Empty); };

@@ -13,47 +13,157 @@ namespace Adv.Tools.RevitAddin.Models
     {
         private readonly Document _document;
 
+        // Private fields
+        private string _title;
+        private Guid _guid;
+        private Guid _projectGuid;
+        private string _dbProjectId;
+        private double _eastWest;
+        private double _northSouth;
+        private double _elevation;
+        private double _angle;
+        private double _latitude;
+        private double _longitude;
+        private string _name;
+        private string _number;
+        private string _status;
+        private string _address;
+        private string _author;
+        private string _organizationName;
+        private string _organizationDescription;
+        private string _clientName;
+        private string _buildingName;
+
+
+        public RevitDocument()
+        {
+
+        }
         public RevitDocument(Document document)
         {
             _document = document;
+            _dbProjectId = GetDocumentProjectGuidAsValidDbName();
         }
 
-        #region Public Properties
-        //Document Identity
-        public string Title { get => _document.Title; set => Title = value; }
-        public Guid  Guid { get => _document.GetCloudModelPath().GetModelGUID(); set => Guid = value; }
-        public Guid ProjectGuid { get => _document.GetCloudModelPath().GetProjectGUID(); set => ProjectGuid = value; }
-        public string DbProjectId { get => GetDocumentProjectGuidAsValidDbName(); set => DbProjectId = value; }
+        // Public properties
+        public string Title
+        {
+            get => _title;
+            set => _title = value;
+        }
 
-        //Project Position
-        public double EastWest { get => _document.ActiveProjectLocation.GetProjectPosition(XYZ.Zero).EastWest; set => EastWest = value; }
-        public double NorthSouth { get => _document.ActiveProjectLocation.GetProjectPosition(XYZ.Zero).NorthSouth; set => NorthSouth = value; }
-        public double Elevation { get => _document.ActiveProjectLocation.GetProjectPosition(XYZ.Zero).Elevation; set => Elevation = value; }
-        public double Angle { get => _document.ActiveProjectLocation.GetProjectPosition(XYZ.Zero).Angle; set => Angle = value; }
+        public Guid Guid
+        {
+            get => _guid;
+            set => _guid = value;
+        }
 
-        //Site Location
-        public double Latitude { get => _document.SiteLocation.Latitude; set => Latitude = value; }
-        public double Longitude { get => _document.SiteLocation.Longitude; set => Longitude = value; }
-        #endregion
+        public Guid ProjectGuid
+        {
+            get => _projectGuid;
+            set => _projectGuid = value;
+        }
 
-        //Project Information
-        public string Name { get => _document.ProjectInformation.Name; set=> Name=value; }
-        public string Number { get => _document.ProjectInformation.Number; set => Number = value; }
-        public string Status {  get=> _document.ProjectInformation.Status; set => Status = value; }
-        public string Address { get => _document.ProjectInformation.Address; set => Address = value; }
-        public string Author { get => _document.ProjectInformation.Author; set => Author = value; }
-        public string OrganizationName { get => _document.ProjectInformation.OrganizationName; set => OrganizationName = value; }
-        public string OrganizationDescription { get => _document.ProjectInformation.OrganizationDescription; set => OrganizationDescription = value; }      
-        public string ClientName { get => _document.ProjectInformation.ClientName; set => ClientName = value; }
-        public string BuildingName { get => _document.ProjectInformation.BuildingName; set => BuildingName = value; }
+        public string DbProjectId
+        {
+            get => _dbProjectId;
+            set => _dbProjectId = value;
+        }
 
+        public double EastWest
+        {
+            get => _eastWest;
+            set => _eastWest = value;
+        }
 
-        #region Public Properties
+        public double NorthSouth
+        {
+            get => _northSouth;
+            set => _northSouth = value;
+        }
+
+        public double Elevation
+        {
+            get => _elevation;
+            set => _elevation = value;
+        }
+
+        public double Angle
+        {
+            get => _angle;
+            set => _angle = value;
+        }
+
+        public double Latitude
+        {
+            get => _latitude;
+            set => _latitude = value;
+        }
+
+        public double Longitude
+        {
+            get => _longitude;
+            set => _longitude = value;
+        }
+
+        public string Name
+        {
+            get => _name;
+            set => _name = value;
+        }
+
+        public string Number
+        {
+            get => _number;
+            set => _number = value;
+        }
+
+        public string Status
+        {
+            get => _status;
+            set => _status = value;
+        }
+
+        public string Address
+        {
+            get => _address;
+            set => _address = value;
+        }
+
+        public string Author
+        {
+            get => _author;
+            set => _author = value;
+        }
+
+        public string OrganizationName
+        {
+            get => _organizationName;
+            set => _organizationName = value;
+        }
+
+        public string OrganizationDescription
+        {
+            get => _organizationDescription;
+            set => _organizationDescription = value;
+        }
+
+        public string ClientName
+        {
+            get => _clientName;
+            set => _clientName = value;
+        }
+
+        public string BuildingName
+        {
+            get => _buildingName;
+            set => _buildingName = value;
+        }
+
         private string GetDocumentProjectGuidAsValidDbName()
         {
-            var ProjectGuid = _document.GetCloudModelPath().GetProjectGUID();
-            return Regex.Replace(ProjectGuid.ToString(), "[^a-zA-Z0-9_]", "");
+            var projectGuid = _document.GetCloudModelPath().GetProjectGUID();
+            return Regex.Replace(projectGuid.ToString(), "[^a-zA-Z0-9_]", "");
         }
-        #endregion
     }
 }

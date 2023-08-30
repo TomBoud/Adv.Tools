@@ -61,6 +61,10 @@
       <Project>{0d4f0645-1361-4f3c-8d7b-eb253f4af4b2}</Project>
       <Name>Adv.Tools.DataAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Adv.Tools.RevitAddin\Adv.Tools.RevitAddin.csproj">
+      <Project>{2ff7a2a4-966e-403e-b10e-d47367565116}</Project>
+      <Name>Adv.Tools.RevitAddin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Adv.Tools.UI\Adv.Tools.UI.csproj">
       <Project>{46cbf741-b2c2-4917-9aba-9e353d79ecd1}</Project>
       <Name>Adv.Tools.UI</Name>

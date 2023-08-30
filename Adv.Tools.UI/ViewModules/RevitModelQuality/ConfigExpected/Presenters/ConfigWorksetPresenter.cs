@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
         private IConfigWorksetView view;
         private IConfigWorksetsRepo reposetory;
         private BindingSource bindingSource;
-        private IEnumerable<ConfigWorksetModel> bindingList;
+        private IEnumerable<ExpectedWorkset> bindingList;
 
         //Constructor
         public ConfigWorksetPresenter(IConfigWorksetView view, IConfigWorksetsRepo repo)
@@ -30,6 +31,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
             this.view = view;
             this.reposetory = repo;
             //Subscribe event handlers
+            this.view.DefaultEvent += DefaultSettings;
             this.view.ExportEvent += ExportWorksets;
             this.view.SearchEvent += SearchWorkset;
             this.view.ImportEvent += ImportSettings;
@@ -46,32 +48,47 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
             bindingSource.DataSource = bindingList;
         }
 
+        private void DefaultSettings(object sender, EventArgs e)
+        {
+            var helper = new ExcelFilesHelper();
+            var bindingList = new List<ExpectedWorkset>();
+            var stream = new MemoryStream(Resource.DefaultSettings);
+
+            var ds = helper.GetExcelFileAsDataSet(stream);
+            var list = helper.GetExcelTableAsList<ExpectedWorkset>(ds,nameof(ExpectedWorkset));
+
+            foreach (var item in list)
+            {
+                bindingList.Add(item);
+            }
+
+            bindingSource.DataSource = bindingList;
+        }
+
         private void ExportWorksets(object sender, EventArgs e)
         {
             var helper = new ExcelFilesHelper();
-            var source = bindingSource.List as IEnumerable<ConfigWorksetModel>;
+            var folder = helper.GetSaveFolderPath();
 
-            var table = helper.ConvertListToDataTable(source.ToList());
-
-            helper.ExportDataTableAsExcelFile(table);
+            if(string.IsNullOrEmpty(folder) is false)
+            {
+                var source = bindingSource.List as IEnumerable<ExpectedWorkset>;
+                var table = helper.ConvertListToDataTable(source.ToList());
+                
+                helper.ExportDataTableAsExcelFile(table,folder);
+            }
         }
 
         private void ImportSettings(object sender, EventArgs e)
         {
-
-            var bindingList = new List<ConfigWorksetModel>();
             var helper = new ExcelFilesHelper();
 
-            var stream = helper.GetExcelFileAsFileStream();
+            var path = helper.GetExcelFilePath();
+            var stream = helper.GetExcelFileAsStream(path);
             var ds = helper.GetExcelFileAsDataSet(stream);
-            var list = helper.GetFirstExcelTableAsList<ExpectedWorkset>(ds);
+            var newList = helper.GetExcelTableAsList<ExpectedWorkset>(ds, nameof(ExpectedWorkset));
            
-            foreach (var item in list)
-            {
-                bindingList.Add(new ConfigWorksetModel(item));
-            }
-
-            bindingSource.DataSource = bindingList;
+            bindingSource.DataSource = newList;
         }
 
         private void SearchWorkset(object sender, EventArgs e)

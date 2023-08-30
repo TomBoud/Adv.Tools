@@ -2,10 +2,12 @@
 using Adv.Tools.Abstractions.Database;
 using Adv.Tools.UI.DataModels.RevitModelQuality;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Repositories
@@ -21,35 +23,40 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Repositories
             _databaseName = databaseName;
         }
 
-
-        public void Add(ConfigDocumentModel model)
+        public async void Add(ExpectedDocument model)
         {
-            throw new NotImplementedException();
+            var data = new List<ExpectedDocument>() {  model };
+            await _dataAccess.SaveByInsertValuesAsync(_databaseName, data);
         }
 
-        public void Delete(int id)
+        public async void Delete(int id)
         {
-            throw new NotImplementedException();
+            await _dataAccess.DeleteDataById<ExpectedDocument>(_databaseName, id);
         }
 
-        public void Edit(ConfigDocumentModel model)
+        public async void Edit(ExpectedDocument model)
         {
-            throw new NotImplementedException();
+            var data = new List<ExpectedDocument>(){ model };    
+            await _dataAccess.SaveByUpdateValuesAsync(_databaseName, data);
         }
 
-        public IEnumerable<ConfigDocumentModel> GetAllDocuments()
+        public IEnumerable<ExpectedDocument> GetAllDocuments()
+        {
+            return _dataAccess.LoadDataSelectAll<ExpectedDocument>(_databaseName);
+        }
+
+        public IEnumerable<ExpectedDocument> GetByValue(string value)
         {
             var results = _dataAccess.LoadDataSelectAll<ExpectedDocument>(_databaseName);
 
-            foreach (var item in results.OrderByDescending(x => x.Id).ToList())
-            {
-                yield return new ConfigDocumentModel(item);
-            }
-        }
+            var pattern = Regex.Escape(value);
+            var regex = new Regex(pattern, RegexOptions.IgnoreCase);
 
-        public IEnumerable<ConfigDocumentModel> GetByValue(string value)
-        {
-            throw new NotImplementedException();
+            return results.Where(result =>
+                 regex.IsMatch(result.Id.ToString()) ||
+                 regex.IsMatch(result.ModelName) ||
+                 regex.IsMatch(result.Discipline))
+                .ToList();
         }
     }
 }

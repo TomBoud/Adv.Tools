@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 {
-    public class ConfigDocumentModel : IExpectedDocument
+    public class ExpectedDocument : IExpectedDocument
     {
         //Fields
         private int id;
@@ -20,19 +20,6 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         private string projectId;
         private string folderId;
         private string positionSource;
-
-        //Constructor
-        public ConfigDocumentModel(IExpectedDocument document)
-        {
-            id = document.Id;
-            modelName = document.ModelName;
-            modelGuid = document.ModelGuid;
-            discipline = document.Discipline;
-            hubId = document.HubId;
-            projectId = document.ProjectId;
-            folderId = document.FolderId;
-            positionSource = document.PositionSource;
-        }
 
         //Properties
         [DisplayName("ID")]

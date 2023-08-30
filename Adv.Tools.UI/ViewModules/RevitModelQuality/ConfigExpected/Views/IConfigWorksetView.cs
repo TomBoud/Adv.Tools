@@ -24,6 +24,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         string Message { get; set; }
 
         //Event
+        event EventHandler DefaultEvent;
         event EventHandler ExportEvent;
         event EventHandler ImportEvent;
         event EventHandler SearchEvent;
@@ -33,7 +34,6 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 
         //Methods
         void SetBindingSource(BindingSource bindingList);
-
         void ShowThisUI();
     }
 }

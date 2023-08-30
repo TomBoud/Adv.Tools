@@ -82,7 +82,26 @@ namespace Adv.Tools.DataAccess.MySql
                 throw ex;
             }
         }
-        public async Task SaveDataByPropertiesMapping<T>(string databaseName, List<T> data)
+        public async Task SaveByUpdateValuesAsync<T>(string databaseName, List<T> data)
+        {
+            PropertyInfo[] props = typeof(T).GetProperties();
+
+            string sqlQuery =
+                $"INSERT INTO {databaseName}.{typeof(T).Name} " +
+                $"({string.Join(",", props.Select(x => x.Name))}) " +
+                $"VALUES ({string.Join(",", props.Select(x => $"@{x.Name}"))})";
+
+            try
+            {
+                await SaveData(sqlQuery, data);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        public async Task SaveByInsertValuesAsync<T>(string databaseName, List<T> data)
         {
             PropertyInfo[] props = typeof(T).GetProperties();
 
@@ -126,6 +145,19 @@ namespace Adv.Tools.DataAccess.MySql
             using (IDbConnection connection = new MySqlConnection(_connectionString))
             {
                 await connection.ExecuteAsync(sqlQuery, parameters);
+            }
+        }
+        public async Task DeleteDataById<T>(string databaseName,int Id)
+        {
+            string sqlQuery = $"DELETE FROM {databaseName}.{nameof(T)} Where Id={Id}";
+
+            try
+            {
+                await DeleteData<T, dynamic>(sqlQuery, new { });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
         public async Task DeleteDataAllRows<T>(string databaseName)

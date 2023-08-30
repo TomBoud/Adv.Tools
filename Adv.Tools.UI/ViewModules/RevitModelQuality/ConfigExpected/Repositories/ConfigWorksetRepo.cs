@@ -21,7 +21,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Repositories
             _databaseName = databaseName;
         }
 
-        public void Add(ConfigWorksetModel configWorkset)
+        public void Add(ExpectedWorkset configWorkset)
         {
             throw new NotImplementedException();
         }
@@ -31,22 +31,17 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Repositories
             throw new NotImplementedException();
         }
 
-        public void Edit(ConfigWorksetModel configWorkset)
+        public void Edit(ExpectedWorkset configWorkset)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ConfigWorksetModel> GetAllWorksets()
+        public IEnumerable<ExpectedWorkset> GetAllWorksets()
         {
-            var results = _dataAccess.LoadDataSelectAll<ExpectedWorkset>(_databaseName);
-
-            foreach (var item in results.OrderByDescending(x => x.Id).ToList())
-            {
-                yield return new ConfigWorksetModel(item);
-            }
+            return _dataAccess.LoadDataSelectAll<ExpectedWorkset>(_databaseName);
         }
 
-        public IEnumerable<ConfigWorksetModel> GetByValue(string value)
+        public IEnumerable<ExpectedWorkset> GetByValue(string value)
         {
             throw new NotImplementedException();
         }

@@ -9,16 +9,56 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClosedXML.Excel;
 using ExcelDataReader;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Adv.Tools.UI.Common
 {
-    
+
     public class ExcelFilesHelper
     {
 
-        public List<T> GetFirstExcelTableAsList<T>(DataSet ds) where T : new()
+        //File Path
+        public string GetExcelFilePath()
         {
-            var dt = ds?.Tables[0];
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "xlsx files (*.xlsx)|*.xlsx";
+                openFileDialog.FilterIndex = 2;
+                openFileDialog.RestoreDirectory = true;
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    return openFileDialog.FileName;
+                }
+                return string.Empty;
+            }
+        }
+        public string GetSaveFolderPath()
+        {
+            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    return dialog.SelectedPath;
+                }
+
+                return string.Empty;
+            }
+
+        }
+
+        public FileStream GetExcelFileAsStream(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                return File.Open(filePath, FileMode.Open, FileAccess.Read);
+            }
+
+            return null;
+        }
+        public List<T> GetExcelTableAsList<T>(DataSet ds, string name) where T : new()
+        {
+            var dt = ds?.Tables[name];
             var result = new List<T>();
 
             if (dt is null)
@@ -44,14 +84,12 @@ namespace Adv.Tools.UI.Common
             }
             return result;
         }
-        public DataSet GetExcelFileAsDataSet(FileStream stream)
+        public DataSet GetExcelFileAsDataSet(Stream stream)
         {
-            //Get all user configurations from xls file
             var ds = new DataSet();
 
             using (var reader = ExcelReaderFactory.CreateReader(stream))
             {
-                ds.DataSetName = stream.Name;
                 ds = reader.AsDataSet(new ExcelDataSetConfiguration()
                 {
                     ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
@@ -62,21 +100,6 @@ namespace Adv.Tools.UI.Common
             }
 
             return ds;
-        }
-        public FileStream GetExcelFileAsFileStream()
-        {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "xlsx files (*.xlsx)|*.xlsx";
-                openFileDialog.FilterIndex = 2;
-                openFileDialog.RestoreDirectory = true;
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    return File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read);
-                }
-                return null;
-            }
         }
         public DataTable ConvertListToDataTable<T>(List<T> list)
         {
@@ -108,18 +131,11 @@ namespace Adv.Tools.UI.Common
 
             return dataTable;
         }
-
-        public void ExportDataTableAsExcelFile(DataTable dt)
+        public void ExportDataTableAsExcelFile(DataTable dt, string folderPath)
         {
-            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
-            {
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    XLWorkbook workBook = new XLWorkbook();
-                    workBook.AddWorksheet(dt);
-                    workBook.SaveAs($@"{dialog.SelectedPath}\{dt.TableName}.xlsx");
-                }
-            }
+            XLWorkbook workBook = new XLWorkbook();
+            workBook.AddWorksheet(dt);
+            workBook.SaveAs($@"{folderPath}\{dt.TableName}.xlsx");
         }
     }
 }

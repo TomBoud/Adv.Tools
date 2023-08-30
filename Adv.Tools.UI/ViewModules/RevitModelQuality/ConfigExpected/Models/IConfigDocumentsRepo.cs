@@ -8,10 +8,10 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 {
     public interface IConfigDocumentsRepo
     {
-        void Add(ConfigDocumentModel model);
-        void Edit(ConfigDocumentModel model);
+        void Add(ExpectedDocument model);
+        void Edit(ExpectedDocument model);
         void Delete(int id);
-        IEnumerable<ConfigDocumentModel> GetAllDocuments();
-        IEnumerable<ConfigDocumentModel> GetByValue(string value);
+        IEnumerable<ExpectedDocument> GetAllDocuments();
+        IEnumerable<ExpectedDocument> GetByValue(string value);
     }
 }

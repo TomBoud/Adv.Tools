@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 {
-    public class ConfigWorksetModel : IExpectedWorkset
+    public class ExpectedWorkset : IExpectedWorkset
     {
         //Fields
         private int id;
@@ -20,18 +20,6 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         private string docGuid;
         private string docDiscipline;
         
-        //Constructor
-        public ConfigWorksetModel(IExpectedWorkset workset)
-        {
-            id = workset.Id;
-            name = workset.WorksetName;
-            catName = workset.CategoryName;
-            catId = workset.CategoryId;
-            docName = workset.ModelName;
-            docGuid = workset.ModelGuid;
-            docDiscipline = workset.Discipline;
-        }
-
         //Properties
         [DisplayName("ID")]
         [Required(ErrorMessage = "Id is required")]

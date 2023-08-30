@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Adv.Tools.Abstractions.Revit;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,10 +29,13 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         event EventHandler AddNewEvent;
         event EventHandler EditedEvent;
         event EventHandler DeleteEvent;
+        event EventHandler CancelEvent;
+        event EventHandler SaveEvent;
 
         //Methods
         void SetBindingSource(BindingSource bindingList);
-
+        void SetDocumentNames(IEnumerable<IDocument> documents);
+        void SetDisciplineTypes();
         void ShowThisUI();
     }
 }

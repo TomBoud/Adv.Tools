@@ -45,7 +45,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
 
-        public Task RunReportBusinessLogic()
+        public void RunReportBusinessLogic()
         {
             var expectedModel = DocumentObjects.Cast<IExpectedDocument>()
               .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
@@ -70,7 +70,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             }
 
             ResultObjects = resultObjects;
-            return Task.CompletedTask;
         }
     }
 }
