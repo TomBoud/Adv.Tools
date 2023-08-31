@@ -25,6 +25,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         string Message { get; set; }
 
         //Event
+        event EventHandler ModelSelectEvent;
         event EventHandler SearchEvent;
         event EventHandler AddNewEvent;
         event EventHandler EditedEvent;

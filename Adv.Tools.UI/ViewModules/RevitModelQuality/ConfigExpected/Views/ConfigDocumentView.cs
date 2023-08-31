@@ -23,21 +23,48 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
             InitializeComponent();
             AssociateAndRaiseViewEvents();
 
-            tabControl1.TabPages.Remove(details_tabPage);
+            tabControl.TabPages.Remove(details_tabPage);
             dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         //Properties
-        public int Id { get; set; }
-        public string ModelName { get => modelName_textBox.Text; set => modelName_textBox.Text = value; }
-        public string ModelGuid { get => modelGuid_textBox.Text; set => modelGuid_textBox.Text = value; }
-        public string Discipline { get; set; }
-        public string HubId { get => hubId_textBox.Text; set => hubId_textBox.Text = value; }
-        public string ProjectId { get => projectId_textBox.Text; set=> projectId_textBox.Text = value; }
-        public string FolderId { get => folderId_textBox.Text; set => folderId_textBox.Text = value; }
+        public int Id 
+        {
+            get => int.Parse(itemId_textBox.Text);
+            set => itemId_textBox.Text = value.ToString();
+        }
+        public string ModelName 
+        { 
+            get => modelName_comboBox.Text;
+            set => modelName_comboBox.Text = value; 
+        }
+        public string ModelGuid 
+        { 
+            get => modelGuid_textBox.Text; 
+            set => modelGuid_textBox.Text = value; 
+        }
+        public string Discipline 
+        {
+            get => discipline_comboBox.Text;
+            set => discipline_comboBox.Text = value;
+        }
+        public string HubId 
+        { 
+            get => hubId_textBox.Text;
+            set => hubId_textBox.SelectedText = value; 
+        }
+        public string ProjectId 
+        { 
+            get => projectId_textBox.Text; 
+            set=> projectId_textBox.Text = value; 
+        }
+        public string FolderId 
+        { 
+            get => folderId_textBox.Text; 
+            set => folderId_textBox.Text = value; 
+        }
         public string PositionSource { get; set; }
         public string PositionSourceGuid { get; set; }
-
 
         public string SearchValue { get => search_textBox.Text; set => search_textBox.Text = value; }
         public bool IsEdit { get; set; }
@@ -45,8 +72,8 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         public bool IsSuccessful { get; set; }
         public string Message { get; set; }
 
-
         //Events
+        public event EventHandler ModelSelectEvent;
         public event EventHandler SearchEvent;
         public event EventHandler AddNewEvent;
         public event EventHandler EditedEvent;
@@ -55,27 +82,24 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         public event EventHandler SaveEvent;
 
         //Methods
-
         public void SetBindingSource(BindingSource itemsList)
         {
             dataGridView.DataSource = itemsList;
         }
         public void SetDisciplineTypes()
         {
-            discipline_comboBox.DataSource = Enum.GetValues(typeof(DisciplineType)).Cast<DisciplineType>().Select(x => x.ToString()).ToArray();
-            discipline_comboBox.SelectedIndex = -1;
+            discipline_comboBox.Items.AddRange(Enum.GetValues(typeof(DisciplineType))
+                .Cast<DisciplineType>().Select(x => x.ToString()).ToArray());
         }
         public void SetDocumentNames(IEnumerable<IDocument> documents)
         {
-            coordinates_comboBox.DataSource = documents.Select(x => x.Title).ToArray();
-            coordinates_comboBox.SelectedIndex = -1;
+            modelName_comboBox.Items.AddRange(documents.Select(x => x.Title).ToArray());
+            coordinates_comboBox.Items.AddRange(documents.Select(x => x.Title).ToArray());
         }
-
         public void ShowThisUI()
         {
             this.Show();
         }
-
         public static ConfigDocumentView GetInstance(Form parentMdiContainer)
         {
             if (instance is null || instance.IsDisposed)
@@ -94,9 +118,15 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
             return instance;
         }
 
-
         private void AssociateAndRaiseViewEvents()
         {
+
+            //Document selection
+            modelName_comboBox.SelectedIndexChanged += delegate
+            {
+                ModelSelectEvent?.Invoke(this, EventArgs.Empty);
+            };
+
             //Search for settings
             search_button.Click += delegate { SearchEvent?.Invoke(this, EventArgs.Empty); };
             search_textBox.KeyUp += (s, e) =>
@@ -104,14 +134,28 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
                 SearchEvent?.Invoke(this, EventArgs.Empty);
             };
 
-            //Save Settings Changes
+            //Cancel settings changes
+            cancel_button.Click += delegate
+            {
+                var result = MessageBox.Show("Are you sure you want to abort the changes?", "Question",
+                   MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result is DialogResult.Yes)
+                {
+                    CancelEvent?.Invoke(this, EventArgs.Empty);
+                    tabControl.TabPages.Remove(details_tabPage);
+                    tabControl.TabPages.Add(display_tabPage);
+                }
+            };
+
+            //Save settings changes
             save_button.Click += delegate
             {
                 SaveEvent?.Invoke(this, EventArgs.Empty);
                 if (IsSuccessful)
                 {
-                    tabControl1.TabPages.Remove(details_tabPage);
-                    tabControl1.TabPages.Add(display_tabPage);
+                    tabControl.TabPages.Remove(details_tabPage);
+                    tabControl.TabPages.Add(display_tabPage);
                 }
                 MessageBox.Show(Message);
             };
@@ -120,8 +164,10 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
             add_button.Click += delegate 
             { 
                 AddNewEvent?.Invoke(this, EventArgs.Empty);
-                tabControl1.TabPages.Remove(display_tabPage);
-                tabControl1.TabPages.Add(details_tabPage);
+                
+                tabControl.TabPages.Remove(display_tabPage);
+                tabControl.TabPages.Add(details_tabPage);
+                
                 details_tabPage.Text = "Add New Linked Model";
             };
 
@@ -129,8 +175,12 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
             edit_button.Click += delegate
             {
                 EditedEvent?.Invoke(this, EventArgs.Empty);
-                tabControl1.TabPages.Remove(display_tabPage);
-                tabControl1.TabPages.Add(details_tabPage);
+                
+                tabControl.TabPages.Remove(display_tabPage);
+                tabControl.TabPages.Add(details_tabPage);
+                modelName_comboBox.Enabled = false;
+
+                modelNameComment_label.Text = "(Read-Only)";
                 details_tabPage.Text = "Edit Selected Model Settings";
             };
 
@@ -148,7 +198,5 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 
             };
         }
-
-        
     }
 }

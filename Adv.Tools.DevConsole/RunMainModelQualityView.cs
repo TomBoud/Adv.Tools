@@ -19,12 +19,13 @@ namespace Adv.Tools.DevConsole
         {
 
             //This is for testing only
-            var doc = new RevitDocument();
-            doc.Title = "Test Model";
-
             List<object> list = new List<object>()
             {
-                doc
+                new RevitDocument(){ Title = "YOH_EL_R22" },
+                new RevitDocument(){ Title = "YOH_ME_R22" },
+                new RevitDocument(){ Title = "YOH_AR_R22" },
+                new RevitDocument(){ Title = "YOH_PL_R22" },
+                new RevitDocument(){ Title = "YOH_ST_R22" },
             };
 
             var mySql = new MySqlDataAccess("Server=192.168.10.1;Port=3306;user id=Admin;password=QAZ56okm;CharSet=utf8;");

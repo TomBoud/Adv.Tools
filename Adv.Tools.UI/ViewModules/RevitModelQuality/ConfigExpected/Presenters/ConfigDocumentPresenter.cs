@@ -4,6 +4,7 @@ using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Repositories;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views;
 using DocumentFormat.OpenXml.EMMA;
+using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,28 +21,49 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
         private IConfigDocumentView view;
         private IConfigDocumentsRepo reposetory;
         private BindingSource bindingSource;
-        private IEnumerable<Models.ExpectedDocument> bindingList;
+        private IEnumerable<ExpectedDocument> bindingList;
+        private IEnumerable revitObjects;
 
         //Constructor
         public ConfigDocumentPresenter(IConfigDocumentView view, IConfigDocumentsRepo repo, IEnumerable revitObjects)
         {
             //Construct the presenter
+            this.revitObjects = revitObjects;
             this.bindingSource = new BindingSource();
             this.view = view;
             this.reposetory = repo;
             //Subscribe event handlers
-            this.view.SearchEvent += SearchReport;
+            this.view.SearchEvent += SearchDocument;
             this.view.AddNewEvent += AddNewEvent;
             this.view.EditedEvent += EditedEvent;
             this.view.SaveEvent += SaveEvent;
             this.view.DeleteEvent += DeleteEvent;
             this.view.CancelEvent += CancelEvent;
-            //Set reports binding source
+            this.view.ModelSelectEvent += ModelSelectEvent;
+            //Set binding source
             this.view.SetBindingSource(this.bindingSource);
             this.view.SetDisciplineTypes();
             this.view.SetDocumentNames(revitObjects.OfType<IDocument>());
-            //Load reposts list view
+            //Load active settings
             LoadAllDocumentsList();
+        }
+
+        private void ModelSelectEvent(object sender, EventArgs e)
+        {
+            var doc = revitObjects?.OfType<IDocument>()
+                .FirstOrDefault(x=> x.Title.Equals(view.ModelName));
+
+            if(doc is null)
+            {
+                CleanViewFields();
+            }
+            else
+            {
+                view.ProjectId = doc.ProjectId.ToString();
+                view.HubId = doc.HubId;
+                view.FolderId = doc.FolderId;
+                view.ModelGuid = doc.Guid.ToString();
+            }
         }
 
         private void CancelEvent(object sender, EventArgs e)
@@ -61,6 +83,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
             view.ProjectId = selected.ProjectId;
             view.HubId = selected.HubId;
             view.PositionSource = selected.PositionSource;
+            
             view.IsEdit = true;
 
         }
@@ -131,6 +154,16 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
 
         private void AddNewEvent(object sender, EventArgs e)
         {
+
+            view.Id = 0;
+            //view.ModelName = selected.ModelName;
+            //view.ModelGuid = selected.ModelGuid;
+            //view.Discipline = selected.Discipline;
+            //view.FolderId = selected.FolderId;
+            //view.ProjectId = selected.ProjectId;
+            //view.HubId = selected.HubId;
+            //view.PositionSource = selected.PositionSource;
+
             view.IsEdit = false;
         }
 
@@ -140,7 +173,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
             bindingList = reposetory.GetAllDocuments();
             bindingSource.DataSource = bindingList;
         }
-        private void SearchReport(object sender, EventArgs e)
+        private void SearchDocument(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(this.view.SearchValue))
                 bindingList = reposetory.GetAllDocuments();

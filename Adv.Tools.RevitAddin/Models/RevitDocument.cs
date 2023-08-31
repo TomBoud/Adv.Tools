@@ -11,12 +11,13 @@ namespace Adv.Tools.RevitAddin.Models
 {
     public class RevitDocument : IDocument
     {
-        private readonly Document _document;
 
         // Private fields
         private string _title;
         private Guid _guid;
-        private Guid _projectGuid;
+        private Guid _projectId;
+        private string _folderId;
+        private string _hubId;
         private string _dbProjectId;
         private double _eastWest;
         private double _northSouth;
@@ -34,15 +35,31 @@ namespace Adv.Tools.RevitAddin.Models
         private string _clientName;
         private string _buildingName;
 
+        public RevitDocument() { }
 
-        public RevitDocument()
-        {
-
-        }
         public RevitDocument(Document document)
         {
-            _document = document;
-            _dbProjectId = GetDocumentProjectGuidAsValidDbName();
+            _title = document.Title;
+            _guid = document.GetCloudModelPath().GetModelGUID();
+            _projectId = document.GetCloudModelPath().GetProjectGUID();
+            _dbProjectId = Regex.Replace(_projectId.ToString(), "[^a-zA-Z0-9_]", "");
+            _folderId = document.GetCloudFolderId(true);
+            _hubId = document.GetHubId();
+            _eastWest = document.ActiveProjectLocation.GetProjectPosition(XYZ.Zero).EastWest;
+            _northSouth = document.ActiveProjectLocation.GetProjectPosition(XYZ.Zero).NorthSouth;
+            _elevation = document.ActiveProjectLocation.GetProjectPosition(XYZ.Zero).Elevation;
+            _angle = document.ActiveProjectLocation.GetProjectPosition(XYZ.Zero).Angle;
+            _latitude = document.SiteLocation.Latitude;
+            _longitude = document.SiteLocation.Longitude;
+            _name = document.ProjectInformation.Name;
+            _number = document.ProjectInformation.Number;
+            _status = document.ProjectInformation.Status;
+            _address = document.ProjectInformation.Address;
+            _author = document.ProjectInformation.Author;
+            _organizationName = document.ProjectInformation.OrganizationName;
+            _organizationDescription = document.ProjectInformation.OrganizationDescription;
+            _clientName = document.ProjectInformation.ClientName;
+            _buildingName = document.ProjectInformation.BuildingName;
         }
 
         // Public properties
@@ -58,10 +75,20 @@ namespace Adv.Tools.RevitAddin.Models
             set => _guid = value;
         }
 
-        public Guid ProjectGuid
+        public Guid ProjectId
         {
-            get => _projectGuid;
-            set => _projectGuid = value;
+            get => _projectId;
+            set => _projectId = value;
+        }
+        public string FolderId 
+        {
+            get => _folderId;
+            set => _folderId = value;
+        }
+        public string HubId 
+        {
+            get => _hubId;
+            set => _hubId = value;
         }
 
         public string DbProjectId
@@ -160,10 +187,5 @@ namespace Adv.Tools.RevitAddin.Models
             set => _buildingName = value;
         }
 
-        private string GetDocumentProjectGuidAsValidDbName()
-        {
-            var projectGuid = _document.GetCloudModelPath().GetProjectGUID();
-            return Regex.Replace(projectGuid.ToString(), "[^a-zA-Z0-9_]", "");
-        }
     }
 }

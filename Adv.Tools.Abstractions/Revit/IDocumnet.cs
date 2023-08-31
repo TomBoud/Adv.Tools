@@ -12,7 +12,9 @@ namespace Adv.Tools.Abstractions.Revit
         //Project Identity
         string Title { get; set; }
         Guid Guid { get; set; }
-        Guid ProjectGuid { get; set; }
+        Guid ProjectId { get; set; }
+        string FolderId { get; set; }
+        string HubId { get; set; }
         string DbProjectId { get; set; }
 
         //Project Position
