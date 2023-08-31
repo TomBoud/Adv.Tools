@@ -12,6 +12,8 @@ namespace Adv.Tools.RevitAddin.Models
     public class RevitDocument : IDocument
     {
 
+        private readonly Document _document;
+
         // Private fields
         private string _title;
         private Guid _guid;
@@ -39,6 +41,7 @@ namespace Adv.Tools.RevitAddin.Models
 
         public RevitDocument(Document document)
         {
+            _document = document;
             _title = document.Title;
             _guid = document.GetCloudModelPath().GetModelGUID();
             _projectId = document.GetCloudModelPath().GetProjectGUID();

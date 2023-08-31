@@ -31,6 +31,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         event EventHandler AddNewEvent;
         event EventHandler EditedEvent;
         event EventHandler DeleteEvent;
+        event EventHandler SaveEvent;
 
         //Methods
         void SetBindingSource(BindingSource bindingList);

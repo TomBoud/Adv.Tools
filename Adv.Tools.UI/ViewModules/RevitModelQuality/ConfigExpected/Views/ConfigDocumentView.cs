@@ -74,6 +74,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 
         //Events
         public event EventHandler ModelSelectEvent;
+        public event EventHandler ExportEvent;
         public event EventHandler SearchEvent;
         public event EventHandler AddNewEvent;
         public event EventHandler EditedEvent;
@@ -120,6 +121,11 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 
         private void AssociateAndRaiseViewEvents()
         {
+            //Export settings
+            export_button.Click += delegate
+            {
+                ExportEvent?.Invoke(this, EventArgs.Empty);
+            };
 
             //Document selection
             modelName_comboBox.SelectedIndexChanged += delegate
@@ -167,7 +173,8 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
                 
                 tabControl.TabPages.Remove(display_tabPage);
                 tabControl.TabPages.Add(details_tabPage);
-                
+                modelName_comboBox.Enabled = true;
+
                 details_tabPage.Text = "Add New Linked Model";
             };
 
@@ -195,7 +202,6 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
                     DeleteEvent?.Invoke(this, EventArgs.Empty);
                     MessageBox.Show(Message);
                 }
-
             };
         }
     }

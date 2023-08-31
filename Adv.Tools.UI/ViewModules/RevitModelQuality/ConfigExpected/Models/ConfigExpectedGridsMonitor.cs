@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 {
-    public class ConfigGridMonitorModel : IExpectedGridsMonitor
+    public class ExpectedGridsMonitor : IExpectedGridsMonitor
     {
         private int id;
         private string modelName;
@@ -18,7 +18,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         private string sourceModelName;
         private string sourceModelGuid;
 
-        public ConfigGridMonitorModel(IExpectedGridsMonitor gridMonitor)
+        public ExpectedGridsMonitor(IExpectedGridsMonitor gridMonitor)
         {
             id = gridMonitor.Id;
             modelName = gridMonitor.ModelName;

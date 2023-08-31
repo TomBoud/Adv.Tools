@@ -1,7 +1,5 @@
 ﻿using Adv.Tools.Abstractions.Common;
-using Adv.Tools.UI.DataModels.RevitModelQuality;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models;
-using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,38 +8,38 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Repositories
 {
-    public class ConfigWorksetRepo : IConfigWorksetsRepo
+    public class ConfigGridsRepo : IConfigGridsMonitorRepo
     {
         private readonly IDbDataAccess _dataAccess;
         private readonly string _databaseName;
 
-        public ConfigWorksetRepo(IDbDataAccess dataAccess, string databaseName)
+        public ConfigGridsRepo(IDbDataAccess dataAccess, string databaseName)
         {
             _dataAccess = dataAccess;
             _databaseName = databaseName;
         }
 
-        public void Add(ExpectedWorkset configWorkset)
+        public void Add(ExpectedGridsMonitor configWorkset)
         {
             throw new NotImplementedException();
         }
 
         public async void Delete(int id)
         {
-            await _dataAccess.DeleteDataById<ExpectedWorkset>(_databaseName, id);
+            await _dataAccess.DeleteDataById<ExpectedGridsMonitor>(_databaseName, id);
         }
 
-        public void Edit(ExpectedWorkset configWorkset)
+        public void Edit(ExpectedGridsMonitor configWorkset)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ExpectedWorkset> GetAllViewData()
+        public IEnumerable<ExpectedGridsMonitor> GetAllViewData()
         {
-            return _dataAccess.LoadDataSelectAll<ExpectedWorkset>(_databaseName);
+            return _dataAccess.LoadDataSelectAll<ExpectedGridsMonitor>(_databaseName);
         }
 
-        public IEnumerable<ExpectedWorkset> GetByValue(string value)
+        public IEnumerable<ExpectedGridsMonitor> GetByValue(string value)
         {
             throw new NotImplementedException();
         }

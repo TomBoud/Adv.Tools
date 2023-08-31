@@ -10,13 +10,13 @@ using System.Windows.Forms;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 {
-    public partial class ConfigWorksetView : Form, IConfigWorksetView
+    public partial class ConfigGridsMonitorView : Form, IConfigGridsMonitorView
     {
         //Singleton
-        private static ConfigWorksetView instance;
+        private static ConfigGridsMonitorView instance;
 
         //Constructor
-        public ConfigWorksetView()
+        public ConfigGridsMonitorView()
         {
             InitializeComponent();
             AssociateAndRaiseViewEvents();
@@ -27,26 +27,19 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         public string ModelName { get; set; }
         public string ModelGuid { get; set; }
         public string Discipline { get; set; }
-        public string WorksetName { get; set; }
-        public string CategoryName { get; set; }
-        public string CategoryId { get; set; }
+        public string SourceModelName { get; set; }
+        public string SourceModelGuid { get; set; }
 
-
-        public string SearchValue { get => search_textBox.Text; set => search_textBox.Text = value; }
+        public string SearchValue { get; set; }
         public bool IsEdit { get; set; }
-        public bool IsEnabled { get; set; }
         public bool IsSuccessful { get; set; }
         public string Message { get; set; }
-        public List<string> Disciplines { get; set; }
 
-
-        //Events
+        //Event
         public event EventHandler DefaultEvent;
         public event EventHandler ExportEvent;
         public event EventHandler ImportEvent;
         public event EventHandler SearchEvent;
-        public event EventHandler AddNewEvent;
-        public event EventHandler EditedEvent;
         public event EventHandler DeleteEvent;
         public event EventHandler SaveEvent;
 
@@ -61,11 +54,11 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
             this.Show();
         }
 
-        public static ConfigWorksetView GetInstance(Form parentMdiContainer)
+        public static ConfigGridsMonitorView GetInstance(Form parentMdiContainer)
         {
-            if(instance is null || instance.IsDisposed)
+            if (instance is null || instance.IsDisposed)
             {
-                instance = new ConfigWorksetView();
+                instance = new ConfigGridsMonitorView();
                 instance.MdiParent = parentMdiContainer;
                 instance.FormBorderStyle = FormBorderStyle.None;
                 instance.Dock = DockStyle.Fill;
@@ -84,27 +77,27 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         {
 
             //Default Event
-            default_button.Click += delegate 
-            { 
-                DefaultEvent?.Invoke(this, EventArgs.Empty); 
+            default_button.Click += delegate
+            {
+                DefaultEvent?.Invoke(this, EventArgs.Empty);
             };
 
             //Export Event
-            export_button.Click += delegate 
-            { 
-                ExportEvent?.Invoke(this, EventArgs.Empty); 
+            export_button.Click += delegate
+            {
+                ExportEvent?.Invoke(this, EventArgs.Empty);
             };
-            
+
             //Import Event
-            import_button.Click += delegate 
-            { 
-                ImportEvent?.Invoke(this, EventArgs.Empty); 
+            import_button.Click += delegate
+            {
+                ImportEvent?.Invoke(this, EventArgs.Empty);
             };
-            
+
             //Search Event
-            search_button.Click += delegate 
-            { 
-                SearchEvent?.Invoke(this, EventArgs.Empty); 
+            search_button.Click += delegate
+            {
+                SearchEvent?.Invoke(this, EventArgs.Empty);
             };
             search_textBox.KeyUp += (s, e) =>
             {

@@ -12,7 +12,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         void Add(ExpectedWorkset model);
         void Edit(ExpectedWorkset model);
         void Delete(int id);
-        IEnumerable<ExpectedWorkset> GetAllWorksets();
+        IEnumerable<ExpectedWorkset> GetAllViewData();
         IEnumerable<ExpectedWorkset> GetByValue(string value);
     }
 }

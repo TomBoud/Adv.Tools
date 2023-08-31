@@ -14,29 +14,38 @@ namespace Adv.Tools.RevitAddin.Models
     {
         private readonly Element _element;
 
-        public RevitElement(Element elemant)
+        #region Private Fields
+        private string _name;
+        private string _levelName;
+        private string _categoryName;
+        private string _documentName;
+        private long _categoryId;
+        private string _worksetName;
+        private long _elementId;
+        private long _levelId;
+        private bool _isMonitoring;
+        private long _monitoredId;
+        private IDocument _monitoredDoc;
+        #endregion
+        
+        public RevitElement() { }
+        public RevitElement(Element element)
         {
-            _element = elemant;
+            _element = element;
+            _name = element.Name;
+            _levelName = GetLevelName();
+            _categoryName = element?.Category?.Name ?? string.Empty;
+            _documentName = element.Document.Title;
+            _categoryId = GetCategoryId();
+            _worksetName = element.get_Parameter(BuiltInParameter.ELEM_PARTITION_PARAM).AsValueString();
+            _elementId = GetElementId();
+            _levelId = GetLevelId();
+            _isMonitoring = element.IsMonitoringLinkElement();
+            _monitoredId = GetMonitoredLinkElementIds();
+            _monitoredDoc = GetMonitoredDocument();
         }
 
-        #region Public Properties
-        public string Name { get { return _element.Name; } set { Name = value; } }
-        public string LevelName { get { return GetLevelName(); } set { LevelName = value; } }
-        public string CategoryName { get { return _element?.Category?.Name ?? string.Empty; } set { CategoryName = value; } }
-        public string DocumentName { get { return _element.Document.Title; } set { DocumentName = value; } }
-        public long CategoryId { get => GetCategoryId(); set { CategoryId = value; } }
-        public string WorksetName { get { return _element.get_Parameter(BuiltInParameter.ELEM_PARTITION_PARAM).AsValueString(); } set { WorksetName = value; } }
-
-        public long ElementId { get => GetElementId(); set { ElementId = value; } }
-        public long LevelId  { get => GetLevelId(); set  { ElementId = value; } }
-
-        public bool IsMonitoring { get => _element.IsMonitoringLinkElement(); set => IsMonitoring = value; }
-        public long MonitoredId { get => GetMonitoredLinkElementIds(); set => MonitoredId = value; }
-        public IDocument MonitoredDoc { get => GetMonitoredDocumnet(); set=> MonitoredDoc = value; }
-        #endregion
-
-
-        #region Provate Methods
+        #region Private Methods
         private string GetLevelName()
         {
             Level level = _element.Document.GetElement(_element.LevelId) as Level;
@@ -54,7 +63,7 @@ namespace Adv.Tools.RevitAddin.Models
         {
 
             #if REVIT2023 || REVIT2022 || REVIT2021 || REVIT2020
-                return Convert.ToInt64(_element.Id.IntegerValue);
+            return Convert.ToInt64(_element.Id.IntegerValue);
             #else
 
             return _element.Id.Value;
@@ -64,7 +73,7 @@ namespace Adv.Tools.RevitAddin.Models
         private long GetLevelId()
         {
             #if REVIT2023 || REVIT2022 || REVIT2021 || REVIT2020
-                return Convert.ToInt64(_element.LevelId.IntegerValue);
+            return Convert.ToInt64(_element.LevelId.IntegerValue);
             #else
             return _element.LevelId.Value;
             #endif
@@ -72,7 +81,7 @@ namespace Adv.Tools.RevitAddin.Models
         private long GetCategoryId()
         {
             #if REVIT2023 || REVIT2022 || REVIT2021 || REVIT2020
-                return Convert.ToInt64(_element.Category.Id.IntegerValue);
+            return Convert.ToInt64(_element.Category.Id.IntegerValue);
             #else
             return _element.Category.Id.Value;
             #endif
@@ -83,12 +92,12 @@ namespace Adv.Tools.RevitAddin.Models
             return Convert.ToInt64(_element.GetMonitoredLinkElementIds().FirstOrDefault().IntegerValue);
             #else
             return _element.GetMonitoredLinkElementIds().FirstOrDefault().Value;
-            #endif          
+            #endif
         }
-        private IDocument GetMonitoredDocumnet()
+        private IDocument GetMonitoredDocument()
         {
             //Skip the search if there is no active monitor
-            if(_element.IsMonitoringLinkElement())
+            if (_element.IsMonitoringLinkElement())
             {
                 //Get the first monitored element Id
                 var MonitoredElementId = _element.GetMonitoredLinkElementIds().FirstOrDefault();
@@ -108,7 +117,7 @@ namespace Adv.Tools.RevitAddin.Models
                     //Try to cast the file as RevitLinkType object
                     var rvtLinkType = file as RevitLinkType;
                     if (rvtLinkType is null) { continue; }
-                    
+
                     //Try to get the monitored element from the casted documnet
                     var MonitoredElement = rvtLinkType.Document.GetElement(MonitoredElementId);
                     if (MonitoredElement is null) { continue; }
@@ -121,5 +130,74 @@ namespace Adv.Tools.RevitAddin.Models
             return null;
         }
         #endregion
+
+        #region Public Properties
+        public string Name
+        {
+            get => _name;
+            set => _name = value;
+        }
+
+        public string LevelName
+        {
+            get => _levelName;
+            set => _levelName = value;
+        }
+
+        public string CategoryName
+        {
+            get => _categoryName;
+            set => _categoryName = value;
+        }
+
+        public string DocumentName
+        {
+            get => _documentName;
+            set => _documentName = value;
+        }
+
+        public long CategoryId
+        {
+            get => _categoryId;
+            set => _categoryId = value;
+        }
+
+        public string WorksetName
+        {
+            get => _worksetName;
+            set => _worksetName = value;
+        }
+
+        public long ElementId
+        {
+            get => _elementId;
+            set => _elementId = value;
+        }
+
+        public long LevelId
+        {
+            get => _levelId;
+            set => _levelId = value;
+        }
+
+        public bool IsMonitoring
+        {
+            get => _isMonitoring;
+            set => _isMonitoring = value;
+        }
+
+        public long MonitoredId
+        {
+            get => _monitoredId;
+            set => _monitoredId = value;
+        }
+
+        public IDocument MonitoredDoc
+        {
+            get => _monitoredDoc;
+            set => _monitoredDoc = value;
+        }
+        #endregion
+
     }
 }

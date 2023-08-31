@@ -113,7 +113,7 @@
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\ConfigCleanViewModel.cs" />
-    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\ConfigGridMonitorModel.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\ConfigExpectedGridsMonitor.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\ConfigLevelMonitorModel.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\ConfigProjectInfoModel.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\ConfigSharedParamModel.cs" />
@@ -130,6 +130,7 @@
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Presenters\ConfigExpectedMainPresenter.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Presenters\ConfigWorksetPresenter.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Repositories\ConfigDocumentRepo.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Repositories\ConfigGridsRepo.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Repositories\ConfigWorksetRepo.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigDocumentView.cs">
       <SubType>Form</SubType>
@@ -143,6 +144,12 @@
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigExpectedMainView.Designer.cs">
       <DependentUpon>ConfigExpectedMainView.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigGridsMonitorView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigGridsMonitorView.Designer.cs">
+      <DependentUpon>ConfigGridsMonitorView.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigWorksetView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,6 +158,7 @@
     </Compile>
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\IConfigDocumentView.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\IConfigExpectedMainView.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\IConfigGridsMonitorView.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\IConfigWorksetView.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigReports\Models\ConfigReportModel.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigReports\Models\IConfigReportRepo.cs" />
@@ -181,6 +189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigExpectedMainView.resx">
       <DependentUpon>ConfigExpectedMainView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigGridsMonitorView.resx">
+      <DependentUpon>ConfigGridsMonitorView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigWorksetView.resx">
       <DependentUpon>ConfigWorksetView.cs</DependentUpon>

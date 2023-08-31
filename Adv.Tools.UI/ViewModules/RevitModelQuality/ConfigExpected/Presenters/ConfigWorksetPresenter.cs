@@ -1,6 +1,7 @@
 ﻿
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -32,20 +33,39 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
             this.reposetory = repo;
             //Subscribe event handlers
             this.view.DefaultEvent += DefaultSettings;
-            this.view.ExportEvent += ExportWorksets;
+            this.view.ExportEvent += ExportEvent;
             this.view.SearchEvent += SearchWorkset;
             this.view.ImportEvent += ImportSettings;
+            this.view.DeleteEvent += DeleteEvent;
             //Set reports binding source
             this.view.SetBindingSource(this.bindingSource);
             //Load reposts list view
-            LoadAllWorksetsList();
+            LoadAllViewData();
         }
 
+
         //Methods
-        private void LoadAllWorksetsList()
+        private void LoadAllViewData()
         {
-            bindingList = reposetory.GetAllWorksets();
+            bindingList = reposetory.GetAllViewData();
             bindingSource.DataSource = bindingList;
+        }
+
+        private void DeleteEvent(object sender, EventArgs e)
+        {
+            try
+            {
+                var selected = (ExpectedDocument)bindingSource.Current;
+                reposetory.Delete(selected.Id);
+                view.IsSuccessful = true;
+                view.Message = "";
+                LoadAllViewData();
+            }
+            catch (Exception ex)
+            {
+                view.IsSuccessful = false;
+                view.Message = ex.Message;
+            }
         }
 
         private void DefaultSettings(object sender, EventArgs e)
@@ -65,7 +85,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
             bindingSource.DataSource = bindingList;
         }
 
-        private void ExportWorksets(object sender, EventArgs e)
+        private void ExportEvent(object sender, EventArgs e)
         {
             var helper = new ExcelFilesHelper();
             var folder = helper.GetSaveFolderPath();
@@ -94,7 +114,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
         private void SearchWorkset(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(this.view.SearchValue))
-                bindingList = reposetory.GetAllWorksets();
+                bindingList = reposetory.GetAllViewData();
 
             else bindingList = reposetory.GetByValue(this.view.SearchValue);
 

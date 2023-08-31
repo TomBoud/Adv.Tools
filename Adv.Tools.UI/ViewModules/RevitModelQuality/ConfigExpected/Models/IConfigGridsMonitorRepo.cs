@@ -8,10 +8,10 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 {
     public interface IConfigGridsMonitorRepo
     {
-        void Add(ConfigGridMonitorModel model);
-        void Edit(ConfigGridMonitorModel model);
+        void Add(ExpectedGridsMonitor model);
+        void Edit(ExpectedGridsMonitor model);
         void Delete(int id);
-        IEnumerable<ConfigGridMonitorModel> GetAllWorksets();
-        IEnumerable<ConfigGridMonitorModel> GetByValue(string value);
+        IEnumerable<ExpectedGridsMonitor> GetAllViewData();
+        IEnumerable<ExpectedGridsMonitor> GetByValue(string value);
     }
 }

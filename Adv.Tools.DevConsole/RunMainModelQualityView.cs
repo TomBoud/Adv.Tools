@@ -26,6 +26,7 @@ namespace Adv.Tools.DevConsole
                 new RevitDocument(){ Title = "YOH_AR_R22" },
                 new RevitDocument(){ Title = "YOH_PL_R22" },
                 new RevitDocument(){ Title = "YOH_ST_R22" },
+                new RevitElement() { Name = "TestElement"}
             };
 
             var mySql = new MySqlDataAccess("Server=192.168.10.1;Port=3306;user id=Admin;password=QAZ56okm;CharSet=utf8;");

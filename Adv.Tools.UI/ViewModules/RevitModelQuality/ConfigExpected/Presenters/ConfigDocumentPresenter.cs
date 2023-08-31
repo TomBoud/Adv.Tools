@@ -1,4 +1,5 @@
 ﻿using Adv.Tools.Abstractions.Revit;
+using Adv.Tools.UI.Common;
 using Adv.Tools.UI.DataModels.RevitModelQuality;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Repositories;
@@ -34,6 +35,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
             this.reposetory = repo;
             //Subscribe event handlers
             this.view.SearchEvent += SearchDocument;
+            this.view.ExportEvent += ExportEvent;
             this.view.AddNewEvent += AddNewEvent;
             this.view.EditedEvent += EditedEvent;
             this.view.SaveEvent += SaveEvent;
@@ -48,6 +50,20 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
             LoadAllDocumentsList();
         }
 
+        private void ExportEvent(object sender, EventArgs e)
+        {
+            var helper = new ExcelFilesHelper();
+            var folder = helper.GetSaveFolderPath();
+
+            if (string.IsNullOrEmpty(folder) is false)
+            {
+                var source = bindingSource.List as IEnumerable<ExpectedDocument>;
+                var table = helper.ConvertListToDataTable(source.ToList());
+
+                helper.ExportDataTableAsExcelFile(table, folder);
+            }
+        }
+         
         private void ModelSelectEvent(object sender, EventArgs e)
         {
             var doc = revitObjects?.OfType<IDocument>()
@@ -154,16 +170,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
 
         private void AddNewEvent(object sender, EventArgs e)
         {
-
             view.Id = 0;
-            //view.ModelName = selected.ModelName;
-            //view.ModelGuid = selected.ModelGuid;
-            //view.Discipline = selected.Discipline;
-            //view.FolderId = selected.FolderId;
-            //view.ProjectId = selected.ProjectId;
-            //view.HubId = selected.HubId;
-            //view.PositionSource = selected.PositionSource;
-
             view.IsEdit = false;
         }
 
@@ -181,7 +188,6 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
             else bindingList = reposetory.GetByValue(this.view.SearchValue);
 
             bindingSource.DataSource = bindingList;
-
         }
     }
 }
