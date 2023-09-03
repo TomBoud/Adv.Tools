@@ -10,6 +10,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 {
     public interface IConfigSharedParamView
     {
+        //Properties - Fields
         int Id { get; set; }
         string ModelName { get; set; }
         string ModelGuid { get; set; }

@@ -9,7 +9,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 {
     public interface IConfigProjectInfoView
     {
-
+        //Properties - Fields
         int Id { get; set; }
         string ModelName { get; set; }
         string ModelGuid { get; set; }

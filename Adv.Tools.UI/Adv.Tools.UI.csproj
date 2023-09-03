@@ -119,13 +119,14 @@
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\ConfigSharedParamModel.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\ConfigWorksetModel.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\ConfigExpectedDocument.cs" />
-    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\IConfigCleanViewsRepo.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\IConfigCleanRepo.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\IConfigGridsMonitorRepo.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\IConfigLevelsMonitorRepo.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\IConfigProjectInfoRepo.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\IConfigSharedParamRepo.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\IConfigWorksetsRepo.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Models\IConfigDocumentsRepo.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Presenters\ConfigCleanPresenter.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Presenters\ConfigDocumentPresenter.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Presenters\ConfigExpectedMainPresenter.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Presenters\ConfigGridMonitorPresenter.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Presenters\ConfigProjectInfoPresenter.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Presenters\ConfigSharedParamPresenter.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Presenters\ConfigWorksetPresenter.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Repositories\ConfigCleanRepo.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Repositories\ConfigDocumentRepo.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Repositories\ConfigGridMonitorRepo.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Repositories\ConfigLevelMonitorRepo.cs" />
@@ -181,6 +183,7 @@
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\ConfigWorksetView.Designer.cs">
       <DependentUpon>ConfigWorksetView.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\IConfigCleanView.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\IConfigDocumentView.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\IConfigExpectedMainView.cs" />
     <Compile Include="ViewModules\RevitModelQuality\ConfigExpected\Views\IConfigGridMonitorView.cs" />
