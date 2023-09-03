@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 {
-    public class ConfigLevelMonitorModel : IExpectedLevelsMonitor
+    public class ExpectedLevelMonitor : IExpectedLevelsMonitor
     {
         private int id;
         private string modelName;
@@ -17,16 +17,6 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         private string discipline;
         private string sourceModelName;
         private string sourceModelGuid;
-
-        public ConfigLevelMonitorModel(IExpectedLevelsMonitor levelMonitor)
-        {
-            id = levelMonitor.Id;
-            modelName = levelMonitor.ModelName;
-            modelGuid = levelMonitor.ModelGuid;
-            discipline = levelMonitor.Discipline;
-            sourceModelName = levelMonitor.SourceModelName;
-            sourceModelGuid = levelMonitor.SourceModelGuid;
-        }
 
         [DisplayName("ID")]
         [Required(ErrorMessage = "Id is required")]

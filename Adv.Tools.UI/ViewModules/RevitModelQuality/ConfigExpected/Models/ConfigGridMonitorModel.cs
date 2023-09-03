@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 {
-    public class ExpectedGridsMonitor : IExpectedGridsMonitor
+    public class ExpectedGridMonitor : IExpectedGridMonitor
     {
         private int id;
         private string modelName;
@@ -18,15 +18,6 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         private string sourceModelName;
         private string sourceModelGuid;
 
-        public ExpectedGridsMonitor(IExpectedGridsMonitor gridMonitor)
-        {
-            id = gridMonitor.Id;
-            modelName = gridMonitor.ModelName;
-            modelGuid = gridMonitor.ModelGuid;
-            discipline = gridMonitor.Discipline;
-            sourceModelName = gridMonitor.SourceModelName;
-            sourceModelGuid = gridMonitor.SourceModelGuid;
-        }
 
         [DisplayName("ID")]
         [Required(ErrorMessage = "Id is required")]

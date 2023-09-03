@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Adv.Tools.Abstractions.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 {
-    public interface IConfigGridsMonitorView
+    public interface IConfigLevelMonitorView
     {
         //Properties - Fields
         int Id { get; set; }
@@ -23,15 +24,19 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         string Message { get; set; }
 
         //Event
-        event EventHandler DefaultEvent;
+        event EventHandler SourceSelectEvent;
+        event EventHandler ModelSelectEvent;
         event EventHandler ExportEvent;
-        event EventHandler ImportEvent;
         event EventHandler SearchEvent;
+        event EventHandler AddNewEvent;
+        event EventHandler EditedEvent;
         event EventHandler DeleteEvent;
+        event EventHandler CancelEvent;
         event EventHandler SaveEvent;
 
         //Methods
         void SetBindingSource(BindingSource bindingList);
+        void SetDocumentNames(IEnumerable<IExpectedDocument> documents);
         void ShowThisUI();
     }
 }

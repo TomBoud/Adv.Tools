@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Adv.Tools.Abstractions.Database
 {
-    public interface IExpectedGridsMonitor
+    public interface IExpectedGridMonitor
     {
         int Id { get; set; }
         string ModelName { get; set; }

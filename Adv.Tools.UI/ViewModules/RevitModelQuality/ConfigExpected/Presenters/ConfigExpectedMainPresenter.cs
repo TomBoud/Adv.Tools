@@ -28,10 +28,26 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
             //Subscribe delegated events to private methods
             this.mainView.ShowConfigDocumentsView += ShowConfigDocumentsView;
             this.mainView.ShowConfigWorksetsView += ShowConfigWorksetsView;
-            
+            this.mainView.ShowConfigGridsMonitorView += ShowConfigGridsMonitorView;
+            this.mainView.ShowConfigLevelsMonitorView += ShowConfigLevelsMonitorView;
+
+
         }
 
-        //Delegated Methods
+        private void ShowConfigLevelsMonitorView(object sender, EventArgs e)
+        {
+            IConfigLevelMonitorView view = ConfigLevelMonitorView.GetInstance((Form)mainView);
+            IConfigLevelMonitorRepo repo = new ConfigLevelMonitorRepo(dataAccess, databaseName);
+            new ConfigLevelMonitorPresenter(view, repo);
+            view.ShowThisUI();
+        }
+        private void ShowConfigGridsMonitorView(object sender, EventArgs e)
+        {
+            IConfigGridMonitorView view = ConfigGridMonitorView.GetInstance((Form)mainView);
+            IConfigGridMonitorRepo repo = new ConfigGridMonitorRepo(dataAccess, databaseName);
+            new ConfigGridMonitorPresenter(view, repo);
+            view.ShowThisUI();
+        }
         private void ShowConfigWorksetsView(object sender, EventArgs e)
         {
             IConfigWorksetView view = ConfigWorksetView.GetInstance((Form)mainView);
@@ -39,7 +55,6 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
             new ConfigWorksetPresenter(view, repo);
             view.ShowThisUI();
         }
-
         private void ShowConfigDocumentsView(object sender, EventArgs e)
         {
             IConfigDocumentView view = ConfigDocumentView.GetInstance((Form)mainView);

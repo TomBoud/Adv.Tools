@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.DataAccess.MySql.Models
 {
-    public class ExpectedGridsMonitor : IExpectedGridsMonitor
+    public class ExpectedGridsMonitor : IExpectedGridMonitor
     {
         public int Id { get; set; }
         public string ModelName { get; set; }

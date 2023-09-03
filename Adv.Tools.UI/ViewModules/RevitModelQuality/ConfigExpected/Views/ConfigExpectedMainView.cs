@@ -18,7 +18,8 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 
             models_button.Click += delegate { ShowConfigDocumentsView?.Invoke(this, EventArgs.Empty); };
             worksets_button.Click += delegate { ShowConfigWorksetsView?.Invoke(this, EventArgs.Empty); };
-            
+            grids_button.Click += delegate { ShowConfigGridsMonitorView?.Invoke(this, EventArgs.Empty); };
+            levels_button.Click += delegate { ShowConfigLevelsMonitorView?.Invoke(this, EventArgs.Empty); };
         }
 
         public event EventHandler ShowConfigDocumentsView;
