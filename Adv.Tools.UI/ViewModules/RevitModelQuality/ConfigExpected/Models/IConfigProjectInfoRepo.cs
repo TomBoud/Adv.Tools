@@ -8,10 +8,10 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 {
     public interface IConfigProjectInfoRepo
     {
-        void Add(ConfigProjectInfoModel model);
-        void Edit(ConfigProjectInfoModel model);
+        void Add(ExpectedProjectInfo model);
+        void Edit(ExpectedProjectInfo model);
         void Delete(int id);
-        IEnumerable<ConfigProjectInfoModel> GetAllWorksets();
-        IEnumerable<ConfigProjectInfoModel> GetByValue(string value);
+        IEnumerable<ExpectedProjectInfo> GetAllWorksets();
+        IEnumerable<ExpectedProjectInfo> GetByValue(string value);
     }
 }

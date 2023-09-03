@@ -23,30 +23,58 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         //Properties
         [DisplayName("ID")]
         [Required(ErrorMessage = "Id is required")]
-        public int Id { get => id; set => id = value; }
+        public int Id 
+        { 
+            get => id; 
+            set => id = value; 
+        }
         
         [DisplayName("Model Name")]
         [Required(ErrorMessage = "Revit Model Name is required")]
-        public string ModelName { get => docName; set => docName = value; }
+        public string ModelName 
+        { 
+            get => docName; 
+            set => docName = value; 
+        }
 
         [DisplayName("Model GUID")]
         [Required(ErrorMessage = "Revit Model GUID is required")]
-        public string ModelGuid { get => docGuid; set => docGuid = value; }
+        public string ModelGuid 
+        { 
+            get => docGuid; 
+            set => docGuid = value; 
+        }
 
         [DisplayName("Model Discipline")]
         [Required(ErrorMessage = "Revit Model Discipline is required")]
-        public string Discipline { get => docDiscipline; set => docDiscipline = value; }
+        public string Discipline 
+        { 
+            get => docDiscipline; 
+            set => docDiscipline = value; 
+        }
 
         [DisplayName("Workset Name")]
         [Required(ErrorMessage = "Workset Name is required")]
-        public string WorksetName { get => name; set=> name = value; }
+        public string WorksetName 
+        { 
+            get => name; 
+            set=> name = value; 
+        }
 
         [DisplayName("Category Name")]
         [Required(ErrorMessage = "Category Name is required")]
-        public string CategoryName { get => catName; set=> catName= value; }
+        public string CategoryName 
+        { 
+            get => catName; 
+            set=> catName= value; 
+        }
 
         [DisplayName("Category Id")]
         [Required(ErrorMessage = "Category Id is required")]
-        public string CategoryId { get => catId; set=> catId = value; }
+        public string CategoryId 
+        { 
+            get => catId; 
+            set=> catId = value; 
+        }
     }
 }

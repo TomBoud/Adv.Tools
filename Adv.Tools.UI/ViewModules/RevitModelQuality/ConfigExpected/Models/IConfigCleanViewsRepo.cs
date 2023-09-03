@@ -8,10 +8,10 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 {
     public interface IConfigCleanViewsRepo
     {
-        void Add(ConfigCleanViewModel model);
-        void Edit(ConfigCleanViewModel model);
+        void Add(ExpectedCleanView model);
+        void Edit(ExpectedCleanView model);
         void Delete(int id);
-        IEnumerable<ConfigCleanViewModel> GetAllWorksets();
-        IEnumerable<ConfigCleanViewModel> GetByValue(string value);
+        IEnumerable<ExpectedCleanView> GetAllWorksets();
+        IEnumerable<ExpectedCleanView> GetByValue(string value);
     }
 }

@@ -1,13 +1,16 @@
 ﻿using Adv.Tools.Abstractions.Database;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 {
-    public class ConfigSharedParamModel : IExpectedSharedPara
+    public class ExpectedSharedPara : IExpectedSharedPara
     {
         private int id;
         private string modelName;
@@ -16,20 +19,37 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         private string parameter;
         private string guid;
 
-        public ConfigSharedParamModel(IExpectedSharedPara sharedParam)
+        [DisplayName("ID")]
+        [Required(ErrorMessage = "Id is required")]
+        public int Id
         {
-            id = sharedParam.Id;
-            modelName = sharedParam.ModelName;
-            modelGuid = sharedParam.ModelGuid;
-            discipline = sharedParam.Discipline;
-            parameter = sharedParam.Parameter;
-            guid = sharedParam.GUID;
+            get => id;
+            set => id = value;
         }
 
-        public int Id { get => id; set => id = value; }
-        public string ModelName { get => modelName; set => modelName = value; }
-        public string ModelGuid { get => modelGuid; set => modelGuid = value; }
-        public string Discipline { get => discipline; set => discipline = value; }
+        [DisplayName("Model Name")]
+        [Required(ErrorMessage = "Revit Model Name is required")]
+        public string ModelName
+        {
+            get => modelName;
+            set => modelName = value;
+        }
+
+        [DisplayName("Model GUID")]
+        [Required(ErrorMessage = "Revit Model GUID is required")]
+        public string ModelGuid
+        {
+            get => modelGuid;
+            set => modelGuid = value;
+        }
+
+        [DisplayName("Model Discipline")]
+        [Required(ErrorMessage = "Revit Model Discipline is required")]
+        public string Discipline
+        {
+            get => discipline;
+            set => discipline = value;
+        }
         public string Parameter { get => parameter; set => parameter = value; }
         public string GUID { get => guid; set => guid = value; }
     }

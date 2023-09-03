@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 {
-    public class ConfigCleanViewModel : IExpectedCleanView
+    public class ExpectedCleanView : IExpectedCleanView
     {
         private int id;
         private string modelName;
@@ -15,16 +15,6 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         private string discipline;
         private string viewType;
         private string viewName;
-
-        public ConfigCleanViewModel(IExpectedCleanView cleanView)
-        {
-            id = cleanView.Id;
-            modelName = cleanView.ModelName;
-            modelGuid = cleanView.ModelGuid;
-            discipline = cleanView.Discipline;
-            viewType = cleanView.ViewType;
-            viewName = cleanView.ViewName;
-        }
 
         public int Id { get => id; set => id = value; }
         public string ModelName { get => modelName; set => modelName = value; }

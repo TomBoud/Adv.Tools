@@ -24,27 +24,63 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         //Properties
         [DisplayName("ID")]
         [Required(ErrorMessage = "Id is required")]
-        public int Id { get => id; set => id = value; }
+        public int Id
+        {
+            get => id;
+            set => id = value;
+        }
 
-        [DisplayName("Name")]
-        public string ModelName { get => modelName; set => modelName = value; }
+        [DisplayName("Model Name")]
+        [Required(ErrorMessage = "Revit Model Name is required")]
+        public string ModelName
+        {
+            get => modelName;
+            set => modelName = value;
+        }
 
-        [DisplayName("Guid")]
-        public string ModelGuid { get => modelGuid; set => modelGuid = value; }
+        [DisplayName("Model GUID")]
+        [Required(ErrorMessage = "Revit Model GUID is required")]
+        public string ModelGuid
+        {
+            get => modelGuid;
+            set => modelGuid = value;
+        }
 
-        [DisplayName("Discipline")]
-        public string Discipline { get => discipline; set => discipline = value; }
+        [DisplayName("Model Discipline")]
+        [Required(ErrorMessage = "Revit Model Discipline is required")]
+        public string Discipline
+        {
+            get => discipline;
+            set => discipline = value;
+        }
 
         [DisplayName("Hub Id")]
-        public string HubId { get => hubId; set => hubId = value; }
+        public string HubId 
+        { 
+            get => hubId; 
+            set => hubId = value; 
+        }
 
         [DisplayName("Project Id")]
-        public string ProjectId { get => projectId; set => projectId = value; }
+        public string ProjectId 
+        { 
+            get => projectId; 
+            set => projectId = value; 
+        }
 
         [DisplayName("Folder Id")]
-        public string FolderId { get => folderId; set => folderId = value; }
+        public string FolderId 
+        { 
+            get => folderId; 
+            set => folderId = value; 
+        }
 
         [DisplayName("URS Name")]
-        public string PositionSource { get => positionSource; set => positionSource = value; }
+        [Required(ErrorMessage = "Source URS Model Name is required")]
+        public string PositionSource 
+        { 
+            get => positionSource; 
+            set => positionSource = value; 
+        }
     }
 }

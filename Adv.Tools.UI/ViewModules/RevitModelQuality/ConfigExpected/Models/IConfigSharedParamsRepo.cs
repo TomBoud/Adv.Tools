@@ -8,10 +8,10 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 {
     public interface IConfigSharedParamsRepo
     {
-        void Add(ConfigSharedParamModel model);
-        void Edit(ConfigSharedParamModel model);
+        void Add(ExpectedSharedPara model);
+        void Edit(ExpectedSharedPara model);
         void Delete(int id);
-        IEnumerable<ConfigSharedParamModel> GetAllWorksets();
-        IEnumerable<ConfigSharedParamModel> GetByValue(string value);
+        IEnumerable<ExpectedSharedPara> GetAllWorksets();
+        IEnumerable<ExpectedSharedPara> GetByValue(string value);
     }
 }

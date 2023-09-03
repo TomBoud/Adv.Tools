@@ -21,21 +21,50 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 
         [DisplayName("ID")]
         [Required(ErrorMessage = "Id is required")]
-        public int Id { get => id; set => id = value; }
+        public int Id
+        {
+            get => id;
+            set => id = value;
+        }
 
-        [DisplayName("Name")]
-        public string ModelName { get => modelName; set => modelName = value; }
+        [DisplayName("Model Name")]
+        [Required(ErrorMessage = "Revit Model Name is required")]
+        public string ModelName
+        {
+            get => modelName;
+            set => modelName = value;
+        }
 
-        [DisplayName("Guid")]
-        public string ModelGuid { get => modelGuid; set => modelGuid = value; }
+        [DisplayName("Model GUID")]
+        [Required(ErrorMessage = "Revit Model GUID is required")]
+        public string ModelGuid
+        {
+            get => modelGuid;
+            set => modelGuid = value;
+        }
 
-        [DisplayName("Discipline")]
-        public string Discipline { get => discipline; set => discipline = value; }
+        [DisplayName("Model Discipline")]
+        [Required(ErrorMessage = "Revit Model Discipline is required")]
+        public string Discipline
+        {
+            get => discipline;
+            set => discipline = value;
+        }
 
         [DisplayName("Source Name")]
-        public string SourceModelName { get => sourceModelName; set => sourceModelName = value; }
+        [Required(ErrorMessage = "Source Model Name is required")]
+        public string SourceModelName
+        {
+            get => sourceModelName;
+            set => sourceModelName = value;
+        }
 
         [DisplayName("Source Guid")]
-        public string SourceModelGuid { get => sourceModelGuid; set => sourceModelGuid = value; }
+        [Required(ErrorMessage = "Source Model Guid is required")]
+        public string SourceModelGuid
+        {
+            get => sourceModelGuid;
+            set => sourceModelGuid = value;
+        }
     }
 }
