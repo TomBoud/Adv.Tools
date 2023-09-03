@@ -16,6 +16,7 @@ namespace Adv.Tools.Abstractions.Revit
         string FolderId { get; set; }
         string HubId { get; set; }
         string DbProjectId { get; set; }
+        bool IsActiveModel { get; set; }
 
         //Project Position
         double EastWest { get; set; }

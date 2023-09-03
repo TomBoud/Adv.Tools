@@ -11,7 +11,10 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         void Add(ExpectedProjectInfo model);
         void Edit(ExpectedProjectInfo model);
         void Delete(int id);
-        IEnumerable<ExpectedProjectInfo> GetAllWorksets();
+        void DeletAllViewData();
+        IEnumerable<ExpectedProjectInfo> GetAllViewData();
         IEnumerable<ExpectedProjectInfo> GetByValue(string value);
+        IEnumerable<ExpectedDocument> GetDocumentsData();
+
     }
 }

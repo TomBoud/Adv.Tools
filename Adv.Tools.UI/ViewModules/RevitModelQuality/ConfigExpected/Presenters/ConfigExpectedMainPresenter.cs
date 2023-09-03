@@ -30,8 +30,25 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
             this.mainView.ShowConfigWorksetsView += ShowConfigWorksetsView;
             this.mainView.ShowConfigGridsMonitorView += ShowConfigGridsMonitorView;
             this.mainView.ShowConfigLevelsMonitorView += ShowConfigLevelsMonitorView;
+            this.mainView.ShowConfigProjectInfoView += ShowConfigProjectInfoView;
+            this.mainView.ShowConfigSharedParaView += ShowConfigSharedParaView;
 
+        }
 
+        private void ShowConfigSharedParaView(object sender, EventArgs e)
+        {
+            IConfigSharedParamView view = ConfigSharedParamView.GetInstance((Form)mainView);
+            IConfigSharedParamRepo repo = new ConfigSharedParamRepo(dataAccess, databaseName);
+            new ConfigSharedParamPresenter(view, repo);
+            view.ShowThisUI();
+        }
+
+        private void ShowConfigProjectInfoView(object sender, EventArgs e)
+        {
+            IConfigProjectInfoView view = ConfigProjectInfoView.GetInstance((Form)mainView);
+            IConfigProjectInfoRepo repo = new ConfigProjectInfoRepo(dataAccess, databaseName);
+            new ConfigProjectInfoPresenter(view, repo, revitObjects);
+            view.ShowThisUI();
         }
 
         private void ShowConfigLevelsMonitorView(object sender, EventArgs e)

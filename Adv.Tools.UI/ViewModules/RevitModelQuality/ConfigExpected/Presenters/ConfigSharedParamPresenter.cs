@@ -1,41 +1,38 @@
-﻿
-
+﻿using Adv.Tools.Abstractions.Revit;
+using Adv.Tools.UI.Common;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Adv.Tools.UI.Common;
-using Adv.Tools.UI.DataModels.RevitModelQuality;
-using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models;
-using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
 {
-    public class ConfigWorksetPresenter
+    public class ConfigSharedParamPresenter
     {
         //Fields
-        private IConfigWorksetView view;
-        private IConfigWorksetsRepo reposetory;
+        private IConfigSharedParamView view;
+        private IConfigSharedParamRepo reposetory;
         private BindingSource bindingSource;
-        private IEnumerable<ExpectedWorkset> bindingList;
+        private IEnumerable<ExpectedSharedPara> bindingList;
 
         //Constructor
-        public ConfigWorksetPresenter(IConfigWorksetView view, IConfigWorksetsRepo repo)
+        public ConfigSharedParamPresenter(IConfigSharedParamView view, IConfigSharedParamRepo repo)
         {
             //Construct the presenter
             this.bindingSource = new BindingSource();
             this.view = view;
             this.reposetory = repo;
             //Subscribe event handlers
-            this.view.DefaultEvent += DefaultEvent;
+            this.view.DefaultEvent += DefaultSettings;
             this.view.ExportEvent += ExportEvent;
-            this.view.SearchEvent += SearchEvent;
-            this.view.ImportEvent += ImportEvent;
+            this.view.SearchEvent += SearchWorkset;
+            this.view.ImportEvent += ImportSettings;
             this.view.DeleteEvent += DeleteEvent;
             this.view.ClearAllEvent += ClearAllEvent;
             //Set reports binding source
@@ -44,7 +41,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
             LoadAllViewData();
         }
 
-       
+
         //Methods
         private void LoadAllViewData()
         {
@@ -70,10 +67,10 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
         {
             try
             {
-                var selected = (ExpectedWorkset)bindingSource.Current;
+                var selected = (ExpectedProjectInfo)bindingSource.Current;
                 reposetory.Delete(selected.Id);
                 view.IsSuccessful = true;
-                view.Message = $"{selected.CategoryName} was Removed from {selected.WorksetName} successfully";
+                view.Message = "";
                 LoadAllViewData();
             }
             catch (Exception ex)
@@ -82,25 +79,33 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
                 view.Message = ex.Message;
             }
         }
-        private void DefaultEvent(object sender, EventArgs e)
+        private void DefaultSettings(object sender, EventArgs e)
         {
             var helper = new ExcelFilesHelper();
-            var bindingList = new List<ExpectedWorkset>();
+            var bindingList = new List<ExpectedSharedPara>();
             var stream = new MemoryStream(Resource.DefaultSettings);
 
             var ds = helper.GetExcelFileAsDataSet(stream);
-            var worksetslist = helper.GetExcelTableAsList<ExpectedWorkset>(ds,nameof(ExpectedWorkset));
+            var defaultList = helper.GetExcelTableAsList<ExpectedSharedPara>(ds, nameof(ExpectedSharedPara));
             var documnetsList = reposetory.GetDocumentsData();
 
             foreach (var docItem in documnetsList)
             {
-                worksetslist.Where(x => x.Discipline.Equals(docItem.Discipline))
-                    .ToList().ForEach(defaultItem =>
+                foreach(var defaultItem in defaultList)
+                {
+                    var newItem = new ExpectedSharedPara()
                     {
-                        defaultItem.ModelName = docItem.ModelName;
-                        defaultItem.ModelGuid = docItem.ModelGuid;
-                        bindingList.Add(defaultItem);
-                    });
+                        Id = 0,
+                        ModelName = docItem.ModelName,
+                        ModelGuid = docItem.ModelGuid,
+                        Discipline = docItem.Discipline,
+                        Parameter = defaultItem.Parameter,
+                        GUID = defaultItem.GUID,
+                    };
+
+                    bindingList.Add(newItem);
+                }
+
             }
 
             bindingSource.DataSource = bindingList;
@@ -110,26 +115,26 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
             var helper = new ExcelFilesHelper();
             var folder = helper.GetSaveFolderPath();
 
-            if(string.IsNullOrEmpty(folder) is false)
+            if (string.IsNullOrEmpty(folder) is false)
             {
-                var source = bindingSource.List as IEnumerable<ExpectedWorkset>;
+                var source = bindingSource.List as IEnumerable<ExpectedProjectInfo>;
                 var table = helper.ConvertListToDataTable(source.ToList());
-                
-                helper.ExportDataTableAsExcelFile(table,folder);
+
+                helper.ExportDataTableAsExcelFile(table, folder);
             }
         }
-        private void ImportEvent(object sender, EventArgs e)
+        private void ImportSettings(object sender, EventArgs e)
         {
             var helper = new ExcelFilesHelper();
 
             var path = helper.GetExcelFilePath();
             var stream = helper.GetExcelFileAsStream(path);
             var ds = helper.GetExcelFileAsDataSet(stream);
-            var newList = helper.GetExcelTableAsList<ExpectedWorkset>(ds, nameof(ExpectedWorkset));
-           
+            var newList = helper.GetExcelTableAsList<ExpectedProjectInfo>(ds, nameof(ExpectedProjectInfo));
+
             bindingSource.DataSource = newList;
         }
-        private void SearchEvent(object sender, EventArgs e)
+        private void SearchWorkset(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(this.view.SearchValue))
                 bindingList = reposetory.GetAllViewData();

@@ -1,7 +1,6 @@
 ﻿using Adv.Tools.Abstractions.Common;
-using Adv.Tools.UI.DataModels.RevitModelQuality;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models;
-using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Models;
+using DocumentFormat.OpenXml.EMMA;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,43 +10,47 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Repositories
 {
-    public class ConfigWorksetRepo : IConfigWorksetsRepo
+    public class ConfigProjectInfoRepo : IConfigProjectInfoRepo
     {
         private readonly IDbDataAccess _dataAccess;
         private readonly string _databaseName;
 
-        public ConfigWorksetRepo(IDbDataAccess dataAccess, string databaseName)
+        public ConfigProjectInfoRepo(IDbDataAccess dataAccess, string databaseName)
         {
             _dataAccess = dataAccess;
             _databaseName = databaseName;
         }
 
-        public void Add(ExpectedWorkset model)
+        public async void Add(ExpectedProjectInfo model)
         {
-            throw new NotImplementedException();
+            var data = new List<ExpectedProjectInfo>() { model };
+            await _dataAccess.SaveByInsertValuesAsync(_databaseName, data);
         }
 
         public async void Delete(int id)
         {
-            await _dataAccess.DeleteDataById<ExpectedWorkset>(_databaseName, id);
+            await _dataAccess.DeleteDataById<ExpectedProjectInfo>(_databaseName, id);
         }
+
         public async void DeletAllViewData()
         {
-            await _dataAccess.DeleteAllData<ExpectedWorkset>(_databaseName);
-        }
-        public void Edit(ExpectedWorkset model)
-        {
-            throw new NotImplementedException();
+            await _dataAccess.DeleteAllData<ExpectedProjectInfo>(_databaseName);
         }
 
-        public IEnumerable<ExpectedWorkset> GetAllViewData()
+        public async void Edit(ExpectedProjectInfo model)
         {
-            return _dataAccess.LoadDataSelectAll<ExpectedWorkset>(_databaseName);
+            var data = new List<ExpectedProjectInfo>() { model };
+            await _dataAccess.SaveByUpdateValuesAsync(_databaseName, data);
         }
 
-        public IEnumerable<ExpectedWorkset> GetByValue(string value)
+        public IEnumerable<ExpectedProjectInfo> GetAllViewData()
         {
-            var results = _dataAccess.LoadDataSelectAll<ExpectedWorkset>(_databaseName);
+            return _dataAccess.LoadDataSelectAll<ExpectedProjectInfo>(_databaseName);
+        }
+
+        public IEnumerable<ExpectedProjectInfo> GetByValue(string value)
+        {
+            var results = _dataAccess.LoadDataSelectAll<ExpectedProjectInfo>(_databaseName);
 
             var pattern = Regex.Escape(value);
             var regex = new Regex(pattern, RegexOptions.IgnoreCase);

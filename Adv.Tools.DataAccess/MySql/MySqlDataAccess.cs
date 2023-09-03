@@ -147,6 +147,13 @@ namespace Adv.Tools.DataAccess.MySql
                 await connection.ExecuteAsync(sqlQuery, parameters);
             }
         }
+        public async Task DeleteAllData<T>(string databaseName)
+        {
+            using (IDbConnection connection = new MySqlConnection(_connectionString))
+            {
+                await connection.ExecuteAsync($"truncate {databaseName}.{typeof(T).Name}");
+            }
+        }
         public async Task DeleteDataById<T>(string databaseName,int Id)
         {
             string sqlQuery = $"DELETE FROM {databaseName}.{nameof(T)} Where Id={Id}";

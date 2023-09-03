@@ -50,7 +50,15 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
             get => discipline;
             set => discipline = value;
         }
-        public string Parameter { get => parameter; set => parameter = value; }
-        public string GUID { get => guid; set => guid = value; }
+        public string Parameter 
+        { 
+            get => parameter; 
+            set => parameter = value; 
+        }
+        public string GUID 
+        { 
+            get => guid; 
+            set => guid = value; 
+        }
     }
 }

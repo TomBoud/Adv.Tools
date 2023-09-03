@@ -14,7 +14,6 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         event EventHandler ShowConfigGridsMonitorView;
         event EventHandler ShowConfigProjectInfoView;
         event EventHandler ShowConfigSharedParaView;
-        event EventHandler ShowConfigSiteLocationView;
 
         void RunUIApplication();
     }

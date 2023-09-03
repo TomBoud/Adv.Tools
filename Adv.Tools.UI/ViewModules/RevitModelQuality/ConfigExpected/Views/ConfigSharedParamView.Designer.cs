@@ -1,6 +1,6 @@
 ﻿namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 {
-    partial class ConfigWorksetView
+    partial class ConfigSharedParamView
     {
         /// <summary>
         /// Required designer variable.
@@ -32,7 +32,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.delete_button = new System.Windows.Forms.Button();
             this.save_button = new System.Windows.Forms.Button();
             this.default_button = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -41,6 +40,7 @@
             this.import_button = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.export_button = new System.Windows.Forms.Button();
+            this.delete_button = new System.Windows.Forms.Button();
             this.clearAll_button = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -63,9 +63,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(4, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(183, 20);
+            this.label1.Size = new System.Drawing.Size(250, 20);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Worksets Configurations";
+            this.label1.Text = "Project Information Configurations";
             // 
             // tabControl1
             // 
@@ -96,16 +96,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Active Settings";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // delete_button
-            // 
-            this.delete_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.delete_button.Location = new System.Drawing.Point(782, 303);
-            this.delete_button.Name = "delete_button";
-            this.delete_button.Size = new System.Drawing.Size(175, 40);
-            this.delete_button.TabIndex = 6;
-            this.delete_button.Text = "Delete Selected";
-            this.delete_button.UseVisualStyleBackColor = true;
             // 
             // save_button
             // 
@@ -149,7 +139,7 @@
             // 
             // search_textBox
             // 
-            this.search_textBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.search_textBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.search_textBox.Location = new System.Drawing.Point(10, 47);
             this.search_textBox.Name = "search_textBox";
@@ -168,8 +158,8 @@
             // 
             // dataGridView
             // 
-            this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Location = new System.Drawing.Point(10, 83);
@@ -187,17 +177,27 @@
             this.export_button.Text = "Export Data";
             this.export_button.UseVisualStyleBackColor = true;
             // 
+            // delete_button
+            // 
+            this.delete_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.delete_button.Location = new System.Drawing.Point(782, 303);
+            this.delete_button.Name = "delete_button";
+            this.delete_button.Size = new System.Drawing.Size(175, 40);
+            this.delete_button.TabIndex = 7;
+            this.delete_button.Text = "Delete Selected";
+            this.delete_button.UseVisualStyleBackColor = true;
+            // 
             // clearAll_button
             // 
             this.clearAll_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.clearAll_button.Location = new System.Drawing.Point(782, 349);
             this.clearAll_button.Name = "clearAll_button";
             this.clearAll_button.Size = new System.Drawing.Size(175, 40);
-            this.clearAll_button.TabIndex = 7;
+            this.clearAll_button.TabIndex = 8;
             this.clearAll_button.Text = "Clear All";
             this.clearAll_button.UseVisualStyleBackColor = true;
             // 
-            // ConfigWorksetView
+            // ConfigSharedParamView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -206,8 +206,8 @@
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "ConfigWorksetView";
-            this.Text = "ConfigWorksetView";
+            this.Name = "ConfigSharedParamView";
+            this.Text = "ConfigSharedParamView";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tabControl1.ResumeLayout(false);

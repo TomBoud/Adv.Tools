@@ -39,7 +39,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         }
 
         [DisplayName("Model GUID")]
-        [Required(ErrorMessage = "Revit Model GUID is required")]
+        [Required(ErrorMessage = "Revit Model Guid is required")]
         public string ModelGuid
         {
             get => modelGuid;

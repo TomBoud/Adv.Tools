@@ -100,6 +100,12 @@ namespace Adv.Tools.RevitAddin.Models
             set => _dbProjectId = value;
         }
 
+        public bool IsActiveModel
+        {
+            get;
+            set;
+        }
+
         public double EastWest
         {
             get => _eastWest;

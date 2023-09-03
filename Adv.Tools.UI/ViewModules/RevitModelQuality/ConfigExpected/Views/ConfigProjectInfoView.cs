@@ -10,13 +10,13 @@ using System.Windows.Forms;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 {
-    public partial class ConfigWorksetView : Form, IConfigWorksetView
+    public partial class ConfigProjectInfoView : Form, IConfigProjectInfoView
     {
         //Singleton
-        private static ConfigWorksetView instance;
+        private static ConfigProjectInfoView instance;
 
         //Constructor
-        public ConfigWorksetView()
+        public ConfigProjectInfoView()
         {
             InitializeComponent();
             AssociateAndRaiseViewEvents();
@@ -27,9 +27,8 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         public string ModelName { get; set; }
         public string ModelGuid { get; set; }
         public string Discipline { get; set; }
-        public string WorksetName { get; set; }
-        public string CategoryName { get; set; }
-        public string CategoryId { get; set; }
+        public string Parameter { get; set; }
+        public string Value { get; set; }
 
 
         public string SearchValue { get => search_textBox.Text; set => search_textBox.Text = value; }
@@ -37,7 +36,6 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         public bool IsEnabled { get; set; }
         public bool IsSuccessful { get; set; }
         public string Message { get; set; }
-        public List<string> Disciplines { get; set; }
 
 
         //Events
@@ -62,11 +60,11 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
             this.Show();
         }
 
-        public static ConfigWorksetView GetInstance(Form parentMdiContainer)
+        public static ConfigProjectInfoView GetInstance(Form parentMdiContainer)
         {
-            if(instance is null || instance.IsDisposed)
+            if (instance is null || instance.IsDisposed)
             {
-                instance = new ConfigWorksetView();
+                instance = new ConfigProjectInfoView();
                 instance.MdiParent = parentMdiContainer;
                 instance.FormBorderStyle = FormBorderStyle.None;
                 instance.Dock = DockStyle.Fill;
@@ -83,6 +81,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 
         private void AssociateAndRaiseViewEvents()
         {
+
             //Clear Event
             clearAll_button.Click += delegate
             {
@@ -97,27 +96,27 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
             };
 
             //Default Event
-            default_button.Click += delegate 
-            { 
-                DefaultEvent?.Invoke(this, EventArgs.Empty); 
+            default_button.Click += delegate
+            {
+                DefaultEvent?.Invoke(this, EventArgs.Empty);
             };
 
             //Export Event
-            export_button.Click += delegate 
-            { 
-                ExportEvent?.Invoke(this, EventArgs.Empty); 
+            export_button.Click += delegate
+            {
+                ExportEvent?.Invoke(this, EventArgs.Empty);
             };
-            
+
             //Import Event
-            import_button.Click += delegate 
-            { 
-                ImportEvent?.Invoke(this, EventArgs.Empty); 
+            import_button.Click += delegate
+            {
+                ImportEvent?.Invoke(this, EventArgs.Empty);
             };
-            
+
             //Search Event
-            search_button.Click += delegate 
-            { 
-                SearchEvent?.Invoke(this, EventArgs.Empty); 
+            search_button.Click += delegate
+            {
+                SearchEvent?.Invoke(this, EventArgs.Empty);
             };
             search_textBox.KeyUp += (s, e) =>
             {

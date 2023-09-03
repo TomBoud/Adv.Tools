@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
 {
-    public interface IConfigSharedParamsRepo
+    public interface IConfigSharedParamRepo
     {
         void Add(ExpectedSharedPara model);
         void Edit(ExpectedSharedPara model);
         void Delete(int id);
-        IEnumerable<ExpectedSharedPara> GetAllWorksets();
+        void DeletAllViewData();
+        IEnumerable<ExpectedSharedPara> GetAllViewData();
         IEnumerable<ExpectedSharedPara> GetByValue(string value);
+        IEnumerable<ExpectedDocument> GetDocumentsData();
     }
 }

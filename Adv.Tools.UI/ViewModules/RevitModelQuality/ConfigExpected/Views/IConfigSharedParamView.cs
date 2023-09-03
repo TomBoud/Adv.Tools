@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Presentation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,16 +8,15 @@ using System.Windows.Forms;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 {
-    public interface IConfigWorksetView
+    public interface IConfigSharedParamView
     {
-        //Properties - Fields
         int Id { get; set; }
         string ModelName { get; set; }
         string ModelGuid { get; set; }
         string Discipline { get; set; }
         string WorksetName { get; set; }
-        string CategoryName { get; set; }
-        string CategoryId { get; set; }
+        string Parameter { get; set; }
+        string GUID { get; set; }
 
         string SearchValue { get; set; }
         bool IsEdit { get; set; }

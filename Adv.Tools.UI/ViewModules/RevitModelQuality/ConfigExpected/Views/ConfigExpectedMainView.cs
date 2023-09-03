@@ -20,6 +20,8 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
             worksets_button.Click += delegate { ShowConfigWorksetsView?.Invoke(this, EventArgs.Empty); };
             grids_button.Click += delegate { ShowConfigGridsMonitorView?.Invoke(this, EventArgs.Empty); };
             levels_button.Click += delegate { ShowConfigLevelsMonitorView?.Invoke(this, EventArgs.Empty); };
+            projectInfo_button.Click += delegate { ShowConfigProjectInfoView?.Invoke(this, EventArgs.Empty); };
+            sharedParams_button.Click += delegate { ShowConfigSharedParaView?.Invoke(this, EventArgs.Empty); };
         }
 
         public event EventHandler ShowConfigDocumentsView;
@@ -28,7 +30,6 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
         public event EventHandler ShowConfigGridsMonitorView;
         public event EventHandler ShowConfigProjectInfoView;
         public event EventHandler ShowConfigSharedParaView;
-        public event EventHandler ShowConfigSiteLocationView;
 
         public void RunUIApplication()
         {

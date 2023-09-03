@@ -7,16 +7,15 @@ using System.Windows.Forms;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Views
 {
-    public interface IConfigWorksetView
+    public interface IConfigProjectInfoView
     {
-        //Properties - Fields
+
         int Id { get; set; }
         string ModelName { get; set; }
         string ModelGuid { get; set; }
         string Discipline { get; set; }
-        string WorksetName { get; set; }
-        string CategoryName { get; set; }
-        string CategoryId { get; set; }
+        string Parameter { get; set; }
+        string Value { get; set; }
 
         string SearchValue { get; set; }
         bool IsEdit { get; set; }

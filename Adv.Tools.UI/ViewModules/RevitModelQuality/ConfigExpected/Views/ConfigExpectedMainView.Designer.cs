@@ -29,15 +29,19 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.levels_button = new System.Windows.Forms.Button();
             this.grids_button = new System.Windows.Forms.Button();
             this.models_button = new System.Windows.Forms.Button();
             this.worksets_button = new System.Windows.Forms.Button();
-            this.levels_button = new System.Windows.Forms.Button();
+            this.projectInfo_button = new System.Windows.Forms.Button();
+            this.sharedParams_button = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.sharedParams_button);
+            this.panel1.Controls.Add(this.projectInfo_button);
             this.panel1.Controls.Add(this.levels_button);
             this.panel1.Controls.Add(this.grids_button);
             this.panel1.Controls.Add(this.models_button);
@@ -47,6 +51,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(144, 594);
             this.panel1.TabIndex = 0;
+            // 
+            // levels_button
+            // 
+            this.levels_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.levels_button.Location = new System.Drawing.Point(3, 132);
+            this.levels_button.Name = "levels_button";
+            this.levels_button.Size = new System.Drawing.Size(138, 34);
+            this.levels_button.TabIndex = 3;
+            this.levels_button.Text = "Levels";
+            this.levels_button.UseVisualStyleBackColor = true;
             // 
             // grids_button
             // 
@@ -78,15 +92,25 @@
             this.worksets_button.Text = "Worksets";
             this.worksets_button.UseVisualStyleBackColor = true;
             // 
-            // levels_button
+            // projectInfo_button
             // 
-            this.levels_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.levels_button.Location = new System.Drawing.Point(3, 132);
-            this.levels_button.Name = "levels_button";
-            this.levels_button.Size = new System.Drawing.Size(138, 34);
-            this.levels_button.TabIndex = 3;
-            this.levels_button.Text = "Levels";
-            this.levels_button.UseVisualStyleBackColor = true;
+            this.projectInfo_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.projectInfo_button.Location = new System.Drawing.Point(3, 172);
+            this.projectInfo_button.Name = "projectInfo_button";
+            this.projectInfo_button.Size = new System.Drawing.Size(138, 34);
+            this.projectInfo_button.TabIndex = 4;
+            this.projectInfo_button.Text = " Project Info";
+            this.projectInfo_button.UseVisualStyleBackColor = true;
+            // 
+            // sharedParams_button
+            // 
+            this.sharedParams_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.sharedParams_button.Location = new System.Drawing.Point(3, 212);
+            this.sharedParams_button.Name = "sharedParams_button";
+            this.sharedParams_button.Size = new System.Drawing.Size(138, 34);
+            this.sharedParams_button.TabIndex = 5;
+            this.sharedParams_button.Text = "Shared Params";
+            this.sharedParams_button.UseVisualStyleBackColor = true;
             // 
             // ConfigExpectedMainView
             // 
@@ -109,5 +133,7 @@
         private System.Windows.Forms.Button models_button;
         private System.Windows.Forms.Button grids_button;
         private System.Windows.Forms.Button levels_button;
+        private System.Windows.Forms.Button projectInfo_button;
+        private System.Windows.Forms.Button sharedParams_button;
     }
 }

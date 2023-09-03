@@ -11,7 +11,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
         void Add(ExpectedCleanView model);
         void Edit(ExpectedCleanView model);
         void Delete(int id);
-        IEnumerable<ExpectedCleanView> GetAllWorksets();
+        IEnumerable<ExpectedCleanView> GetAllViewData();
         IEnumerable<ExpectedCleanView> GetByValue(string value);
     }
 }
