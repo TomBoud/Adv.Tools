@@ -1,5 +1,5 @@
 ﻿using Adv.Tools.RevitAddin.Application.Components.RibbonPanels;
-using Adv.Tools.RevitAddin.Commands;
+using Adv.Tools.RevitAddin.Commands.RevitModelQuality;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -17,7 +17,7 @@ namespace Adv.Tools.RevitAddin.Application.Components.PushButtons
         public string AssemblyPath => TriggerClassType.Assembly.Location;
         public string TriggerClassName => TriggerClassType.FullName;
         public Icon Icon => Properties.Resources.utilities;
-        public Type TriggerClassType => typeof(RevitModelQualityCommand);
+        public Type TriggerClassType => typeof(ConfigExpectedCommand);
 
     }
 }

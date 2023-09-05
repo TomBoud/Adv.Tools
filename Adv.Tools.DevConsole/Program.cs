@@ -17,12 +17,13 @@ namespace Adv.Tools.DevConsole
                 Console.WriteLine("ADV Tools Dev Console, please select a routine");
                 Console.Write(Environment.NewLine);
                 Console.WriteLine("1. Run Main Model Quality View UI");
-                Console.WriteLine("2. Run Config Report View UI");
-                Console.WriteLine("3. Exit");
+                Console.WriteLine("2. Run Main Config Report View UI");
+                Console.WriteLine("3. Run Main Display Results View UI");
+                Console.WriteLine("4. Exit");
                 Console.Write(Environment.NewLine);
                 Console.Write("Enter your choice: ");
 
-                int choice = GetMenuChoice(1, 3);
+                int choice = GetMenuChoice(1, 4);
 
                 switch (choice)
                 {
@@ -31,8 +32,11 @@ namespace Adv.Tools.DevConsole
                         break;
                     case 2:
                         new RunConfigReportView();
-                        return;
+                        break;
                     case 3:
+                        new RunDisplayResultsView();
+                        break;
+                    case 4:
                         Console.WriteLine("Exiting the application. Goodbye!");
                         return;
                 }

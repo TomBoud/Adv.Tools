@@ -55,7 +55,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
         {
             try
             {
-                reposetory.DeletAllViewData();
+                reposetory.DeleteAllViewData();
                 view.IsSuccessful = true;
                 view.Message = "All Data was Deleted successfully";
                 LoadAllViewData();

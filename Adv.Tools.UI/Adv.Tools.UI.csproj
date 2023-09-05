@@ -205,6 +205,24 @@
     <Compile Include="ViewModules\RevitModelQuality\DisplayResults\Models\DisplaySharedParamModel.cs" />
     <Compile Include="ViewModules\RevitModelQuality\DisplayResults\Models\DisplayElementWorksetModel.cs" />
     <Compile Include="ViewModules\RevitModelQuality\DisplayResults\Models\DisplayMissingWorksetModel.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\DisplayResults\Models\IDisplayElementWorksetRepo.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\DisplayResults\Presenters\DisplayElementWorksetPresenter.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\DisplayResults\Presenters\DisplayResultsMainPresenter.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\DisplayResults\Repositories\DisplayElementWorksetRepo.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\DisplayResults\Views\DisplayElementWorksetView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewModules\RevitModelQuality\DisplayResults\Views\DisplayElementWorksetView.Designer.cs">
+      <DependentUpon>DisplayElementWorksetView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModules\RevitModelQuality\DisplayResults\Views\DisplayResultsMainView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewModules\RevitModelQuality\DisplayResults\Views\DisplayResultsMainView.Designer.cs">
+      <DependentUpon>DisplayResultsMainView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModules\RevitModelQuality\DisplayResults\Views\IDisplayElementWorksetView.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\DisplayResults\Views\IDisplayResultsMainView.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -241,6 +259,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ViewModules\RevitModelQuality\ConfigReports\Views\ConfigReportView.resx">
       <DependentUpon>ConfigReportView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModules\RevitModelQuality\DisplayResults\Views\DisplayElementWorksetView.resx">
+      <DependentUpon>DisplayElementWorksetView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModules\RevitModelQuality\DisplayResults\Views\DisplayResultsMainView.resx">
+      <DependentUpon>DisplayResultsMainView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
