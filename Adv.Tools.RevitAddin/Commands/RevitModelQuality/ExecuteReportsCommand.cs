@@ -17,10 +17,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-/// <summary>
-/// Represents a namesapce for managing the scripts to be executed in Autodesk Revit.
-/// </summary>
-namespace Adv.Tools.RevitAddin.Commands
+namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
 {
     /// <summary>
     /// Represents the RevitCmd class for executing a specific function in Autodesk Revit.
@@ -73,13 +70,13 @@ namespace Adv.Tools.RevitAddin.Commands
                 tasks.Add(Task.Run(async () =>
                 {
                     await dataHandler.InitializeReportDataAsync(report);
-                }).ContinueWith(async _=>
+                }).ContinueWith(async _ =>
                 {
                     await dataHandler.ActivateReportBusinessLogicAsync(report);
-                }).ContinueWith(async _=> 
+                }).ContinueWith(async _ =>
                 {
                     await dataHandler.SaveReportResultsDataAsync(report);
-                }).ContinueWith(async _=> 
+                }).ContinueWith(async _ =>
                 {
                     await dataHandler.SaveReportScoreDataAsync(report);
                 }));

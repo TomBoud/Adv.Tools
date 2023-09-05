@@ -32,7 +32,6 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Presenters
             this.mainView.ShowConfigLevelsMonitorView += ShowConfigLevelsMonitorView;
             this.mainView.ShowConfigProjectInfoView += ShowConfigProjectInfoView;
             this.mainView.ShowConfigSharedParaView += ShowConfigSharedParaView;
-
         }
 
         private void ShowConfigSharedParaView(object sender, EventArgs e)

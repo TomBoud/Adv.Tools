@@ -7,17 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
+namespace Adv.Tools.UI.ViewModules.RevitModelQuality.DisplayResults.Models
 {
-    public class ExpectedCleanView : IExpectedCleanView
+    public class ReportElementsWorkset : IReportElementsWorkset
     {
-        //Fields
         private int id;
         private string modelName;
         private string modelGuid;
         private string discipline;
-        private string viewType;
-        private string viewName;
+        private string objectName;
+        private string objectCategory;
+        private string objectId;
 
         //Properties
         [DisplayName("ID")]
@@ -51,7 +51,23 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
             get => discipline;
             set => discipline = value;
         }
-        public string ViewType { get => viewType; set => viewType = value; }
-        public string ViewName { get => viewName; set => viewName = value; }
+
+        public string ObjectName 
+        { 
+            get => objectName;
+            set => objectName = value;
+        }
+
+        public string ObjectCategory 
+        { 
+            get => objectCategory; 
+            set => objectCategory = value;
+        }
+
+        public string ObjectId 
+        { 
+            get => objectId; 
+            set => objectId = value;
+        }
     }
 }

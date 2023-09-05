@@ -202,6 +202,9 @@
       <DependentUpon>ConfigReportView.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewModules\RevitModelQuality\ConfigReports\Views\IConfigReportView.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\DisplayResults\Models\DisplaySharedParamModel.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\DisplayResults\Models\DisplayElementWorksetModel.cs" />
+    <Compile Include="ViewModules\RevitModelQuality\DisplayResults\Models\DisplayMissingWorksetModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -262,8 +265,6 @@
       <Name>Adv.Tools.Abstractions</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModules\RevitModelQuality\DisplayResults\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

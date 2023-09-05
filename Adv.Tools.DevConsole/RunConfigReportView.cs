@@ -27,6 +27,8 @@ namespace Adv.Tools.DevConsole
             new ConfigReportPresenter(view, repo);
 
             view.RunUIApplication();
+
+
         }
     }
 }

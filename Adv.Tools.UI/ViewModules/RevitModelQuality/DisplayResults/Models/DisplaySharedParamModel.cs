@@ -7,17 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
+namespace Adv.Tools.UI.ViewModules.RevitModelQuality.DisplayResults.Models
 {
-    public class ExpectedCleanView : IExpectedCleanView
+    public class ReportSharedParameter : IReportSharedParameter
     {
-        //Fields
         private int id;
-        private string modelName;
         private string modelGuid;
+        private string modelName;
         private string discipline;
-        private string viewType;
-        private string viewName;
+        private string parameterName;
+        private string guid;
+        private bool isFound;
+        private string isFoundHeb;
 
         //Properties
         [DisplayName("ID")]
@@ -51,7 +52,29 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
             get => discipline;
             set => discipline = value;
         }
-        public string ViewType { get => viewType; set => viewType = value; }
-        public string ViewName { get => viewName; set => viewName = value; }
+
+        public string ParameterName 
+        { 
+            get => parameterName; 
+            set => parameterName = value; 
+        }
+
+        public string GUID 
+        { 
+            get => guid; 
+            set => guid = value; 
+        }
+
+        public bool IsFound 
+        { 
+            get => isFound; 
+            set => isFound = value; 
+        }
+
+        public string IsFoundHeb 
+        { 
+            get => isFoundHeb; 
+            set => isFoundHeb = value; 
+        }
     }
 }

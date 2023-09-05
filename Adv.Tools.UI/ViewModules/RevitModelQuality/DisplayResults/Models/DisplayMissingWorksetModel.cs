@@ -1,4 +1,5 @@
 ﻿using Adv.Tools.Abstractions.Database;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,17 +8,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
+namespace Adv.Tools.UI.ViewModules.RevitModelQuality.DisplayResults.Models
 {
-    public class ExpectedCleanView : IExpectedCleanView
+    public class ReportMissingWorkset : IReportMissingWorkset
     {
+
+        
         //Fields
         private int id;
         private string modelName;
         private string modelGuid;
         private string discipline;
-        private string viewType;
-        private string viewName;
+        private string worksetName;
+        private string objectId;
+        private bool isFound;
+        private string isFoundHeb;
+
 
         //Properties
         [DisplayName("ID")]
@@ -51,7 +57,29 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models
             get => discipline;
             set => discipline = value;
         }
-        public string ViewType { get => viewType; set => viewType = value; }
-        public string ViewName { get => viewName; set => viewName = value; }
+
+        public string WorksetName 
+        {
+            get => worksetName;
+            set => worksetName = value;
+        }
+        
+        public string ObjectId 
+        {
+            get => objectId;
+            set => objectId = value;
+        }
+        
+        public bool IsFound 
+        {
+            get => isFound;
+            set => isFound = value;
+        }
+
+        public string IsFoundHeb
+        {
+            get => isFoundHeb;
+            set => isFoundHeb = value;
+        }
     }
 }

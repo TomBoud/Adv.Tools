@@ -15,7 +15,7 @@ namespace Adv.Tools.DevConsole
 {
     public class RunMainModelQualityView
     {
-        public RunMainModelQualityView() 
+        public RunMainModelQualityView()
         {
 
             //This is for testing only
@@ -36,6 +36,7 @@ namespace Adv.Tools.DevConsole
             new ConfigExpectedMainPresenter(view, list, mySql, databaseName);
 
             view.RunUIApplication();
+
         }
 
     }
