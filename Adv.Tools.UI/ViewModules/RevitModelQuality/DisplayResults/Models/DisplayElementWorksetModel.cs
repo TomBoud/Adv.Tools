@@ -18,6 +18,9 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.DisplayResults.Models
         private string objectName;
         private string objectCategory;
         private string objectId;
+        private string objectWorkset;
+        private string objectFamily;
+
 
         //Properties
         [DisplayName("ID")]
@@ -52,22 +55,46 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.DisplayResults.Models
             set => discipline = value;
         }
 
+        [DisplayName("Workset Name")]
+        [Required(ErrorMessage = "Element Family is required")]
+        public string ObjectWorkset
+        {
+            get => objectWorkset;
+            set => objectWorkset = value;
+        }
+
+        [DisplayName("Element Id")]
+        [Required(ErrorMessage = "Element Id is required")]
+        public string ObjectId
+        {
+            get => objectId;
+            set => objectId = value;
+        }
+
+        [DisplayName("Element Name")]
+        [Required(ErrorMessage = "Element Name is required")]
         public string ObjectName 
         { 
             get => objectName;
             set => objectName = value;
         }
 
-        public string ObjectCategory 
-        { 
-            get => objectCategory; 
+        [DisplayName("Element Category")]
+        [Required(ErrorMessage = "Element Category is required")]
+        public string ObjectCategory
+        {
+            get => objectCategory;
             set => objectCategory = value;
         }
 
-        public string ObjectId 
+        [DisplayName("Element Family")]
+        [Required(ErrorMessage = "Element Family is required")]
+        public string ObjectFamily 
         { 
-            get => objectId; 
-            set => objectId = value;
+            get => objectFamily;
+            set => objectFamily = value; 
         }
+
+        
     }
 }

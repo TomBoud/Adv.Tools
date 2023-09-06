@@ -1,4 +1,5 @@
-﻿using Adv.Tools.Abstractions.Database;
+﻿using Adv.Tools.Abstractions.Common;
+using Adv.Tools.Abstractions.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.DataAccess.MySql.Models
 {
-    public class ExpectedSiteLocation : IExpectedSiteLocation
+    public class ExpectedSiteLocation : IExpectedSiteLocation, IDbModelEntity
     {
         public int Id { get; set; }
         public string ModelName { get; set; }
@@ -20,10 +21,10 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public string Latitude { get; set; }
         public string Longitude { get; set; }
 
-        public string GetMySqlTableMapping(string databaseName, string tableName)
+        public string GetCreateTableQuery(string databaseName)
         {
             string sqlQuery =
-               $"CREATE TABLE IF NOT EXISTS {databaseName}.{tableName} " +
+               $"CREATE TABLE IF NOT EXISTS {databaseName}.{GetType().Name} " +
                $"(`{nameof(Id)}` int NOT NULL AUTO_INCREMENT, " +
                $"`{nameof(ModelName)}` text, " +
                $"`{nameof(ModelGuid)}` text, " +
@@ -38,5 +39,6 @@ namespace Adv.Tools.DataAccess.MySql.Models
 
             return sqlQuery;
         }
+       
     }
 }

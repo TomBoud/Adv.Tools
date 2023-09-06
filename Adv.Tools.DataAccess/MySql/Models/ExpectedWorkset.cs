@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Adv.Tools.Abstractions.Common;
 using Adv.Tools.Abstractions.Database;
 
 namespace Adv.Tools.DataAccess.MySql.Models
 {
-    public class ExpectedWorkset : IExpectedWorkset
+    public class ExpectedWorkset : IExpectedWorkset , IDbModelEntity
     {
         public int Id { get; set; }
         public string ModelName { get; set; }
@@ -18,10 +19,10 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public string CategoryName { get; set; }
         public string CategoryId { get; set; }
 
-        public string GetMySqlTableMapping(string databaseName, string tableName)
+        public string GetCreateTableQuery(string databaseName)
         {
             string sqlQuery =
-               $"CREATE TABLE IF NOT EXISTS {databaseName}.{tableName} " +
+               $"CREATE TABLE IF NOT EXISTS {databaseName}.{GetType().Name} " +
                $"(`{nameof(Id)}` int NOT NULL AUTO_INCREMENT, " +
                $"`{nameof(ModelName)}` text, " +
                $"`{nameof(ModelGuid)}` text, " +

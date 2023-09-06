@@ -12,5 +12,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
         public string ModelName { get; set; }
         public string ModelGuid { get; set; }
         public string Discipline { get; set; }
+        public string ObjectFamily { get; set; }
+        public string ObjectWorkset { get; set; }
     }
 }

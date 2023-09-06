@@ -19,5 +19,6 @@ namespace Adv.Tools.Abstractions.Common
         Task DeleteDataById<T>(string databaseName, int Id);
         Task ExecuteWithTransaction(params Func<Task>[] tasks);
         Task SaveByInsertUpdateOnDuplicateKeysAsync<T>(List<T> data, T keyProperties);
+        Task ExecuteBuildNewMySqlDataBase(string databaseName);
     }
 }

@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Adv.Tools.Abstractions.Common;
 using Adv.Tools.Abstractions.Database;
 
 namespace Adv.Tools.DataAccess.MySql.Models
 {
-    public class ExpectedModel : IExpectedDocument
+    public class ExpectedModel : IExpectedDocument , IDbModelEntity
     {
         public int Id { get; set; }
         public string ModelName { get; set; }
@@ -20,7 +21,7 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public string PositionSource { get; set; }
         public string PositionSourceGuid { get; set; }
 
-        public string GetMySqlTableMapping(string databaseName)
+        public string GetCreateTableQuery(string databaseName)
         {
             string sqlQuery =
                 $"CREATE TABLE IF NOT EXISTS {databaseName}.{nameof(ExpectedModel)} " +
@@ -37,5 +38,6 @@ namespace Adv.Tools.DataAccess.MySql.Models
 
             return sqlQuery;
         }
+
     }
 }

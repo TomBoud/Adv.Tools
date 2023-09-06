@@ -34,7 +34,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
         public async void TestCreateTable_Successful()
         {
             //Stage
-            var query = new ExpectedModel().GetMySqlTableMapping(TestDataBaseName);
+            var query = new ExpectedModel().GetCreateTableQuery(TestDataBaseName);
             var task = _access.ExecuteSqlQueryAsync(query);
             //Act
             await task;
@@ -62,7 +62,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
                 }
             };
             //Act
-            var task = _access.SaveDataByPropertiesMappping(TestDataBaseName, models);
+            var task = _access.SaveByInsertValuesAsync(TestDataBaseName, models);
             await task;
             //Assert
             Assert.True(task.IsCompleted);

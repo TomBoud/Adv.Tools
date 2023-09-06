@@ -184,7 +184,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>MySql.settings</DependentUpon>
     </Compile>
-    <Compile Include="SQLite\SQLiteDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

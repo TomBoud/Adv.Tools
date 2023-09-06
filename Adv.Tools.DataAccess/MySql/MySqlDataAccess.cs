@@ -232,7 +232,25 @@ namespace Adv.Tools.DataAccess.MySql
                 }
             }
         }
+        public async Task ExecuteBuildNewMySqlDataBase(string databaseName)
+        {
+            var buildTasks = new List<Func<Task>>();
+            // Get all types from the currently executing assembly
+            var assembly = Assembly.GetExecutingAssembly();
+            var types = assembly.GetTypes();
 
-        
+            // Filter the types that implement the interface
+            var modelEntities = types.Where(t => typeof(IDbModelEntity).IsAssignableFrom(t) && t.IsClass).ToList();
+
+            foreach (var entity in modelEntities)
+            {
+                var dbModelEntity = Activator.CreateInstance(entity) as IDbModelEntity;
+                var query = dbModelEntity.GetCreateTableQuery(databaseName);
+                buildTasks.Add( () => ExecuteSqlQueryAsync(query));
+            }
+
+            await ExecuteWithTransaction(buildTasks.ToArray());
+
+        }
     }
 }
