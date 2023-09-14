@@ -50,8 +50,37 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Autodesk\AppStore\EntitlementApiTests.cs" />
+    <Compile Include="MySql\Models\ExpectedCleanViewTest.cs" />
+    <Compile Include="MySql\Models\ExpectedGridsMonitorTest.cs" />
+    <Compile Include="MySql\Models\ExpectedLevelsMonitorTest.cs" />
+    <Compile Include="MySql\Models\ExpectedMidpSheetTest.cs" />
     <Compile Include="MySql\Models\ExpectedModelTest.cs" />
+    <Compile Include="MySql\Models\ExpectedProjectInfoTest.cs" />
+    <Compile Include="MySql\Models\ExpectedSharedParaTest.cs" />
+    <Compile Include="MySql\Models\ExpectedSiteLocationTest.Cs" />
+    <Compile Include="MySql\Models\ExpectedTidpCodeTest.cs" />
+    <Compile Include="MySql\Models\ExpectedWorksetTest.cs" />
     <Compile Include="MySql\Models\ReportCheckScoreTest.cs" />
+    <Compile Include="MySql\Models\ReportCleanViewTest.cs" />
+    <Compile Include="MySql\Models\ReportElementsWorksetTest.cs" />
+    <Compile Include="MySql\Models\ReportFileReferenceTest.cs" />
+    <Compile Include="MySql\Models\ReportGenericModelTest.cs" />
+    <Compile Include="MySql\Models\ReportGridsMonitorTest.cs" />
+    <Compile Include="MySql\Models\ReportHeadRoomClearenceTest.cs" />
+    <Compile Include="MySql\Models\ReportInternalClashTest.cs" />
+    <Compile Include="MySql\Models\ReportLevelsMonitorTest.cs" />
+    <Compile Include="MySql\Models\ReportMidpSheetTest.cs" />
+    <Compile Include="MySql\Models\ReportMissingWorksetTest.cs" />
+    <Compile Include="MySql\Models\ReportModelGroupTest.cs" />
+    <Compile Include="MySql\Models\ReportModelPlaceTest.cs" />
+    <Compile Include="MySql\Models\ReportModelSheetTest.cs" />
+    <Compile Include="MySql\Models\ReportProjectBasePointTest.cs" />
+    <Compile Include="MySql\Models\ReportProjectInfoTest.cs" />
+    <Compile Include="MySql\Models\ReportProjectWarningTest.cs" />
+    <Compile Include="MySql\Models\ReportRoomDataTest.cs" />
+    <Compile Include="MySql\Models\ReportServiceSystemTest.cs" />
+    <Compile Include="MySql\Models\ReportSharedParameterTest.cs" />
+    <Compile Include="MySql\Models\ReportSpaceDataTest.cs" />
     <Compile Include="MySql\MySqlDataAccessTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\DataAccess.Designer.cs">

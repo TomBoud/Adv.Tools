@@ -26,17 +26,18 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public string GetCreateTableQuery(string databaseName)
         {
             string sqlQuery =
+               $"CREATE SCHEMA IF NOT EXISTS {databaseName} DEFAULT CHARACTER SET utf8mb4;" +
                $"CREATE TABLE IF NOT EXISTS {databaseName}.{GetType().Name} " +
                $"(`{nameof(Id)}` int NOT NULL AUTO_INCREMENT, " +
                $"`{nameof(ModelName)}` text, " +
                $"`{nameof(ModelGuid)}` text, " +
-            $"`{nameof(Discipline)}` text, " +
+               $"`{nameof(Discipline)}` text, " +
                $"`{nameof(LinkName)}` text, " +
                $"`{nameof(Status)}` text, " +
                $"`{nameof(Reference)}` text, " +
-               $"`{nameof(IsReffOk)}` text, " +
+               $"`{nameof(IsReffOk)}` TINYINT, " +
                $"`{nameof(IsReffOkHeb)}` text, " +
-               $"`{nameof(IsStatusOk)}` text, " +
+               $"`{nameof(IsStatusOk)}` TINYINT, " +
                $"`{nameof(IsStatusOkHeb)}` text, " +
                $"PRIMARY KEY (`{nameof(Id)}`))";
 

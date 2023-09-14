@@ -1,4 +1,5 @@
-﻿using Adv.Tools.Abstractions.Database;
+﻿using Adv.Tools.Abstractions.Common;
+using Adv.Tools.Abstractions.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.DataAccess.MySql.Models
 {
-    public class ReportMissingWorkset : IReportMissingWorkset
+    public class ReportMissingWorkset : IReportMissingWorkset ,IDbModelEntity
     {
         public int Id { get; set; }
         public string ModelName { get; set; }
@@ -18,11 +19,11 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public bool IsFound { get; set; }
         public string IsFoundHeb { get; set; }
 
-
-        public string GetMySqlTableMapping(string databaseName, string tableName)
+        public string GetCreateTableQuery(string databaseName)
         {
             string sqlQuery =
-               $"CREATE TABLE IF NOT EXISTS {databaseName}.{tableName} " +
+               $"CREATE SCHEMA IF NOT EXISTS {databaseName} DEFAULT CHARACTER SET utf8mb4;" +
+               $"CREATE TABLE IF NOT EXISTS {databaseName}.{GetType().Name} " +
                $"(`{nameof(Id)}` int NOT NULL AUTO_INCREMENT, " +
                $"`{nameof(ModelName)}` text, " +
                $"`{nameof(ModelGuid)}` text, " +

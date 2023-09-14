@@ -1,4 +1,5 @@
-﻿using Adv.Tools.Abstractions.Database;
+﻿using Adv.Tools.Abstractions.Common;
+using Adv.Tools.Abstractions.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.DataAccess.MySql.Models
 {
-    public class ExpectedTidpCode : IExpectedTidpCode
+    public class ExpectedTidpCode : IExpectedTidpCode, IDbModelEntity
     {
         public int Id { get; set; }
         public string ModelName { get; set; }
@@ -17,5 +18,23 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public string UsageType { get; set; }
         public string Name { get; set; }
         public string Guid { get; set; }
+
+        public string GetCreateTableQuery(string databaseName)
+        {
+            string sqlQuery =
+              $"CREATE SCHEMA IF NOT EXISTS {databaseName} DEFAULT CHARACTER SET utf8mb4; " +
+              $"CREATE TABLE IF NOT EXISTS {databaseName}.{GetType().Name} " +
+              $"(`{nameof(Id)}` int NOT NULL AUTO_INCREMENT, " +
+              $"`{nameof(ModelName)}` text, " +
+              $"`{nameof(ModelGuid)}` text, " +
+              $"`{nameof(Discipline)}` text, " +
+              $"`{nameof(Position)}` text, " +
+              $"`{nameof(UsageType)}` text, " +
+              $"`{nameof(Name)}` text, " +
+               $"`{nameof(Guid)}` text, " +
+              $"PRIMARY KEY (`{nameof(Id)}`))";
+
+            return sqlQuery;
+        }
     }
 }

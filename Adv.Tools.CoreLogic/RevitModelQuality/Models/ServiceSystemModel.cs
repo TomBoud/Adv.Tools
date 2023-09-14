@@ -13,7 +13,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
         public string ObjectType { get; set; }
         public string ParameterName { get; set; }
         public string ParameterValue { get; set; }
-        public string IsValueAcceptable { get; set; }
+        public bool IsValueAcceptable { get; set; }
         public string Discipline { get; set; }
     }
 }

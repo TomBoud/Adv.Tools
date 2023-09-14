@@ -6,9 +6,9 @@
         string GroupedGroups { get; set; }
         string GroupedObjects { get; set; }
         int Id { get; set; }
-        string IsNameCompliance { get; set; }
-        string IsNestedGroups { get; set; }
-        string IsUniLevel { get; set; }
+        bool IsNameCompliance { get; set; }
+        bool IsNestedGroups { get; set; }
+        bool IsUniLevel { get; set; }
         string LevelName { get; set; }
         string ModelGuid { get; set; }
         string ModelName { get; set; }

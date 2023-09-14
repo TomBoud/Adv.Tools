@@ -28,6 +28,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
             //Assert
             Assert.True(task.IsCompleted);
             Assert.False(task.IsFaulted);
+            Assert.Null(task.Exception);
         }
 
         [Fact, Order(2)]
@@ -41,6 +42,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
             //Assert
             Assert.True(task.IsCompleted);
             Assert.False(task.IsFaulted);
+            Assert.Null(task.Exception);
         }
 
         [Fact, Order(3)]
@@ -67,6 +69,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
             //Assert
             Assert.True(task.IsCompleted);
             Assert.False(task.IsFaulted);
+            Assert.Null(task.Exception);
         }
 
         [Fact, Order(4)]
@@ -77,6 +80,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
             //Act
             var models = await task;
             //Assert
+            Assert.Null(task.Exception);
             Assert.NotNull(models); 
             Assert.True(models?.Count() > 0);
         }

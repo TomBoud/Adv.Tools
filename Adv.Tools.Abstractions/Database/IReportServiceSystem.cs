@@ -4,7 +4,7 @@
     {
         string Discipline { get; set; }
         int Id { get; set; }
-        string IsValueAcceptable { get; set; }
+        bool IsValueAcceptable { get; set; }
         string LevelName { get; set; }
         string ModelGuid { get; set; }
         string ModelName { get; set; }

@@ -16,6 +16,59 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
         private readonly string TestDataBaseName = Properties.DataAccess.Default.DatabaseName;
 
         [Fact, Order(1)]
+        public async void TestDeleteTable_Successful()
+        {
+            //Stage
+            var task = _access.DeleteTableIfExists(TestDataBaseName, nameof(ReportCheckScore));
+            //Act
+            await task;
+            //Assert
+            Assert.True(task.IsCompleted);
+            Assert.False(task.IsFaulted);
+            Assert.Null(task.Exception);
+        }
+
+        [Fact, Order(2)]
+        public async void TestCreateTable_Successful()
+        {
+            //Stage
+            var query = new ReportCheckScore().GetCreateTableQuery(TestDataBaseName);
+            var task = _access.ExecuteSqlQueryAsync(query);
+            //Act
+            await task;
+            //Assert
+            Assert.True(task.IsCompleted);
+            Assert.False(task.IsFaulted);
+            Assert.Null(task.Exception);
+        }
+
+        [Fact, Order(3)]
+        public async void TestDataBaseInsert_Successful()
+        {
+            //Stage
+            var models = new List<ReportCheckScore>
+            {
+                new ReportCheckScore()
+                {
+                    Id =0,
+                    ModelName = "testModel",
+                    ModelGuid = "testGuid",
+                    Discipline = "testDiscipline",
+                    CheckLod = "100",
+                    CheckName = "Name",
+                    CheckScore = "95.5",
+                }
+            };
+            //Act
+            var task = _access.SaveByInsertValuesAsync(TestDataBaseName, models);
+            await task;
+            //Assert
+            Assert.True(task.IsCompleted);
+            Assert.False(task.IsFaulted);
+            Assert.Null(task.Exception);
+        }
+
+        [Fact, Order(4)]
         public async void TestDataBaseLoad_Successful()
         {
             //Stage
@@ -23,6 +76,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
             //Act
             var models = await task;
             //Assert
+            Assert.Null(task.Exception);
             Assert.NotNull(models);
             Assert.True(models?.Count() > 0);
         }
