@@ -1,4 +1,6 @@
-﻿using Adv.Tools.UI.ViewModules.RevitModelQuality.DisplayResults.Models;
+﻿using Adv.Tools.UI.Common;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.DisplayResults.Models;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.DisplayResults.Views;
 using System;
 using System.Collections.Generic;
@@ -18,7 +20,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.DisplayResults.Presenters
         private IEnumerable<ReportMissingWorkset> bindingList;
 
         //Constructor
-        public DisplayMissingWorksetPresenter(IDisplayElementWorksetView view, IDisplayElementWorksetRepo repo)
+        public DisplayMissingWorksetPresenter(IDisplayMissingWorksetView view, IDisplayMissingWorksetRepo repo)
         {
             //Construct the presenter
             this.bindingSource = new BindingSource();
