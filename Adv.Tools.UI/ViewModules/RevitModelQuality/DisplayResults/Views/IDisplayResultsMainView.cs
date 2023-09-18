@@ -9,6 +9,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.DisplayResults.Views
     public interface IDisplayResultsMainView
     {
         event EventHandler ShowDisplayElementWorksetView;
+        event EventHandler ShowDisplayElementWorksetsView;
 
         void RunUIApplication();
     }

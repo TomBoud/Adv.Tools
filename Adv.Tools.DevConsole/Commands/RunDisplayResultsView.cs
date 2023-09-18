@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adv.Tools.DevConsole
+namespace Adv.Tools.DevConsole.Commands
 {
     public class RunDisplayResultsView
     {

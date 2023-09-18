@@ -30,11 +30,13 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.elementsWorksets_button = new System.Windows.Forms.Button();
+            this.missingWorksets_button = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.missingWorksets_button);
             this.panel1.Controls.Add(this.elementsWorksets_button);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -51,6 +53,16 @@
             this.elementsWorksets_button.TabIndex = 1;
             this.elementsWorksets_button.Text = "Elements on Worksets";
             this.elementsWorksets_button.UseVisualStyleBackColor = true;
+            // 
+            // missingWorksets_button
+            // 
+            this.missingWorksets_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.missingWorksets_button.Location = new System.Drawing.Point(3, 52);
+            this.missingWorksets_button.Name = "missingWorksets_button";
+            this.missingWorksets_button.Size = new System.Drawing.Size(244, 34);
+            this.missingWorksets_button.TabIndex = 2;
+            this.missingWorksets_button.Text = "Missing Worksets";
+            this.missingWorksets_button.UseVisualStyleBackColor = true;
             // 
             // DisplayResultsMainView
             // 
@@ -70,5 +82,6 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button elementsWorksets_button;
+        private System.Windows.Forms.Button missingWorksets_button;
     }
 }

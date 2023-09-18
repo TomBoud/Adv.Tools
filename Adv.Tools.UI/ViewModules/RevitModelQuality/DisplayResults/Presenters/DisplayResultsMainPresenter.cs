@@ -29,6 +29,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.DisplayResults.Presenters
             this.databaseName = databaseName;
             //Subscribe delegated events to private methods
             this.mainView.ShowDisplayElementWorksetView += ShowDisplayElementWorksetView;
+            this.mainView.ShowDisplayElementWorksetView += ShowDisplayMissingWorksetsView;
         }
 
         private void ShowDisplayElementWorksetView(object sender, EventArgs e)
@@ -36,6 +37,14 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.DisplayResults.Presenters
             IDisplayElementWorksetView view = DisplayElementWorksetView.GetInstance((Form)mainView);
             IDisplayElementWorksetRepo repo = new DisplayElementWorksetRepo(dataAccess, databaseName);
             new DisplayElementWorksetPresenter(view, repo);
+            view.ShowThisUI();
+        }
+
+        private void ShowDisplayMissingWorksetsView(object sender, EventArgs e)
+        {
+            IDisplayMissingWorksetView view = DisplayMissingWorksetView.GetInstance((Form)mainView);
+            IDisplayMissingWorksetRepo repo = new DisplayMissingWorksetRepo(dataAccess, databaseName);
+            new DisplayMissingWorksetPresenter(view, repo);
             view.ShowThisUI();
         }
     }

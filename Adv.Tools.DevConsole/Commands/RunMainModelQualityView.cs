@@ -11,7 +11,7 @@ using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Repositories;
 using Adv.Tools.Abstractions.Revit;
 using Adv.Tools.RevitAddin.Models;
 
-namespace Adv.Tools.DevConsole
+namespace Adv.Tools.DevConsole.Commands
 {
     public class RunMainModelQualityView
     {

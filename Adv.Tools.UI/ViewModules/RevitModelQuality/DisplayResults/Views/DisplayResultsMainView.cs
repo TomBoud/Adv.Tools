@@ -17,11 +17,13 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.DisplayResults.Views
             InitializeComponent();
 
             elementsWorksets_button.Click += delegate { ShowDisplayElementWorksetView?.Invoke(this, EventArgs.Empty); };
+            missingWorksets_button.Click += delegate { ShowDisplayElementWorksetsView?.Invoke(this, EventArgs.Empty); };
 
         }
 
 
         public event EventHandler ShowDisplayElementWorksetView;
+        public event EventHandler ShowDisplayElementWorksetsView;
 
         public void RunUIApplication()
         {

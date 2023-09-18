@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Adv.Tools.DevConsole.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DatabaseName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">b908b0a4c8a1a457e97cfd4617c54301d</Value>
+    </Setting>
+    <Setting Name="DevDbConStr" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Server=localhost;Port=3306;user id=root;password=$QAZ56okm$;CharSet=utf8;</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
