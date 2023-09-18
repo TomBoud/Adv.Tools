@@ -45,7 +45,7 @@ namespace Adv.Tools.RevitAddin.Models
             _title = document.Title;
             _guid = document.GetCloudModelPath().GetModelGUID();
             _projectId = document.GetCloudModelPath().GetProjectGUID();
-            _dbProjectId = Regex.Replace(_projectId.ToString(), "[^a-zA-Z0-9_]", "");
+            _dbProjectId = Regex.Replace(document.GetProjectId(), "[^a-zA-Z0-9_]", "");
             _folderId = document.GetCloudFolderId(true);
             _hubId = document.GetHubId();
             _eastWest = document.ActiveProjectLocation.GetProjectPosition(XYZ.Zero).EastWest;

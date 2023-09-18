@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Adv.Tools.Abstractions.Common;
 
 /// <summary>
 /// Represents a namesapce for managing the scripts to be executed in Autodesk Revit.
@@ -54,10 +54,7 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
             //Reference the Adv.Tools.UI input objects
             var reports = new List<IReportModelQuality>
             {
-                new ElementsWorksetsReport()
-                {
-                    ReportDocument = new RevitDocument(doc)
-                }
+
             };
 
             //Acquire the data needed for the reports logic

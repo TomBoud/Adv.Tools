@@ -18,6 +18,7 @@ using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Presenters;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Repository;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Views;
 using Adv.Tools.RevitAddin.Application.Components;
+using Adv.Tools.Abstractions.Common;
 
 namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
 {
@@ -49,9 +50,6 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
             var tasks = new List<Task>();
             var dbName = new RevitDocument(doc).DbProjectId;
 
-            //Build database tables if needed
-            access.ExecuteBuildMySqlDataBase(dbName).RunSynchronously();
-
             //Acquire the Revit models for which the reports to be executed
             foreach (Document linkedModel in app.Documents)
             {
@@ -65,18 +63,22 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
             view.RunUIApplication();
 
             //Parse user input as a list of IReportModelQuality objects
-            var activeReportsNames = presenter.GetActiveReportsList()
-                .Select(r => r.CheckName).ToList();
+            var reportInstances = new List<IReportModelQuality>();
+            var reportTypes = Assembly.GetAssembly(typeof(IReportModelQuality)).GetTypes()
+                .Where(t => typeof(IReportModelQuality).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract).ToList();
 
-            var activeReportsTypes = Assembly.GetExecutingAssembly().GetTypes()
-                .Where(t => typeof(IReportModelQuality).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
-                .Where(t => activeReportsNames.Any(name => name.Equals(t.Name))).ToList();
-
-            var activeReportsInstances = activeReportsTypes
-                .Select(x => Activator.CreateInstance(x) as IReportModelQuality).ToList();
+            foreach (var reportType in reportTypes)
+            {
+                foreach(var link in links)
+                {
+                    var instance = Activator.CreateInstance(reportType) as IReportModelQuality;
+                    instance.ReportDocument = new RevitDocument(link);
+                    reportInstances.Add(instance);
+                }
+            }
 
             //Acquire the data needed for the reports logic
-            foreach (var report in activeReportsInstances)
+            foreach (var report in reportInstances)
             {
                 var document = links.FirstOrDefault(x => x.GetCloudModelPath().GetModelGUID().Equals(report.ReportDocument.Guid));
                 var dataHandler = new RevitModelQualityDataHandler(access, document, report.ReportDocument.DbProjectId);

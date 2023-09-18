@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Adv.Tools.Abstractions;
+using Adv.Tools.Abstractions.Common;
 using Adv.Tools.Abstractions.Database;
 using Adv.Tools.Abstractions.Enums;
 using Adv.Tools.Abstractions.Revit;
@@ -16,7 +17,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 {
     public class ElementsWorksetsReport : IReportModelQuality
     {
-        public string ReportName { get => nameof(ElementsWorksetsReport); set => ReportName = value; }
+        public string ReportName { get => "ReportElementsWorksets"; set => ReportName = "ReportElementsWorksets"; }
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
         public IDocument ReportDocument { get; set; }

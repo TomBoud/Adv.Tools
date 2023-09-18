@@ -13,7 +13,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 {
     public class MissingWorksetsReport : IReportModelQuality
     {
-        public string ReportName { get => nameof(MissingWorksetsReport); set => ReportName = nameof(MissingWorksetsReport); }
+        public string ReportName { get => "ReportMissingWorksets"; set => ReportName = "ReportMissingWorksets"; }
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
         public IDocument ReportDocument { get; set; }

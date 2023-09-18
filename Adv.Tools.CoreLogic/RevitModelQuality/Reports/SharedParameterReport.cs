@@ -1,5 +1,6 @@
 ﻿
 
+using Adv.Tools.Abstractions.Common;
 using Adv.Tools.Abstractions.Database;
 using Adv.Tools.Abstractions.Enums;
 using Adv.Tools.Abstractions.Revit;
@@ -16,7 +17,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 {
     public class SharedParameterReport : IReportModelQuality
     {
-        public string ReportName { get => nameof(SharedParameterReport); set => ReportName = nameof(SharedParameterReport); }
+        public string ReportName { get => "ReportSharedParameter"; set => ReportName = "ReportSharedParameter"; }
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
         public IDocument ReportDocument { get; set; }

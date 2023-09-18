@@ -8,7 +8,9 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 using Adv.Tools.RevitAddin.Application.Components;
 using Adv.Tools.DataAccess.MySql;
-
+using Autodesk.Revit.DB.Events;
+using Adv.Tools.RevitAddin.Commands.RevitModelQuality;
+using Adv.Tools.RevitAddin.Models;
 /// <summary>
 /// Represents a namesapce for managing the user interface in Autodesk Revit.
 /// </summary>
@@ -52,6 +54,8 @@ namespace Adv.Tools.RevitAddin.Application
                     _ = appRibbonPanel.AddItem(appPushButton.ButtonData) as PushButton;
                 }
 
+                application.ControlledApplication.DocumentOpened += ControlledApplication_DocumentOpened;
+
             }
             catch (Exception ex)
             {
@@ -69,6 +73,13 @@ namespace Adv.Tools.RevitAddin.Application
 
             return Result.Succeeded;
         }
+
+        private async void ControlledApplication_DocumentOpened(object sender, DocumentOpenedEventArgs e)
+        {
+            var access = new MySqlDataAccess(Properties.DataAccess.Default.ProdDb);
+            await access.ExecuteBuildMySqlDataBase(new RevitDocument(e.Document).DbProjectId);
+        }
+
 
         /// <summary>
         /// Called when the add-in is shut down.

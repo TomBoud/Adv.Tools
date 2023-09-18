@@ -16,7 +16,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 {
     public class FileReferenceReport : IReportModelQuality
     {
-        public string ReportName { get => nameof(FileReferenceReport); set => ReportName = nameof(FileReferenceReport); }
+        public string ReportName { get => "ReportFileReference"; set => ReportName = "ReportFileReference"; }
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
         public IDocument ReportDocument { get; set; }
