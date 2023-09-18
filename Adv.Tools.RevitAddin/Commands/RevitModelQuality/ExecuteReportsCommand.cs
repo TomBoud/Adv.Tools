@@ -50,7 +50,7 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
             var dbName = new RevitDocument(doc).DbProjectId;
 
             //Build database tables if needed
-            access.ExecuteBuildMySqlDataBase(dbName).Wait();
+            access.ExecuteBuildMySqlDataBase(dbName).RunSynchronously();
 
             //Acquire the Revit models for which the reports to be executed
             foreach (Document linkedModel in app.Documents)
