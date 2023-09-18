@@ -13,5 +13,6 @@ namespace Adv.Tools.Abstractions.Database
         string CheckName { get; set; }
         string CheckLod { get; set; }
         string CheckScore { get; set; }
+        bool IsActive { get; set; }
     }
 }

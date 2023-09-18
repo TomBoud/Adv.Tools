@@ -20,6 +20,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Models
         private string docName;
         private string docGuid;
         private string docDiscipline;
+        private bool isActive;
 
         public ConfigReportModel(IReportCheckScore reportCheckScore)
         {
@@ -30,6 +31,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Models
             docName = reportCheckScore.ModelName;
             docGuid = reportCheckScore.ModelGuid;
             docDiscipline= reportCheckScore.Discipline; 
+            isActive = reportCheckScore.IsActive;
         }
 
         //Properties
@@ -58,6 +60,8 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Models
         [DisplayName("Model Discipline")]
         [Required(ErrorMessage = "Revit Model Discipline is required")]
         public string Discipline { get => docDiscipline; set => docDiscipline = value; }
-      
+
+        public bool IsActive { get => isActive; set => isActive = value; }
+
     }
 }

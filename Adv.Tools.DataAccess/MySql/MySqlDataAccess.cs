@@ -232,7 +232,7 @@ namespace Adv.Tools.DataAccess.MySql
                 }
             }
         }
-        public async Task ExecuteBuildNewMySqlDataBase(string databaseName)
+        public async Task ExecuteBuildMySqlDataBase(string databaseName)
         {
             var buildTasks = new List<Func<Task>>();
             // Get all types from the currently executing assembly

@@ -53,7 +53,6 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.DisplayResults.Presenters
                 view.Message = ex.Message;
             }
         }
-
         private void ExportEvent(object sender, EventArgs e)
         {
             var helper = new ExcelFilesHelper();
@@ -75,7 +74,6 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.DisplayResults.Presenters
             bindingList = repository.GetAllViewData();
             bindingSource.DataSource = bindingList;
         }
-
         private void SearchDocument(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(this.view.SearchValue))

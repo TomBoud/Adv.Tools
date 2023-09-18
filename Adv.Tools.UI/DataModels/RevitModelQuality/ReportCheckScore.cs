@@ -16,5 +16,6 @@ namespace Adv.Tools.UI.DataModels.RevitModelQuality
         public string CheckName { get; set; }
         public string CheckLod { get; set; }
         public string CheckScore { get; set; }
+        public bool IsActive { get; set; }
     }
 }

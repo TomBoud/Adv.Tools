@@ -7,7 +7,7 @@ using System.Reflection;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 using Adv.Tools.RevitAddin.Application.Components;
-
+using Adv.Tools.DataAccess.MySql;
 
 /// <summary>
 /// Represents a namesapce for managing the user interface in Autodesk Revit.
@@ -51,8 +51,9 @@ namespace Adv.Tools.RevitAddin.Application
 
                     _ = appRibbonPanel.AddItem(appPushButton.ButtonData) as PushButton;
                 }
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var mainDialog = new TaskDialog("Adv Tools UI error")
                 {

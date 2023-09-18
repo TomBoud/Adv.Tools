@@ -1,7 +1,4 @@
-﻿
-
-
-using Adv.Tools.DataAccess.MySql;
+﻿using Adv.Tools.DataAccess.MySql;
 using Adv.Tools.CoreLogic.RevitModelQuality;
 using Adv.Tools.RevitAddin.Handlers;
 using Adv.Tools.RevitAddin.Models;
@@ -16,6 +13,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Models;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Presenters;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Repository;
+using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Views;
+using Adv.Tools.RevitAddin.Application.Components;
 
 namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
 {
@@ -23,7 +25,7 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
     /// Represents the RevitCmd class for executing a specific function in Autodesk Revit.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    public class RevitModelQualityCommand : IExternalCommand
+    public class ExecuteReportsCommand : IExternalCommand
     {
 
         private readonly string _connectionString = Properties.DataAccess.Default.ProdDb;
@@ -45,6 +47,10 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
             var access = new MySqlDataAccess(_connectionString);
             var links = new List<Document>();
             var tasks = new List<Task>();
+            var dbName = new RevitDocument(doc).DbProjectId;
+
+            //Build database tables if needed
+            access.ExecuteBuildMySqlDataBase(dbName).Wait();
 
             //Acquire the Revit models for which the reports to be executed
             foreach (Document linkedModel in app.Documents)
@@ -52,17 +58,25 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
                 if (linkedModel.IsLinked) { links.Add(linkedModel); }
             }
 
-            //Reference the Adv.Tools.UI input objects
-            var reports = new List<IReportModelQuality>
-            {
-                new ElementsWorksetsReport()
-                {
-                    ReportDocument = new RevitDocument(doc)
-                }
-            };
+            //Acquire user input about which reports to be executed
+            IConfigReportView view = new ConfigReportView();
+            IConfigReportRepo repo = new ConfigReportRepo(access, dbName);
+            var presenter = new ConfigReportPresenter(view, repo);
+            view.RunUIApplication();
+
+            //Parse user input as a list of IReportModelQuality objects
+            var activeReportsNames = presenter.GetActiveReportsList()
+                .Select(r => r.CheckName).ToList();
+
+            var activeReportsTypes = Assembly.GetExecutingAssembly().GetTypes()
+                .Where(t => typeof(IReportModelQuality).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
+                .Where(t => activeReportsNames.Any(name => name.Equals(t.Name))).ToList();
+
+            var activeReportsInstances = activeReportsTypes
+                .Select(x => Activator.CreateInstance(x) as IReportModelQuality).ToList();
 
             //Acquire the data needed for the reports logic
-            foreach (var report in reports)
+            foreach (var report in activeReportsInstances)
             {
                 var document = links.FirstOrDefault(x => x.GetCloudModelPath().GetModelGUID().Equals(report.ReportDocument.Guid));
                 var dataHandler = new RevitModelQualityDataHandler(access, document, report.ReportDocument.DbProjectId);

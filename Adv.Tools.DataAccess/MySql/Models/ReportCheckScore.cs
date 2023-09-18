@@ -13,7 +13,8 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public string CheckName { get; set; }
         public string CheckLod { get; set; }
         public string CheckScore { get; set; }
-        
+        public bool IsActive { get; set; }
+
 
         public string GetCreateTableQuery(string databaseName)
         {
@@ -27,6 +28,7 @@ namespace Adv.Tools.DataAccess.MySql.Models
                $"`{nameof(CheckName)}` text, " +
                $"`{nameof(CheckLod)}` text, " +
                $"`{nameof(CheckScore)}` text, " +
+               $"`{nameof(IsActive)}` TINYINT, " +
                $"PRIMARY KEY (`{nameof(Id)}`))";
 
             return sqlQuery;

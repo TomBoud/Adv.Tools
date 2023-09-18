@@ -24,9 +24,10 @@ namespace Adv.Tools.DevConsole.Commands
 
             IConfigReportView view = new ConfigReportView();
             IConfigReportRepo repo = new ConfigReportRepo(mySql, databaseName);
-            new ConfigReportPresenter(view, repo);
+            var presenter = new ConfigReportPresenter(view, repo);
 
             view.RunUIApplication();
+            var reports = presenter.GetActiveReportsList();
 
 
         }
