@@ -74,7 +74,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Views
             //Run Reports
             start_button.Click += delegate 
             { 
-                CloseEvent?.Invoke(this, EventArgs.Empty); 
+                //CloseEvent?.Invoke(this, EventArgs.Empty); 
                 this.Close();
             };
         }

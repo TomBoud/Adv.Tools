@@ -33,7 +33,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Repositories
 
         public async void DeletAllViewData()
         {
-            await _dataAccess.DeleteAllData<ExpectedCleanView>(_databaseName);
+            await _dataAccess.DeleteAllTableDataAsync<ExpectedCleanView>(_databaseName);
         }
 
         public async void Edit(ExpectedCleanView model)

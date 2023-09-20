@@ -34,49 +34,47 @@ namespace Adv.Tools.RevitAddin.Handlers
         {
             if (report is ElementsWorksetsReport)
             {
+                report.DocumentObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedModel>(_databaseName);
                 report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedWorkset>(_databaseName);
                 report.ExistingObjects = GetElementsByExpectedCategoryId(report.ExpectedObjects);
             }
             else if (report is MissingWorksetsReport)
             {
+                report.DocumentObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedModel>(_databaseName);
                 report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedWorkset>(_databaseName);
                 report.ExistingObjects = GetUserCreatedWorksets();
             }
             else if (report is FileReferenceReport)
             {
+                report.DocumentObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedModel>(_databaseName);
                 report.ExpectedObjects = Enumerable.Empty<object>();
                 report.ExistingObjects = GetRevitLinkTypes();
             }
             else if (report is LevelsMonitorReport)
             {
+                report.DocumentObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedModel>(_databaseName);
                 report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedGridsMonitor>(_databaseName);
                 report.ExistingObjects = GetLevelsAsElements();
             }
             else if (report is GridsMonitorReport)
             {
+                report.DocumentObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedModel>(_databaseName);
                 report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedGridsMonitor>(_databaseName);
                 report.ExistingObjects = GetGridsAsElements();
             }
             else if (report is ProjectWarningReport)
             {
+                report.DocumentObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedModel>(_databaseName);
                 report.ExpectedObjects = Enumerable.Empty<object>();
                 report.ExistingObjects = GetDocumentFailureMessages();
             }
         }
-
         public async Task SaveReportResultsDataAsync(IReportModelQuality report)
         {
             if (report is ElementsWorksetsReport)
             {
                 var results = report.ResultObjects.Cast<ReportElementsWorkset>().ToList();
-                
-                var duplicaeKeys = new ReportElementsWorkset
-                {
-                    ModelName = report.ReportDocument.Name,
-                    ModelGuid = report.ReportDocument.Guid.ToString(),
-                };
-
-                await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(results, duplicaeKeys);
+                await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName,results);
                 
             }
             else if (report is MissingWorksetsReport)
@@ -122,15 +120,7 @@ namespace Adv.Tools.RevitAddin.Handlers
                 }
             };
 
-            var duplicateKeys = new ReportCheckScore
-            {
-                CheckLod = ((int)report.Lod).ToString(),
-                CheckName = report.ReportName,
-                ModelGuid = report.ReportDocument.Guid.ToString(),
-                ModelName = report.ReportDocument.Title
-            };
-
-            await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(checkScoreData, duplicateKeys);
+            await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName, checkScoreData);
         }
 
         /// <summary>

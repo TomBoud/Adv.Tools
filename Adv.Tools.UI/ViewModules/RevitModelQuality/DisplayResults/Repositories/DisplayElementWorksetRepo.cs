@@ -22,7 +22,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.DisplayResults.Repositories
 
         public async void DeleteAllViewData()
         {
-            await _dataAccess.DeleteAllData<ReportElementsWorkset>(_databaseName);
+            await _dataAccess.DeleteAllTableDataAsync<ReportElementsWorkset>(_databaseName);
         }
         public IEnumerable<ReportElementsWorkset> GetAllViewData()
         {

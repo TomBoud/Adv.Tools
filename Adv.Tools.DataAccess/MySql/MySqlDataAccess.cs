@@ -119,7 +119,7 @@ namespace Adv.Tools.DataAccess.MySql
                 throw ex;
             }
         }
-        public async Task SaveByInsertUpdateOnDuplicateKeysAsync<T>(List<T> data, T parameters)
+        public async Task SaveByInsertUpdateOnDuplicateKeysAsync<T>(string databaseName,List<T> data)
         {
             using (IDbConnection dbConnection = new MySqlConnection(_connectionString))
             {
@@ -128,11 +128,9 @@ namespace Adv.Tools.DataAccess.MySql
                 string tableName = typeof(T).Name;
                 string columns = string.Join(", ", properties.Select(p => p.Name));
                 string parametersPlaceholder = string.Join(", ", properties.Select(p => "@" + p.Name));
-                string updateAssignments = string.Join(", ", properties
-                    .Where(p => !p.GetValue(parameters).Equals(default(T)) && p.GetValue(parameters) != null)
-                    .Select(p => p.Name + " = VALUES(" + p.Name + ")"));
+                string updateAssignments = string.Join(", ", properties.Select(p => p.Name + " = VALUES(" + p.Name + ")"));
 
-                string query = $"INSERT INTO {tableName} ({columns}) VALUES ({parametersPlaceholder}) " +
+                string query = $"INSERT INTO {databaseName}.{tableName} ({columns}) VALUES ({parametersPlaceholder}) " +
                                $"ON DUPLICATE KEY UPDATE {updateAssignments}";
 
                 await dbConnection.ExecuteAsync(query, data);
@@ -147,29 +145,23 @@ namespace Adv.Tools.DataAccess.MySql
                 await connection.ExecuteAsync(sqlQuery, parameters);
             }
         }
-        public async Task DeleteAllData<T>(string databaseName)
+        public async Task DeleteAllTableDataAsync<T>(string databaseName)
         {
             using (IDbConnection connection = new MySqlConnection(_connectionString))
             {
-                await connection.ExecuteAsync($"truncate {databaseName}.{typeof(T).Name}");
+                try
+                {
+                    await connection.ExecuteAsync($"truncate {databaseName}.{typeof(T).Name}");
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
         }
         public async Task DeleteDataById<T>(string databaseName,int Id)
         {
             string sqlQuery = $"DELETE FROM {databaseName}.{nameof(T)} Where Id={Id}";
-
-            try
-            {
-                await DeleteData<T, dynamic>(sqlQuery, new { });
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public async Task DeleteDataAllRows<T>(string databaseName)
-        {
-            string sqlQuery = $"DELETE FROM {databaseName}.{nameof(T)}";
 
             try
             {

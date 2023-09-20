@@ -15,10 +15,10 @@ namespace Adv.Tools.Abstractions.Common
         Task<List<T>> LoadDataSelectAllAsync<T>(string databaseName);
         List<T> LoadDataSelectAll<T>(string databaseName);
         Task DeleteData<T, U>(string databaseName, U parameters);
-        Task DeleteAllData<T>(string databaseName);
+        Task DeleteAllTableDataAsync<T>(string databaseName);
         Task DeleteDataById<T>(string databaseName, int Id);
         Task ExecuteWithTransaction(params Func<Task>[] tasks);
-        Task SaveByInsertUpdateOnDuplicateKeysAsync<T>(List<T> data, T keyProperties);
+        Task SaveByInsertUpdateOnDuplicateKeysAsync<T>(string databaseName, List<T> data);
         Task ExecuteBuildMySqlDataBase(string databaseName);
     }
 }

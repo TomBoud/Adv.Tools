@@ -31,7 +31,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Repositories
         }
         public async void DeletAllViewData()
         {
-            await _dataAccess.DeleteAllData<ExpectedSharedPara>(_databaseName);
+            await _dataAccess.DeleteAllTableDataAsync<ExpectedSharedPara>(_databaseName);
         }
         public void Edit(ExpectedSharedPara model)
         {

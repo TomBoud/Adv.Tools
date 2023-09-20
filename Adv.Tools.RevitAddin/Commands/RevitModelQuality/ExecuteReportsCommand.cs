@@ -47,13 +47,18 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
             //Reference to support objects
             var access = new MySqlDataAccess(_connectionString);
             var links = new List<Document>();
+            var rvtDocs = new List<RevitDocument>();
             var tasks = new List<Task>();
             var dbName = new RevitDocument(doc).DbProjectId;
 
             //Acquire the Revit models for which the reports to be executed
             foreach (Document linkedModel in app.Documents)
             {
-                if (linkedModel.IsLinked) { links.Add(linkedModel); }
+                if (linkedModel.IsLinked) 
+                { 
+                    links.Add(linkedModel);
+                    rvtDocs.Add(new RevitDocument(linkedModel));
+                }
             }
 
             //Acquire user input about which reports to be executed
@@ -69,10 +74,10 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
 
             foreach (var reportType in reportTypes)
             {
-                foreach(var link in links)
+                foreach(var rvtModel in rvtDocs)
                 {
                     var instance = Activator.CreateInstance(reportType) as IReportModelQuality;
-                    instance.ReportDocument = new RevitDocument(link);
+                    instance.ReportDocument = rvtModel;
                     reportInstances.Add(instance);
                 }
             }
