@@ -1,35 +1,45 @@
 ﻿
 using Adv.Tools.Abstractions.Common;
 using Adv.Tools.Abstractions.Database;
+using Google.Protobuf.WellKnownTypes;
 using System;
 
 namespace Adv.Tools.DataAccess.MySql.Models
 {
     public class ReportCheckScore : IReportCheckScore, IDbModelEntity
     {
+
         public int Id { get; set; }
-        public string RowGuid { get; set; }
         public string ModelName { get; set; }
-        public string ModelGuid { get; set; }
+        public string ModelGuid { get => modelGuid; set => modelGuid = value; }
         public string Discipline { get; set; }
-        public string CheckName { get; set; }
+        public string CheckName { get => checkName; set=> checkName = value; }
         public string CheckLod { get; set; }
         public string CheckScore { get; set; }
+        public string RowGuid { get => GetUniqueDbEntityGuid(); }
         public bool IsActive { get; set; }
 
-        public string GetUniqueDbEntityGuid()
+
+        private string modelGuid;
+        private string checkName;
+
+        private string GetUniqueDbEntityGuid()
         {
             // Concatenate the three input strings
-            string combinedInput = ModelName + ModelGuid + CheckName;
+            string combinedInput = modelGuid + checkName;
 
-            // Convert the concatenated string to bytes
-            byte[] inputBytes = System.Text.Encoding.UTF8.GetBytes(combinedInput);
+            // Calculate a basic hash code from the combined string
+            int hashCode = combinedInput.GetHashCode();
 
-            // Generate a GUID from the bytes
-            Guid generatedGuid = new Guid(inputBytes);
+            // Convert the hash code to a positive number
+            long positiveHashCode = Math.Abs((long)hashCode);
 
-            return generatedGuid.ToString();
+            // Format the number as a serial key
+            string serialKey = positiveHashCode.ToString("D12");
+
+            return serialKey.ToString();
         }
+
         public string GetCreateTableQuery(string databaseName)
         {
             string sqlQuery =

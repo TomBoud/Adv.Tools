@@ -95,7 +95,6 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql
                         CheckLod = "ThisStringBeOverwitted",
                         CheckScore = "ThisStringBeOverwitted",
                         CheckName = $"ReportNumber{i}",
-                        RowGuid = $"327D5F04-A5C6-4216-AA4C-FF0FD8E653E{i}",
                         IsActive = true,
                     });
             }
@@ -126,7 +125,6 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql
                         CheckLod = "ThisIsAnUpdatedString",
                         CheckScore = "ThisShouldBeUpdatedLater",
                         CheckName = $"ReportNumber{i}",
-                        RowGuid = $"327D5F04-A5C6-4216-AA4C-FF0FD8E653E{i}",
                         IsActive = true,
                     });
             }
@@ -141,7 +139,6 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql
                         CheckLod = "NewInsertedData",
                         CheckScore = "NewInsertedData",
                         CheckName = $"ReportNumber{i+6}",
-                        RowGuid = $"327D5F04-A5C6-4216-AA4C-FF0FD8E653E{i+6}",
                         IsActive = true,
                     });
             }

@@ -132,7 +132,7 @@ namespace Adv.Tools.DataAccess.MySql
 
                 string query = $"INSERT INTO {databaseName}.{tableName} ({columns}) VALUES ({parametersPlaceholder}) " +
                                $"ON DUPLICATE KEY UPDATE {updateAssignments}";
-
+                
                 await dbConnection.ExecuteAsync(query, data);
             }
         }
@@ -244,5 +244,6 @@ namespace Adv.Tools.DataAccess.MySql
             await ExecuteWithTransaction(buildTasks.ToArray());
 
         }
+
     }
 }

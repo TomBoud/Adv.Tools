@@ -46,19 +46,19 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
         public async void TestDataBaseInsert_Successful()
         {
             //Stage
-            var models = new List<ReportCheckScore>
+            var models = new List<ReportCheckScore>();
+            var model = new ReportCheckScore()
             {
-                new ReportCheckScore()
-                {
-                    Id =0,
-                    ModelName = "testModel",
-                    ModelGuid = "testGuid",
-                    Discipline = "testDiscipline",
-                    CheckLod = "100",
-                    CheckName = "Name",
-                    CheckScore = "95.5",
-                }
+                Id = 0,
+                ModelName = "testModel",
+                ModelGuid = "testGuid",
+                Discipline = "testDiscipline",
+                CheckLod = "100",
+                CheckName = "Name",
+                CheckScore = "95.5",
+                IsActive = true,
             };
+
             //Act
             var task = _access.SaveByInsertValuesAsync(TestDataBaseName, models);
             await task;
