@@ -13,6 +13,8 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 {
     public class ProjectBasePointReports : IReportModelQuality
     {
+        private readonly decimal ratio = 30.48M; // Conversion from native API "feet" units to "metric" units
+
         public string ReportName { get => "ReportProjectBasePoint"; set => ReportName = "ReportProjectBasePoint"; }
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
@@ -34,18 +36,21 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 DisciplineType.Landscape,
             };
         }
-        public string GetReportScore()
+        public string GetReportScoreAsString()
         {
-            double checkScore = 0;
             //Cast results property to a valid list
-            var results = ResultObjects.Cast<IReportProjectBasePoint>();
-            if (results is null) { return string.Empty; }
+            var results = ResultObjects.OfType<IReportProjectBasePoint>().ToList();
+            if (results.Count.Equals(0)) { return string.Empty; }
+
             //Get all bool properties
             PropertyInfo[] boolProperties = typeof(IReportProjectBasePoint).GetProperties()
                     .Where(prop => prop.PropertyType == typeof(bool)).ToArray();
+            
             //Check for bool properties existence (avoid zero division)
             if (boolProperties.Length.Equals(0)) { return string.Empty; }
+            
             //Count all positive (true) values for all the results
+            double checkScore = 0;
             foreach (var result in results)
             {
                 foreach (PropertyInfo property in boolProperties)
@@ -57,20 +62,22 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                     }
                 }
             }
+
             //Calculate final score and return  in a string format
             checkScore = 100 * checkScore / (boolProperties.Length * results.Count());
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
         public void RunReportBusinessLogic()
         {
-            //Initialize Business Logic Parameters
-            decimal ratio = 30.48M; // Conversion from native API "feet" units to metric
+            //Initialize Result objects return data type
             var _resultObjects = new List<IReportProjectBasePoint>();
-            var _expectedLocation = ExpectedObjects?.OfType<IExpectedSiteLocation>()?.FirstOrDefault(x=>x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
-           
-            //Return nothing if there was no data provided
+
+            // Initialize expected objects data type
+            var _expectedLocation = ExpectedObjects?.OfType<IExpectedSiteLocation>()
+                ?.FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
             if (_expectedLocation is null) { ResultObjects = _resultObjects; return; }
 
+            //Perform Report Business Logic
             var report = new ProjectBasePointModel()
             {
                 ModelName = _expectedLocation.ModelName,
@@ -102,7 +109,8 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             else { report.IsLocation = true; report.IsBasePointHeb = "מיקום גאוגרפי תקין"; }
             if (report.IsLocation != true || report.IsBasePoint != true) { report.IsCorrect = false; report.IsCorrectHeb = "קורדינטות שגויות"; }
             else { report.IsCorrect = true; report.IsCorrectHeb = "קורדינטות תקינות"; }
-            
+
+            //Assign Report Results
             _resultObjects.Add(report);
             ResultObjects = _resultObjects;
         }

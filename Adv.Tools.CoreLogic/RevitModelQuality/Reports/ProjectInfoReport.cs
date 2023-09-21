@@ -36,7 +36,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 DisciplineType.Landscape,
             };
         }
-        public string GetReportScore()
+        public string GetReportScoreAsString()
         {
             double totalObjects = ResultObjects.Cast<IReportProjectInfo>().Count();
             double trueFound = ResultObjects.Cast<IReportProjectInfo>().Where(x=>x.IsCorrect).Count();
@@ -47,30 +47,36 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         }
         public void RunReportBusinessLogic()
         {
-            var expectedModel = DocumentObjects.Cast<IExpectedDocument>()
-                .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
-
-            var documentProps = ReportDocument.GetType().GetProperties().ToList();
-
-            var expectedInformation = ExpectedObjects.Cast<IExpectedProjectInfo>()
-                .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()))
-                .GetType().GetProperties().ToList();
-
+            //Initialize Result objects return data type
             var _resultObjects = new List<IReportProjectInfo>();
 
-            foreach (var expectedProperty in expectedInformation)
+            //Initialize existing objects data type
+            var _existingInfo = ReportDocument.GetType().GetProperties().ToList();
+
+            //Initialize expected objects data type
+            var _expectedInfo = ExpectedObjects.Cast<IExpectedProjectInfo>()
+                ?.Where(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()))
+                .GetType().GetProperties().ToList();
+            if (_expectedInfo.Count.Equals(0)) { ResultObjects = _resultObjects; return; }
+
+            //Initialize user defined documents data type
+            var _expectedDoc = DocumentObjects?.OfType<IExpectedDocument>()?.FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
+            if (_expectedDoc is null) { ResultObjects = _resultObjects; return; }
+
+            //Perform Report Business Logic
+            foreach (var property in _expectedInfo)
             {
-                var documentProperty = documentProps.FirstOrDefault(x => x.Name.Equals(expectedProperty.Name));
-                if (expectedProperty is null) { continue; }
+                var existingProperty = _existingInfo.FirstOrDefault(x => x.Name.Equals(property.Name));
+                if (property is null) { continue; }
 
                 var report = new ProjectInfoModel()
                 {
-                    ModelName = expectedModel.ModelName,
-                    ModelGuid = expectedModel.ModelGuid,
-                    Discipline = expectedModel.Discipline,
-                    ExpectedValue = (string)expectedProperty?.GetValue(expectedProperty.Name,null) ?? string.Empty,
-                    InfoName = documentProperty.Name,
-                    InfoValue = (string)documentProperty?.GetValue(documentProperty.Name,null) ?? string.Empty,
+                    ModelName = _expectedDoc.ModelName,
+                    ModelGuid = _expectedDoc.ModelGuid,
+                    Discipline = _expectedDoc.Discipline,
+                    ExpectedValue = (string)property?.GetValue(property.Name,null) ?? string.Empty,
+                    InfoName = existingProperty.Name,
+                    InfoValue = (string)existingProperty?.GetValue(existingProperty.Name,null) ?? string.Empty,
                 };
 
                 if (report.ExpectedValue.Equals(report.InfoValue))
@@ -87,6 +93,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 _resultObjects.Add(report);
             }
 
+            //Assign Report Results
             ResultObjects = _resultObjects;
         }
     }

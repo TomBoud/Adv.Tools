@@ -38,7 +38,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 DisciplineType.Landscape,
             };
         }
-        public string GetReportScore()
+        public string GetReportScoreAsString()
         {
             double checkScore = 0;
             //Cast results property to a valid list

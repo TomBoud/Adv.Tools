@@ -38,13 +38,14 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 DisciplineType.Landscape,
             };
         }
-        public string GetReportScore()
+        public string GetReportScoreAsString()
         {
 
             double totalObjects = ExistingObjects.Cast<IElement>().Count();
             double falseFound = ResultObjects.Cast<IReportElementsWorkset>().Count();
-            double checkScore = 100 * falseFound / totalObjects;
 
+            //Calculate final score and return  in a string format
+            double checkScore = 100 * falseFound / totalObjects;
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
 
         }
@@ -53,23 +54,21 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             //Initialize Result objects return data type
             var _resultObjects = new List<IReportElementsWorkset>();
 
+            //Initialize existing objects data type
+            var _existingElements = ExistingObjects?.OfType<IElement>().ToList();
+
             //Initialize expected objects data type
             var _expectedWorksets = ExpectedObjects?.OfType<IExpectedWorkset>().ToList();
             if (_expectedWorksets.Count.Equals(0)) { ResultObjects = _resultObjects; return; }
 
-            //Initialize existing objects data type
-            var _elements = ExistingObjects?.OfType<IElement>().ToList();
-            if (_elements.Count.Equals(0)) { ResultObjects = _resultObjects; return; }
-
             //Initialize user defined documents data type
-            var _doc = DocumentObjects?.OfType<IExpectedDocument>()
-                ?.FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
-            if (_doc is null) { ResultObjects = _resultObjects; return; }
+            var _expectedDoc = DocumentObjects?.OfType<IExpectedDocument>()?.FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
+            if (_expectedDoc is null) { ResultObjects = _resultObjects; return; }
 
-            // Get Collection of the elements foreach workset if they should not be related to it
+            //Perform Report Business Logic
             foreach (var worksetName in _expectedWorksets.Select(x => x.WorksetName).Distinct().ToList())
             {
-                var elementsOnWorkset = _elements.Where(x => x.WorksetName.Equals(worksetName));
+                var elementsOnWorkset = _existingElements.Where(x => x.WorksetName.Equals(worksetName));
                 var allowedCategoryIds = _expectedWorksets.Where(x=>x.WorksetName.Equals(worksetName));
 
                 foreach (var element in elementsOnWorkset)
@@ -78,9 +77,9 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                     {
                         var report = new ElementsWorksetModel()
                         {
-                            ModelName = _doc.ModelName,
-                            ModelGuid = _doc.ModelGuid,
-                            Discipline = _doc.Discipline,
+                            ModelName = _expectedDoc.ModelName,
+                            ModelGuid = _expectedDoc.ModelGuid,
+                            Discipline = _expectedDoc.Discipline,
                             ObjectCategory = element.CategoryName,
                             ObjectId = element.ElementId.ToString(),
                             ObjectName = element.Name,
@@ -91,6 +90,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 }
             }
 
+            //Assign Report Results
             ResultObjects = _resultObjects;
         }
     }

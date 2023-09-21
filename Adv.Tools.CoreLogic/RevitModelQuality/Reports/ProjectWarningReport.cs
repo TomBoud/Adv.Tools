@@ -37,7 +37,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             };
         }
 
-        public string GetReportScore()
+        public string GetReportScoreAsString()
         {
             double failuresCount = ResultObjects.Cast<IReportProjectWarning>().Count();
             double checkScore = Math.Max(0, 100 - failuresCount * 0.5);

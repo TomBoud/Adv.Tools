@@ -182,7 +182,7 @@ namespace Adv.Tools.RevitAddin.Handlers
                 {
                        Id = 0,
                        CheckLod = ((int)report.Lod).ToString(),
-                       CheckScore = report.GetReportScore(),
+                       CheckScore = report.GetReportScoreAsString(),
                        CheckName = report.ReportName,
                        Discipline = string.Empty,
                        ModelGuid = report.ReportDocument.Guid.ToString(),

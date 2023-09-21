@@ -34,25 +34,34 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 DisciplineType.Landscape,
             };
         }
-        public string GetReportScore()
+        public string GetReportScoreAsString()
         {
             double totalObjects = ExistingObjects.Cast<IElement>().Count();
             double falseFound = ResultObjects.Cast<IReportMissingWorkset>().Where(x => x.IsFound == true).Count();
 
+            //Calculate final score and return  in a string format
             double checkScore = 100 * falseFound / totalObjects;
 
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
         public void RunReportBusinessLogic()
         {
-            var expectedDocumnet = DocumentObjects.Cast<IExpectedDocument>()
-                .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
-
-            var expectedWorksets = ExpectedObjects.Cast<IExpectedWorkset>();
-            var _existingWorksets = ExistingObjects.Cast<IWorkset>();
+            //Initialize Result objects return data type
             var _resultObjects = new List<IReportMissingWorkset>();
 
-            var distinctExpectedWorksets = expectedWorksets.GroupBy(workset => workset.WorksetName).Select(group => group.First()).ToList();
+            //Initialize existing objects data type
+            var _existingWorksets = ExistingObjects?.OfType<IWorkset>().ToList();
+
+            //Initialize expected objects data type
+            var _expectedWorksets = ExpectedObjects?.OfType<IExpectedWorkset>().ToList();
+            if (_expectedWorksets.Count.Equals(0)) { ResultObjects = _resultObjects; return; }
+
+            //Initialize user defined documents data type
+            var _expectedDoc = DocumentObjects?.OfType<IExpectedDocument>()?.FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
+            if (_expectedDoc is null) { ResultObjects = _resultObjects; return; }
+
+            //Perform Report Business Logic
+            var distinctExpectedWorksets = _expectedWorksets.GroupBy(workset => workset.WorksetName).Select(group => group.First()).ToList();
             foreach (var distinctWorkset in distinctExpectedWorksets)
             {
                 if(_existingWorksets.Any(x=>x.Name.Equals(distinctWorkset.WorksetName)))
@@ -61,9 +70,9 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 
                     var report = new MissingWorksetModel()
                     {
-                        ModelName = expectedDocumnet.ModelName,
-                        ModelGuid = expectedDocumnet.ModelGuid,
-                        Discipline = expectedDocumnet.Discipline,
+                        ModelName = _expectedDoc.ModelName,
+                        ModelGuid = _expectedDoc.ModelGuid,
+                        Discipline = _expectedDoc.Discipline,
                         WorksetName = existingWorkset.Name,
                         ObjectId = existingWorkset.Id.ToString(),
                         IsFound = true,
@@ -76,9 +85,9 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 {
                     var report = new MissingWorksetModel()
                     {
-                        ModelName = expectedDocumnet.ModelName,
-                        ModelGuid = expectedDocumnet.ModelGuid,
-                        Discipline = expectedDocumnet.Discipline,
+                        ModelName = _expectedDoc.ModelName,
+                        ModelGuid = _expectedDoc.ModelGuid,
+                        Discipline = _expectedDoc.Discipline,
                         WorksetName = distinctWorkset.WorksetName,
                         ObjectId = string.Empty,
                         IsFound = false,
@@ -89,6 +98,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 }
             }
 
+            //Assign Report Results
             ResultObjects = _resultObjects;
         }
     }

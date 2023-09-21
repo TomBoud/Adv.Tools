@@ -37,7 +37,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 DisciplineType.Landscape,
             };
         }
-        public string GetReportScore()
+        public string GetReportScoreAsString()
         {
             double checkScore = 0;
             //Cast results property to a valid list
@@ -67,26 +67,31 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         }
         public void RunReportBusinessLogic()
         {
-            //Initizlize the expected results List<T>
-            var resultObjects = new List<IReportFileReference>();
-            //The revit type files which where found linked to the reported model
-            var existingRevitLinks = ExistingObjects.Cast<IRevitLinkType>();
-            //Get all the revit files which should to be found as linked to the parent
-            var expectedRevitLinks = ExpectedObjects.Cast<IExpectedDocument>()
-                .Where(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()) is false);
-            //Get the the reported model as a IExpectedDocument object
-            var expectedDoc = DocumentObjects.Cast<IExpectedDocument>()
-                .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
+            //Initialize Result objects return data type
+            var _resultObjects = new List<IReportFileReference>();
 
-            foreach (var file in expectedRevitLinks)
+            //Initialize existing objects data type
+            var _existingRevitLinks = ExistingObjects?.OfType<IRevitLinkType>();
+
+            //Initialize expected objects data type
+            var _expectedRevitLinks = ExpectedObjects.OfType<IExpectedDocument>()
+                .Where(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()) is false).ToList();
+            if (_expectedRevitLinks.Count.Equals(0)) { ResultObjects = _resultObjects; return; }
+
+            //Initialize user defined documents data type
+            var _expectedDoc = DocumentObjects?.OfType<IExpectedDocument>()?.FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
+            if (_expectedDoc is null) { ResultObjects = _resultObjects; return; }
+
+            //Perform Report Business Logic
+            foreach (var file in _expectedRevitLinks)
             {
-                var linkFileType = existingRevitLinks.FirstOrDefault(x => x.FileGuid.ToString().Equals(file.ModelGuid));
+                var linkFileType = _existingRevitLinks.FirstOrDefault(x => x.FileGuid.ToString().Equals(file.ModelGuid));
 
                 var report = new FileReferenceModel()
                 {
-                    ModelName = expectedDoc.ModelName,
-                    Discipline = expectedDoc.Discipline,
-                    ModelGuid = expectedDoc.ModelGuid,
+                    ModelName = _expectedDoc.ModelName,
+                    Discipline = _expectedDoc.Discipline,
+                    ModelGuid = _expectedDoc.ModelGuid,
                     LinkName = linkFileType?.FileName ?? string.Empty,
                     Status = linkFileType?.LinkedFileStatus ?? string.Empty,
                     Reference = linkFileType?.AttachmentType ?? string.Empty,
@@ -98,10 +103,11 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 if (report.Reference != "Overlay") { report.IsReffOk = false; report.IsReffOkHeb = "ייחוס לא תקין"; }
                 else { report.IsReffOk = true; report.IsReffOkHeb = "ייחוס תקין"; }
 
-                resultObjects.Add(report);
+                _resultObjects.Add(report);
             }
 
-            ResultObjects = resultObjects;
+            //Assign Report Results
+            ResultObjects = _resultObjects;
         }
     }
 }

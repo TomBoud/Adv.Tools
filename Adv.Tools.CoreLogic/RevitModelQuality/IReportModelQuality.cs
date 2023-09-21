@@ -22,7 +22,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality
         IEnumerable DocumentObjects { get; set; }
         IDocument ReportDocument { get; set; }
 
-        string GetReportScore();
+        string GetReportScoreAsString();
         void RunReportBusinessLogic();
         DisciplineType[] GetDisciplines();
 

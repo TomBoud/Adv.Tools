@@ -39,7 +39,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             };
         }
 
-        public string GetReportScore()
+        public string GetReportScoreAsString()
         {
             double checkScore = 0;
             //Cast results property to a valid list
@@ -69,28 +69,33 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 
         public void RunReportBusinessLogic()
         {
+            //Initialize Result objects return data type
+            var _resultObjects = new List<IReportGridsMonitor>();
 
-            var expectedDocumnet = DocumentObjects.Cast<IExpectedDocument>()
-               .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
+            //Initialize existing objects data type
+            var _existingGrids = ExistingObjects?.OfType<IElement>().ToList();
 
-            var expectedLevelsGrids = ExpectedObjects.Cast<IExpectedLevelsMonitor>()
-                .Where(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString())).ToList();
+            //Initialize expected objects data type
+            var _expectedGrids = ExpectedObjects?.OfType<IExpectedGridMonitor>().ToList();
+            if (_expectedGrids.Count.Equals(0)) { ResultObjects = _resultObjects; return; }
 
-            var docLevelsGrids = ExistingObjects.Cast<IElement>();
-            var resultObjects = new List<IReportGridsMonitor>();
+            //Initialize user defined documents data type
+            var _expectedDoc = DocumentObjects?.OfType<IExpectedDocument>()?.FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
+            if (_expectedDoc is null) { ResultObjects = _resultObjects; return; }
 
-            foreach (var expectedLevelGrid in expectedLevelsGrids)
+            //Perform Report Business Logic
+            foreach (var expectedGrid in _expectedGrids)
             {
-                foreach (var element in docLevelsGrids)
+                foreach (var grid in _existingGrids)
                 {
                     var report = new GridsMonitorModel()
                     {
-                        ModelName = expectedDocumnet.ModelName,
-                        Discipline = expectedDocumnet.Discipline,
-                        ModelGuid = expectedDocumnet.ModelGuid,
-                        ObjectId = element?.ElementId.ToString() ?? string.Empty,
-                        ObjectName = element?.Name ?? string.Empty,
-                        IsCopyMonitor = element.IsMonitoring,
+                        ModelName = _expectedDoc.ModelName,
+                        Discipline = _expectedDoc.Discipline,
+                        ModelGuid = _expectedDoc.ModelGuid,
+                        ObjectId = grid?.ElementId.ToString() ?? string.Empty,
+                        ObjectName = grid?.Name ?? string.Empty,
+                        IsCopyMonitor = grid.IsMonitoring,
                         IsCopyMonitorHeb = string.Empty,
                         IsOriginValid = false,
                         ObjectOrigin = string.Empty,
@@ -101,7 +106,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                     {
                         report.IsCopyMonitorHeb = "מוניטור פעיל";
 
-                        if (element.MonitoredDoc != null)
+                        if (grid.MonitoredDoc != null)
                         {
                             report.IsOriginValid = true;
                             report.IsOriginValidHeb = "מודל מקור תקין";
@@ -118,10 +123,12 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                         report.IsOriginValid = false;
                         report.IsOriginValidHeb = "מודל מקור לא ידוע";
                     }
-                    resultObjects.Add(report);
+                    _resultObjects.Add(report);
                 }
             }
-            ResultObjects = resultObjects;
+
+            //Assign Report Results
+            ResultObjects = _resultObjects;
         }
     }
 }
