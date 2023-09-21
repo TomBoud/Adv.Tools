@@ -1,7 +1,6 @@
 ﻿
 using Adv.Tools.Abstractions.Common;
 using Adv.Tools.Abstractions.Database;
-using Google.Protobuf.WellKnownTypes;
 using System;
 
 namespace Adv.Tools.DataAccess.MySql.Models
@@ -16,14 +15,13 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public string CheckName { get => checkName; set=> checkName = value; }
         public string CheckLod { get; set; }
         public string CheckScore { get; set; }
-        public string RowGuid { get => GetUniqueDbEntityGuid(); }
+        public long HashCode { get => GetUniqueDbEntityHashCode(); }
         public bool IsActive { get; set; }
-
 
         private string modelGuid;
         private string checkName;
 
-        private string GetUniqueDbEntityGuid()
+        public long GetUniqueDbEntityHashCode()
         {
             // Concatenate the three input strings
             string combinedInput = modelGuid + checkName;
@@ -34,10 +32,7 @@ namespace Adv.Tools.DataAccess.MySql.Models
             // Convert the hash code to a positive number
             long positiveHashCode = Math.Abs((long)hashCode);
 
-            // Format the number as a serial key
-            string serialKey = positiveHashCode.ToString("D12");
-
-            return serialKey.ToString();
+            return positiveHashCode;
         }
 
         public string GetCreateTableQuery(string databaseName)
@@ -50,11 +45,11 @@ namespace Adv.Tools.DataAccess.MySql.Models
                $"`{nameof(ModelGuid)}` text, " +
                $"`{nameof(Discipline)}` text, " +
                $"`{nameof(CheckName)}` text, " +
-               $"`{nameof(RowGuid)}` varchar(45) DEFAULT NULL, " +
+               $"`{nameof(HashCode)}` BIGINT UNSIGNED, " +
                $"`{nameof(CheckLod)}` text, " +
                $"`{nameof(CheckScore)}` text, " +
                $"`{nameof(IsActive)}` TINYINT, " +
-               $"UNIQUE KEY `{nameof(RowGuid)}_UNIQUE` (`{nameof(RowGuid)}`), " +
+               $"UNIQUE KEY `{nameof(HashCode)}_UNIQUE` (`{nameof(HashCode)}`), " +
                $"PRIMARY KEY (`{nameof(Id)}`))";
 
             return sqlQuery;

@@ -12,8 +12,8 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
 {
     public class ReportCheckScoreTest
     {
-        private readonly MySqlDataAccess _access = new MySqlDataAccess(Properties.DataAccess.Default.DevDb);
-        private readonly string TestDataBaseName = Properties.DataAccess.Default.DatabaseName;
+        private readonly MySqlDataAccess _access = new MySqlDataAccess(Properties.DataAccess.Default.DevMySqlString);
+        private readonly string TestDataBaseName = Properties.DataAccess.Default.DevMySqlModels;
 
         [Fact, Order(1)]
         public async void TestDeleteTable_Successful()
@@ -43,10 +43,28 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
         }
 
         [Fact, Order(3)]
+        public void TestUniqueDbEntityHashCode_Successful()
+        {
+            //Stage
+            var model = new ReportCheckScore()
+            {
+                ModelGuid = "testModelGuid",
+                CheckName = "testCheckName",
+            };
+
+            //Act
+            var hashCode = model.GetUniqueDbEntityHashCode();
+
+            //Assert
+            Assert.True(hashCode.Equals(1429552731));
+
+        }
+
+        [Fact, Order(4)]
         public async void TestDataBaseInsert_Successful()
         {
             //Stage
-            var models = new List<ReportCheckScore>();
+            
             var model = new ReportCheckScore()
             {
                 Id = 0,
@@ -60,6 +78,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
             };
 
             //Act
+            var models = new List<ReportCheckScore>() { model };
             var task = _access.SaveByInsertValuesAsync(TestDataBaseName, models);
             await task;
             //Assert
@@ -68,7 +87,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
             Assert.Null(task.Exception);
         }
 
-        [Fact, Order(4)]
+        [Fact, Order(5)]
         public async void TestDataBaseLoad_Successful()
         {
             //Stage

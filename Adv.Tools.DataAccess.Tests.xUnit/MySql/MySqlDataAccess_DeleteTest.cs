@@ -1,0 +1,35 @@
+﻿
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Xunit;
+using Xunit.Extensions.Ordering;
+using Adv.Tools.DataAccess.MySql;
+using Adv.Tools.DataAccess.MySql.Models;
+
+namespace Adv.Tools.DataAccess.Tests.xUnit.MySql
+{
+    [CollectionDefinition("4"),Order(4)]
+    public class MySqlDataAccess_DeleteTest
+    {
+        private readonly MySqlDataAccess _access = new MySqlDataAccess(Properties.DataAccess.Default.DevMySqlString);
+        private readonly string _dbName = Properties.DataAccess.Default.DevMySqlAccess;
+
+        [Fact, Order(1)]
+        public async void TestDeleteAllTableDataAsync_Successful()
+        {
+            //Stage
+            var executeTask = _access.DeleteAllTableDataAsync<ReportCheckScore>(_dbName);
+
+            //Act
+            await executeTask;
+
+            //Assert
+            Assert.True(executeTask.IsCompleted);
+            Assert.False(executeTask.IsFaulted);
+            Assert.Null(executeTask.Exception);
+        }
+    }
+}

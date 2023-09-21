@@ -29,7 +29,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Repositories
         }
         public async void Delete(int id)
         {
-            await _dataAccess.DeleteDataById<ExpectedGridMonitor>(_databaseName, id);
+            await _dataAccess.DeleteDataByIdAsync<ExpectedGridMonitor>(_databaseName, id);
         }
         public async void Edit(ExpectedGridMonitor model)
         {

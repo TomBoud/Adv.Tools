@@ -50,6 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Autodesk\AppStore\EntitlementApiTests.cs" />
+    <Compile Include="MySql\MySqlDataAccess_DeleteTest.cs" />
+    <Compile Include="MySql\MySqlDataAccess_LoadTest.cs" />
+    <Compile Include="MySql\MySqlDataAccess_InsertTest.cs" />
     <Compile Include="MySql\Models\ExpectedCleanViewTest.cs" />
     <Compile Include="MySql\Models\ExpectedGridsMonitorTest.cs" />
     <Compile Include="MySql\Models\ExpectedLevelsMonitorTest.cs" />
@@ -81,7 +84,7 @@
     <Compile Include="MySql\Models\ReportServiceSystemTest.cs" />
     <Compile Include="MySql\Models\ReportSharedParameterTest.cs" />
     <Compile Include="MySql\Models\ReportSpaceDataTest.cs" />
-    <Compile Include="MySql\MySqlDataAccessTest.cs" />
+    <Compile Include="MySql\MySqlDataAccess_ExecuteTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\DataAccess.Designer.cs">
       <AutoGen>True</AutoGen>

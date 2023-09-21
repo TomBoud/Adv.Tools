@@ -17,6 +17,7 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public string ViewType { get; set; }
         public string ViewName { get; set; }
 
+
         public string GetCreateTableQuery(string databaseName)
         {
             string sqlQuery =

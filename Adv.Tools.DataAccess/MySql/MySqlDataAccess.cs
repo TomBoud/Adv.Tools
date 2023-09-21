@@ -24,29 +24,17 @@ namespace Adv.Tools.DataAccess.MySql
         }
 
         //Load
-        public async Task<List<T>> LoadDataAsync<T, U>(string sqlQuery, U parameters)
-        {
-            using (IDbConnection connection = new MySqlConnection(_connectionString))
-            {
-                var rows = await connection.QueryAsync<T>(sqlQuery, parameters);
-                return rows.ToList();
-            }
-        }
-        public List<T> LoadData<T, U>(string sqlQuery, U parameters)
-        {
-            using (IDbConnection connection = new MySqlConnection(_connectionString))
-            {
-                var rows = connection.Query<T>(sqlQuery, parameters);
-                return rows.ToList();
-            }
-        }
         public List<T> LoadDataSelectAll<T>(string databaseName)
         {
             string sqlQuery = $"SELECT * FROM {databaseName}.{typeof(T).Name}";
 
             try
             {
-                return LoadData<T, dynamic>(sqlQuery, new { });
+                using (IDbConnection connection = new MySqlConnection(_connectionString))
+                {
+                    var rows = connection.Query<T>(sqlQuery, new { });
+                    return rows.ToList();
+                }
             }
             catch (Exception ex)
             {
@@ -59,7 +47,11 @@ namespace Adv.Tools.DataAccess.MySql
 
             try
             {
-                return await LoadDataAsync<T, dynamic>(sqlQuery, new { });
+                using (IDbConnection connection = new MySqlConnection(_connectionString))
+                {
+                    var rows = await connection.QueryAsync<T>(sqlQuery, new { });
+                    return rows.ToList();
+                }
             }
             catch (Exception ex)
             {
@@ -68,20 +60,6 @@ namespace Adv.Tools.DataAccess.MySql
         }
 
         //Save
-        public async Task SaveData<T>(string sqlQuery, T parameters)
-        {
-            try
-            {
-                using (IDbConnection connection = new MySqlConnection(_connectionString))
-                {
-                    await connection.ExecuteAsync(sqlQuery, parameters);
-                };
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
         public async Task SaveByUpdateValuesAsync<T>(string databaseName, List<T> data)
         {
             PropertyInfo[] props = typeof(T).GetProperties();
@@ -93,7 +71,10 @@ namespace Adv.Tools.DataAccess.MySql
 
             try
             {
-                await SaveData(sqlQuery, data);
+                using (IDbConnection dbConnection = new MySqlConnection(_connectionString))
+                {
+                    await dbConnection.ExecuteAsync(sqlQuery, data);
+                }
             }
             catch (Exception ex)
             {
@@ -112,7 +93,10 @@ namespace Adv.Tools.DataAccess.MySql
 
             try
             {
-               await SaveData(sqlQuery, data);
+                using (IDbConnection connection = new MySqlConnection(_connectionString))
+                {
+                    await connection.ExecuteAsync(sqlQuery, data);
+                };
             }
             catch (Exception ex)
             {
@@ -138,13 +122,6 @@ namespace Adv.Tools.DataAccess.MySql
         }
 
         //Delete
-        public async Task DeleteData<T, U>(string sqlQuery, U parameters)
-        {
-            using (IDbConnection connection = new MySqlConnection(_connectionString))
-            {
-                await connection.ExecuteAsync(sqlQuery, parameters);
-            }
-        }
         public async Task DeleteAllTableDataAsync<T>(string databaseName)
         {
             using (IDbConnection connection = new MySqlConnection(_connectionString))
@@ -159,13 +136,35 @@ namespace Adv.Tools.DataAccess.MySql
                 }
             }
         }
-        public async Task DeleteDataById<T>(string databaseName,int Id)
+        public async Task DeleteDataByIdAsync<T>(string databaseName, int Id)
         {
             string sqlQuery = $"DELETE FROM {databaseName}.{nameof(T)} Where Id={Id}";
 
             try
             {
-                await DeleteData<T, dynamic>(sqlQuery, new { });
+                using (IDbConnection dbConnection = new MySqlConnection(_connectionString))
+                {
+                    await dbConnection.ExecuteAsync(sqlQuery,Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task DeleteDataByParametersAsync<T>(string databaseName, T parameters)
+        {
+            var tableName = typeof(T).Name;
+            var properties = typeof(T).GetProperties();
+            var whereCondition = string.Join(" AND ", properties.Select(p => $"{p.Name} = @{p.Name}"));
+            var sqlQuery = $"DELETE FROM {databaseName}.{tableName} WHERE {whereCondition}";
+
+            try
+            {
+                using (IDbConnection dbConnection = new MySqlConnection(_connectionString))
+                {
+                    await dbConnection.ExecuteAsync(sqlQuery, parameters);
+                }
             }
             catch (Exception ex)
             {

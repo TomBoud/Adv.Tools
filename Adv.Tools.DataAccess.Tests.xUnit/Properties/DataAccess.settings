@@ -2,15 +2,18 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Adv.Tools.DataAccess.Tests.xUnit.Properties" GeneratedClassName="DataAccess">
   <Profiles />
   <Settings>
-    <Setting Name="DatabaseName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">b908b0a4c8a1a457e97cfd4617c54301d</Value>
+    <Setting Name="DevMySqlModels" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MySqlDataModelsTest</Value>
     </Setting>
-    <Setting Name="DevDb" Type="(Connection string)" Scope="Application">
+    <Setting Name="DevMySqlString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
   &lt;ConnectionString&gt;Server=localhost;Port=3306;user id=root;password=$QAZ56okm$;CharSet=utf8;&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Server=localhost;Port=3306;user id=root;password=$QAZ56okm$;CharSet=utf8;</Value>
+    </Setting>
+    <Setting Name="DevMySqlAccess" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MySqlDataAccessTest</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -25,10 +25,10 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("b908b0a4c8a1a457e97cfd4617c54301d")]
-        public string DatabaseName {
+        [global::System.Configuration.DefaultSettingValueAttribute("MySqlDataModelsTest")]
+        public string DevMySqlModels {
             get {
-                return ((string)(this["DatabaseName"]));
+                return ((string)(this["DevMySqlModels"]));
             }
         }
         
@@ -36,9 +36,21 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;Port=3306;user id=root;password=$QAZ56okm$;CharSet=utf8;")]
-        public string DevDb {
+        public string DevMySqlString {
             get {
-                return ((string)(this["DevDb"]));
+                return ((string)(this["DevMySqlString"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MySqlDataAccessTest")]
+        public string DevMySqlAccess {
+            get {
+                return ((string)(this["DevMySqlAccess"]));
+            }
+            set {
+                this["DevMySqlAccess"] = value;
             }
         }
     }

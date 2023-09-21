@@ -30,7 +30,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Repositories
         }
         public async void Delete(int id)
         {
-            await _dataAccess.DeleteDataById<ExpectedDocument>(_databaseName, id);
+            await _dataAccess.DeleteDataByIdAsync<ExpectedDocument>(_databaseName, id);
         }
         public async void Edit(ExpectedDocument model)
         {

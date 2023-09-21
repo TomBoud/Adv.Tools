@@ -8,15 +8,20 @@ namespace Adv.Tools.Abstractions.Common
 {
     public interface IDbDataAccess
     {
-        Task<List<T>> LoadDataAsync<T, U>(string sqlQuery, U parameters);
-        Task SaveData<T>(string sqlQuery, T parameters);
+        //Save
         Task SaveByInsertValuesAsync<T>(string databaseName, List<T> data);
         Task SaveByUpdateValuesAsync<T>(string databaseName, List<T> data);
+
+        //Load
         Task<List<T>> LoadDataSelectAllAsync<T>(string databaseName);
         List<T> LoadDataSelectAll<T>(string databaseName);
-        Task DeleteData<T, U>(string databaseName, U parameters);
+        
+        //Delete
         Task DeleteAllTableDataAsync<T>(string databaseName);
-        Task DeleteDataById<T>(string databaseName, int Id);
+        Task DeleteDataByIdAsync<T>(string databaseName, int Id);
+        Task DeleteDataByParametersAsync<T>(string databaseName, T Parameters);
+        
+        //Execute
         Task ExecuteWithTransaction(params Func<Task>[] tasks);
         Task SaveByInsertUpdateOnDuplicateKeysAsync<T>(string databaseName, List<T> data);
         Task ExecuteBuildMySqlDataBase(string databaseName);

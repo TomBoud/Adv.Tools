@@ -15,8 +15,8 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql.Models
     public class ExpectedModelTest
     {
         
-        private readonly MySqlDataAccess _access = new MySqlDataAccess(Properties.DataAccess.Default.DevDb);
-        private readonly string TestDataBaseName = Properties.DataAccess.Default.DatabaseName;
+        private readonly MySqlDataAccess _access = new MySqlDataAccess(Properties.DataAccess.Default.DevMySqlString);
+        private readonly string TestDataBaseName = Properties.DataAccess.Default.DevMySqlModels;
 
         [Fact, Order(1)]
         public async void TestDeleteTable_Successful()

@@ -28,7 +28,7 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Repositories
 
         public async void Delete(int id)
         {
-            await _dataAccess.DeleteDataById<ExpectedCleanView>(_databaseName, id);
+            await _dataAccess.DeleteDataByIdAsync<ExpectedCleanView>(_databaseName, id);
         }
 
         public async void DeletAllViewData()
