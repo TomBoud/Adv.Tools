@@ -63,11 +63,13 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         }
         public void RunReportBusinessLogic()
         {
-            decimal ratio = 30.48M; // Conversion from native API feet standard to metric standard
-            var _compareDocument = ExistingObjects.Cast<IDocument>().FirstOrDefault();
-            var _expectedLocation = ExpectedObjects.Cast<IExpectedSiteLocation>()
-                .FirstOrDefault(x=>x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
+            //Initialize Business Logic Parameters
+            decimal ratio = 30.48M; // Conversion from native API "feet" units to metric
+            var _resultObjects = new List<IReportProjectBasePoint>();
+            var _expectedLocation = ExpectedObjects?.OfType<IExpectedSiteLocation>()?.FirstOrDefault(x=>x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
            
+            //Return nothing if there was no data provided
+            if (_expectedLocation is null) { ResultObjects = _resultObjects; return; }
 
             var report = new ProjectBasePointModel()
             {
@@ -82,12 +84,12 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 ExpectedLatitude = _expectedLocation.Latitude.ToString(),
                 ExpectedLongitude = _expectedLocation.Longitude.ToString(),
 
-                LinkedNorthSouth = (Convert.ToDecimal(_compareDocument.NorthSouth) * ratio).ToString("0.00"),
-                LinkedEastWest = (Convert.ToDecimal(_compareDocument.EastWest) * ratio).ToString("0.00"),
-                LinkedElevation = (Convert.ToDecimal(_compareDocument.Elevation) * ratio).ToString("0.00"),
-                LinkedAngle = _compareDocument.Angle.ToString(),
-                LinkedLatitude = _compareDocument.Latitude.ToString(),
-                LinkedLongitude = _compareDocument.Longitude.ToString(),
+                LinkedNorthSouth = (Convert.ToDecimal(ReportDocument.NorthSouth) * ratio).ToString("0.00"),
+                LinkedEastWest = (Convert.ToDecimal(ReportDocument.EastWest) * ratio).ToString("0.00"),
+                LinkedElevation = (Convert.ToDecimal(ReportDocument.Elevation) * ratio).ToString("0.00"),
+                LinkedAngle = ReportDocument.Angle.ToString(),
+                LinkedLatitude = ReportDocument.Latitude.ToString(),
+                LinkedLongitude = ReportDocument.Longitude.ToString(),
             };
 
             if (report.ExpectedNorthSouth != report.LinkedNorthSouth) { report.IsBasePoint = false; report.IsBasePointHeb = "נקודת יחוס שגויה"; }
@@ -100,8 +102,9 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             else { report.IsLocation = true; report.IsBasePointHeb = "מיקום גאוגרפי תקין"; }
             if (report.IsLocation != true || report.IsBasePoint != true) { report.IsCorrect = false; report.IsCorrectHeb = "קורדינטות שגויות"; }
             else { report.IsCorrect = true; report.IsCorrectHeb = "קורדינטות תקינות"; }
-
-            ResultObjects = new List<IReportProjectBasePoint> { report };
+            
+            _resultObjects.Add(report);
+            ResultObjects = _resultObjects;
         }
     }
 }

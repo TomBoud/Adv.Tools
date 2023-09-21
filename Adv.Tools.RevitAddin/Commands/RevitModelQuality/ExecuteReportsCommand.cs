@@ -20,6 +20,7 @@ using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Views;
 using Adv.Tools.RevitAddin.Application.Components;
 using Adv.Tools.Abstractions.Common;
 
+
 namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
 {
     /// <summary>
@@ -47,7 +48,6 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
             //Reference to support objects
             var access = new MySqlDataAccess(_connectionString);
             var links = new List<Document>();
-            var rvtDocs = new List<RevitDocument>();
             var tasks = new List<Task>();
             var dbName = new RevitDocument(doc).DbProjectId;
 
@@ -57,7 +57,6 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
                 if (linkedModel.IsLinked) 
                 { 
                     links.Add(linkedModel);
-                    rvtDocs.Add(new RevitDocument(linkedModel));
                 }
             }
 
@@ -72,35 +71,28 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
             var reportTypes = Assembly.GetAssembly(typeof(IReportModelQuality)).GetTypes()
                 .Where(t => typeof(IReportModelQuality).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract).ToList();
 
+            //Execute Reports
             foreach (var reportType in reportTypes)
             {
-                foreach(var rvtModel in rvtDocs)
+                foreach(var rvtModel in links)
                 {
-                    var instance = Activator.CreateInstance(reportType) as IReportModelQuality;
-                    instance.ReportDocument = rvtModel;
-                    reportInstances.Add(instance);
+                    var reportInstance = Activator.CreateInstance(reportType) as IReportModelQuality;
+                    var dataHandler = new RevitModelQualityDataHandler(access, rvtModel, dbName);
+
+                    tasks.Add(Task.Run(async () =>
+                    {
+                        await dataHandler.InitializeReportDataAsync(reportInstance);
+                    }).ContinueWith(async _ =>
+                    {
+                        await dataHandler.ActivateReportBusinessLogicAsync(reportInstance);
+                    }).ContinueWith(async _ =>
+                    {
+                        await dataHandler.SaveReportResultsDataAsync(reportInstance);
+                    }).ContinueWith(async _ =>
+                    {
+                        await dataHandler.SaveReportScoreDataAsync(reportInstance);
+                    }));
                 }
-            }
-
-            //Acquire the data needed for the reports logic
-            foreach (var report in reportInstances)
-            {
-                var document = links.FirstOrDefault(x => x.GetCloudModelPath().GetModelGUID().Equals(report.ReportDocument.Guid));
-                var dataHandler = new RevitModelQualityDataHandler(access, document, report.ReportDocument.DbProjectId);
-
-                tasks.Add(Task.Run(async () =>
-                {
-                    await dataHandler.InitializeReportDataAsync(report);
-                }).ContinueWith(async _ =>
-                {
-                    await dataHandler.ActivateReportBusinessLogicAsync(report);
-                }).ContinueWith(async _ =>
-                {
-                    await dataHandler.SaveReportResultsDataAsync(report);
-                }).ContinueWith(async _ =>
-                {
-                    await dataHandler.SaveReportScoreDataAsync(report);
-                }));
             }
 
             Task.WaitAll(tasks.ToArray());

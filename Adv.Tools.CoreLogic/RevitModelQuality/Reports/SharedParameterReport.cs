@@ -67,8 +67,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         }
         public void RunReportBusinessLogic()
         {
-            var _doc = DocumentObjects.Cast<IExpectedDocument>()
-                .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
 
             var _expectedSharedParams = ExpectedObjects.Cast<IExpectedSharedPara>();
             var _existingSharedParams = ExistingObjects.Cast<ISharedParameterElement>();
@@ -84,7 +82,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                     GUID = param.GUID,
                 };
 
-                if (_existingSharedParams.Any(x => x.GuidValue.Equals(new Guid(param.GUID))))
+                if (_existingSharedParams.Any(x => x.GuidValue.ToString().Equals(param.GUID)))
                 {
                     report.IsFound = true;
                     report.IsFoundHeb = "קיים במודל";

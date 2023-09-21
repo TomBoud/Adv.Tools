@@ -26,11 +26,11 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql
                 data.Add(
                     new ReportCheckScore()
                     {
-                        ModelName = "ThisStringBeOverwitted",
+                        ModelName = "ThisShouldBeOverwitted",
                         ModelGuid = "testModelGUID",
-                        Discipline = "ThisStringBeOverwitted",
-                        CheckLod = "ThisStringBeOverwitted",
-                        CheckScore = "ThisStringBeOverwitted",
+                        Discipline = "ThisShouldBeOverwitted",
+                        CheckLod = "ThisShouldBeOverwitted",
+                        CheckScore = "ThisShouldBeOverwitted",
                         CheckName = $"ReportNumber{i}",
                         IsActive = true,
                     });
@@ -70,11 +70,11 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql
                 data.Add(
                     new ReportCheckScore()
                     {
-                        ModelName = "NewInsertedData",
-                        ModelGuid = "NewInsertedData",
-                        Discipline = "NewInsertedData",
-                        CheckLod = "NewInsertedData",
-                        CheckScore = "NewInsertedData",
+                        ModelName = "NewInsertedDataOk",
+                        ModelGuid = $"NewInsertedDataOk{i}",
+                        Discipline = "NewInsertedDataOk",
+                        CheckLod = "NewInsertedDataOk",
+                        CheckScore = "NewInsertedDataOk",
                         CheckName = $"ReportNumber{i + 5}",
                         IsActive = true,
                     });

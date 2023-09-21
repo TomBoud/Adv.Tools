@@ -21,14 +21,29 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql
         {
             //Stage
             var executeTask = _access.LoadDataSelectAllAsync<ReportCheckScore>(_dbName);
-            
+
             //Act
-            var list = await executeTask;
+            var data = await executeTask;
 
             //Assert
-            Assert.NotEmpty(list);
-            Assert.NotNull(list);
-            Assert.True(list.Count > 0);
+            Assert.NotEmpty(data);
+            Assert.NotNull(data);
+            Assert.True(data.Count > 0);
+        }
+
+        [Fact, Order(2)]
+        public void TestLoadDataSelectAll_Successful()
+        {
+            //Stage
+            IEnumerable<ReportCheckScore> data;
+
+            //Act
+            data = _access.LoadDataSelectAll<ReportCheckScore>(_dbName);
+
+            //Assert
+            Assert.NotEmpty(data);
+            Assert.NotNull(data);
+            Assert.True(data.ToList().Count > 0);
         }
     }
 }

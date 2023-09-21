@@ -32,70 +32,53 @@ namespace Adv.Tools.RevitAddin.Handlers
 
         public async Task InitializeReportDataAsync(IReportModelQuality report)
         {
+            report.DocumentObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedModel>(_databaseName);
+            report.ReportDocument = new RevitDocument(_document);
+
             if (report is ElementsWorksetsReport)
             {
-                report.DocumentObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedModel>(_databaseName);
                 report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedWorkset>(_databaseName);
                 report.ExistingObjects = GetElementsByExpectedCategoryId(report.ExpectedObjects);
             }
             else if (report is MissingWorksetsReport)
             {
-                report.DocumentObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedModel>(_databaseName);
                 report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedWorkset>(_databaseName);
                 report.ExistingObjects = GetUserCreatedWorksets();
             }
             else if (report is FileReferenceReport)
             {
-                report.DocumentObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedModel>(_databaseName);
                 report.ExpectedObjects = Enumerable.Empty<object>();
                 report.ExistingObjects = GetRevitLinkTypes();
             }
             else if (report is LevelsMonitorReport)
             {
-                report.DocumentObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedModel>(_databaseName);
                 report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedGridsMonitor>(_databaseName);
                 report.ExistingObjects = GetLevelsAsElements();
             }
             else if (report is GridsMonitorReport)
             {
-                report.DocumentObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedModel>(_databaseName);
                 report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedGridsMonitor>(_databaseName);
                 report.ExistingObjects = GetGridsAsElements();
             }
             else if (report is ProjectWarningReport)
             {
-                report.DocumentObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedModel>(_databaseName);
                 report.ExpectedObjects = Enumerable.Empty<object>();
                 report.ExistingObjects = GetDocumentFailureMessages();
             }
-        }
-        public async Task SaveReportResultsDataAsync(IReportModelQuality report)
-        {
-            if (report is ElementsWorksetsReport)
+            else if (report is ProjectBasePointReports)
             {
-                var results = report.ResultObjects.Cast<ReportElementsWorkset>().ToList();
-                await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName,results);
-                
+                report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedSiteLocation>(_databaseName);
+                report.ExistingObjects = Enumerable.Empty<object>();
             }
-            else if (report is MissingWorksetsReport)
+            else if (report is ProjectInfoReport)
             {
-                var results = report.ResultObjects.Cast<ReportMissingWorkset>().ToList();
+                report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedProjectInfo>(_databaseName);
+                report.ExistingObjects = Enumerable.Empty<object>();
             }
-            else if (report is FileReferenceReport)
+            else if (report is SharedParameterReport)
             {
-                var results = report.ResultObjects.Cast<ReportFileReference>().ToList();
-            }
-            else if (report is LevelsMonitorReport)
-            {
-                var results = report.ResultObjects.Cast<ReportLevelsMonitor>().ToList();
-            }
-            else if (report is GridsMonitorReport)
-            {
-                var results = report.ResultObjects.Cast<ReportGridsMonitor>().ToList();
-            }
-            else if (report is ProjectWarningReport)
-            {
-                var results = report.ResultObjects.Cast<ReportProjectWarning>().ToList();
+                report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedSharedPara>(_databaseName);
+                report.ExistingObjects = Enumerable.Empty<object>();
             }
         }
         public async Task ActivateReportBusinessLogicAsync(IReportModelQuality report)
@@ -105,18 +88,106 @@ namespace Adv.Tools.RevitAddin.Handlers
                 report.RunReportBusinessLogic();
             });
         }
+        public async Task SaveReportResultsDataAsync(IReportModelQuality report)
+        {
+
+            if (report is ElementsWorksetsReport)
+            {
+                var parameters = new { ModelGuid = report.ReportDocument.Guid };
+                var results = report.ResultObjects.Cast<ReportElementsWorkset>().ToList();
+
+                Func<Task>[] functions = new Func<Task>[]
+                {
+                    async () => await _dbAccess.DeleteDataWhereParametersAsync<ReportElementsWorkset, dynamic>(_databaseName, parameters),
+                    async () => await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName,results),
+                };
+
+                await _dbAccess.ExecuteWithTransaction(functions);
+
+            }
+            else if (report is MissingWorksetsReport)
+            {
+                var parameters = new { ModelGuid = report.ReportDocument.Guid };
+                var results = report.ResultObjects.Cast<ReportElementsWorkset>().ToList();
+
+                Func<Task>[] functions = new Func<Task>[]
+                {
+                    async () => await _dbAccess.DeleteDataWhereParametersAsync<ReportMissingWorkset, dynamic>(_databaseName, parameters),
+                    async () => await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName,results),
+                };
+
+                await _dbAccess.ExecuteWithTransaction(functions);
+
+            }
+            else if (report is FileReferenceReport)
+            {
+                var parameters = new { ModelGuid = report.ReportDocument.Guid };
+                var results = report.ResultObjects.Cast<ReportFileReference>().ToList();
+
+                Func<Task>[] functions = new Func<Task>[]
+                {
+                    async () => await _dbAccess.DeleteDataWhereParametersAsync<ReportFileReference, dynamic>(_databaseName, parameters),
+                    async () => await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName,results),
+                };
+
+                await _dbAccess.ExecuteWithTransaction(functions);
+            }
+            else if (report is LevelsMonitorReport)
+            {
+
+                var parameters = new { ModelGuid = report.ReportDocument.Guid };
+                var results = report.ResultObjects.Cast<ReportLevelsMonitor>().ToList();
+
+                Func<Task>[] functions = new Func<Task>[]
+                {
+                    async () => await _dbAccess.DeleteDataWhereParametersAsync<ReportLevelsMonitor, dynamic>(_databaseName, parameters),
+                    async () => await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName,results),
+                };
+
+                await _dbAccess.ExecuteWithTransaction(functions);
+            }
+            else if (report is GridsMonitorReport)
+            {
+                var parameters = new { ModelGuid = report.ReportDocument.Guid };
+                var results = report.ResultObjects.Cast<ReportGridsMonitor>().ToList();
+
+                Func<Task>[] functions = new Func<Task>[]
+                {
+                    async () => await _dbAccess.DeleteDataWhereParametersAsync<ReportGridsMonitor, dynamic>(_databaseName, parameters),
+                    async () => await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName,results),
+                };
+
+                await _dbAccess.ExecuteWithTransaction(functions);
+            }
+            else if (report is ProjectWarningReport)
+            {
+
+                var parameters = new { ModelGuid = report.ReportDocument.Guid };
+                var results = report.ResultObjects.Cast<ReportProjectWarning>().ToList();
+
+                Func<Task>[] functions = new Func<Task>[]
+                {
+                    async () => await _dbAccess.DeleteDataWhereParametersAsync<ReportProjectWarning, dynamic>(_databaseName, parameters),
+                    async () => await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName,results),
+                };
+
+                await _dbAccess.ExecuteWithTransaction(functions);
+            }
+        }
         public async Task SaveReportScoreDataAsync(IReportModelQuality report)
         {
             var checkScoreData = new List<ReportCheckScore>
             {
                 new ReportCheckScore
                 {
+                       Id = 0,
                        CheckLod = ((int)report.Lod).ToString(),
                        CheckScore = report.GetReportScore(),
                        CheckName = report.ReportName,
                        Discipline = string.Empty,
                        ModelGuid = report.ReportDocument.Guid.ToString(),
-                       ModelName = report.ReportDocument.Title
+                       ModelName = report.ReportDocument.Title,
+                       IsActive = true,
                 }
             };
 

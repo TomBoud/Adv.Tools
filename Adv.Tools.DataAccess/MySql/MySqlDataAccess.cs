@@ -138,7 +138,7 @@ namespace Adv.Tools.DataAccess.MySql
         }
         public async Task DeleteDataByIdAsync<T>(string databaseName, int Id)
         {
-            string sqlQuery = $"DELETE FROM {databaseName}.{nameof(T)} Where Id={Id}";
+            string sqlQuery = $"DELETE FROM {databaseName}.{typeof(T).Name} Where Id={Id}";
 
             try
             {
@@ -152,11 +152,12 @@ namespace Adv.Tools.DataAccess.MySql
                 throw ex;
             }
         }
-        public async Task DeleteDataByParametersAsync<T>(string databaseName, T parameters)
+        public async Task DeleteDataWhereParametersAsync<T,U>(string databaseName, U parameters)
         {
             var tableName = typeof(T).Name;
-            var properties = typeof(T).GetProperties();
+            var properties = parameters.GetType().GetProperties();
             var whereCondition = string.Join(" AND ", properties.Select(p => $"{p.Name} = @{p.Name}"));
+
             var sqlQuery = $"DELETE FROM {databaseName}.{tableName} WHERE {whereCondition}";
 
             try

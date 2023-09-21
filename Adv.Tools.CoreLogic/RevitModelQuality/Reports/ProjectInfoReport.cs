@@ -50,9 +50,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             var expectedModel = DocumentObjects.Cast<IExpectedDocument>()
                 .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
 
-            var documentProps = ExistingObjects.Cast<IDocument>()
-                .FirstOrDefault(x => x.Guid.Equals(ReportDocument.Guid))
-                .GetType().GetProperties().ToList();
+            var documentProps = ReportDocument.GetType().GetProperties().ToList();
 
             var expectedInformation = ExpectedObjects.Cast<IExpectedProjectInfo>()
                 .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()))

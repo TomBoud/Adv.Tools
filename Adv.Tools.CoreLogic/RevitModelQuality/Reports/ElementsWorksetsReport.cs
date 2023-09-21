@@ -50,12 +50,21 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         }
         public void RunReportBusinessLogic()
         {
-
+            //Initialize Result objects return data type
             var _resultObjects = new List<IReportElementsWorkset>();
-            var _expectedWorksets = ExpectedObjects.Cast<IExpectedWorkset>();
-            var _elements = ExistingObjects.Cast<IElement>();
-            var _doc = DocumentObjects.Cast<IExpectedDocument>()
-                .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
+
+            //Initialize expected objects data type
+            var _expectedWorksets = ExpectedObjects?.OfType<IExpectedWorkset>().ToList();
+            if (_expectedWorksets.Count.Equals(0)) { ResultObjects = _resultObjects; return; }
+
+            //Initialize existing objects data type
+            var _elements = ExistingObjects?.OfType<IElement>().ToList();
+            if (_elements.Count.Equals(0)) { ResultObjects = _resultObjects; return; }
+
+            //Initialize user defined documents data type
+            var _doc = DocumentObjects?.OfType<IExpectedDocument>()
+                ?.FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
+            if (_doc is null) { ResultObjects = _resultObjects; return; }
 
             // Get Collection of the elements foreach workset if they should not be related to it
             foreach (var worksetName in _expectedWorksets.Select(x => x.WorksetName).Distinct().ToList())

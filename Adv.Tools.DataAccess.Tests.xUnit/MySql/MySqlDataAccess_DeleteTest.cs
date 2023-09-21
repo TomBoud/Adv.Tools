@@ -17,7 +17,40 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql
         private readonly MySqlDataAccess _access = new MySqlDataAccess(Properties.DataAccess.Default.DevMySqlString);
         private readonly string _dbName = Properties.DataAccess.Default.DevMySqlAccess;
 
-        [Fact, Order(1)]
+
+        [Fact, Order(2)]
+        public async void TestDeleteDataByIdAsyncAsync_Successful()
+        {
+            //Stage
+            var data = new { ModelGuid = "NewInsertedDataOk0" };
+
+            //Act
+            var executeTask = _access.DeleteDataByIdAsync<ReportCheckScore>(_dbName, 6);
+            await executeTask;
+
+            //Assert
+            Assert.True(executeTask.IsCompleted);
+            Assert.False(executeTask.IsFaulted);
+            Assert.Null(executeTask.Exception);
+        }
+
+        [Fact, Order(2)]
+        public async void TestDeleteDataByParametersAsync_Successful()
+        {
+            //Stage
+            var data = new { ModelGuid = "NewInsertedDataOk0" };
+
+            //Act
+            var executeTask = _access.DeleteDataByParametersAsync<ReportCheckScore,dynamic>(_dbName, data);
+            await executeTask;
+
+            //Assert
+            Assert.True(executeTask.IsCompleted);
+            Assert.False(executeTask.IsFaulted);
+            Assert.Null(executeTask.Exception);
+        }
+
+        [Fact, Order(3)]
         public async void TestDeleteAllTableDataAsync_Successful()
         {
             //Stage

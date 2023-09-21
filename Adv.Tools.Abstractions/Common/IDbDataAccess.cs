@@ -19,7 +19,7 @@ namespace Adv.Tools.Abstractions.Common
         //Delete
         Task DeleteAllTableDataAsync<T>(string databaseName);
         Task DeleteDataByIdAsync<T>(string databaseName, int Id);
-        Task DeleteDataByParametersAsync<T>(string databaseName, T Parameters);
+        Task DeleteDataWhereParametersAsync<T,U>(string databaseName, U Parameters);
         
         //Execute
         Task ExecuteWithTransaction(params Func<Task>[] tasks);

@@ -37,7 +37,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql
         public async void TestExecuteWithTransaction_Successful()
         {
             //Stage
-            Func<Task> function = async () => await _access.ExecuteSqlQueryAsync("DROP DATABASE IF EXISTS _dbName");
+            Func<Task> function = async () => await _access.ExecuteSqlQueryAsync($"DROP DATABASE IF EXISTS {_dbName}");
 
             //Act
             var executeTask = _access.ExecuteWithTransaction(function);
