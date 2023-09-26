@@ -36,12 +36,16 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         }
         public string GetReportScoreAsString()
         {
-            double totalObjects = ExistingObjects.Cast<IElement>().Count();
-            double falseFound = ResultObjects.Cast<IReportMissingWorkset>().Where(x => x.IsFound == true).Count();
+            //Get and Parse this report result objects
+            var results = ResultObjects?.OfType<IReportMissingWorkset>() ?? null;
+            if (results is null) { return string.Empty; }
+
+            //Initialize vars and Count all positive (true) values for all the results
+            double totalObjects = ExistingObjects.OfType<IElement>().ToList().Count;
+            double falseFound = results.Where(x => x.IsFound).ToList().Count;
 
             //Calculate final score and return  in a string format
             double checkScore = 100 * falseFound / totalObjects;
-
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
         public void RunReportBusinessLogic()

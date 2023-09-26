@@ -22,10 +22,9 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql
         public async void TestDeleteDataByIdAsyncAsync_Successful()
         {
             //Stage
-            var data = new { ModelGuid = "NewInsertedDataOk0" };
-
-            //Act
             var executeTask = _access.DeleteDataByIdAsync<ReportCheckScore>(_dbName, 6);
+            
+            //Act
             await executeTask;
 
             //Assert
@@ -35,13 +34,13 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql
         }
 
         [Fact, Order(2)]
-        public async void TestDeleteDataByParametersAsync_Successful()
+        public async void TestDeleteDataWhereParametersAsync_Successful()
         {
             //Stage
             var data = new { ModelGuid = "NewInsertedDataOk0" };
 
             //Act
-            var executeTask = _access.DeleteDataByParametersAsync<ReportCheckScore,dynamic>(_dbName, data);
+            var executeTask = _access.DeleteDataWhereParametersAsync<ReportCheckScore,dynamic>(_dbName, data);
             await executeTask;
 
             //Assert

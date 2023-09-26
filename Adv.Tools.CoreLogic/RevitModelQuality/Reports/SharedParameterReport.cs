@@ -41,14 +41,18 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public string GetReportScoreAsString()
         {
             double checkScore = 0;
-            //Cast results property to a valid list
-            var results = ResultObjects.Cast<IReportSharedParameter>();
+
+            //Get and Parse this report result objects
+            var results = ResultObjects?.OfType<IReportSharedParameter>() ?? null;
             if (results is null) { return string.Empty; }
+            
             //Get all bool properties
             PropertyInfo[] boolProperties = typeof(IReportSharedParameter).GetProperties()
                     .Where(prop => prop.PropertyType == typeof(bool)).ToArray();
+            
             //Check for bool properties existence (avoid zero division)
             if (boolProperties.Length.Equals(0)) { return string.Empty; }
+            
             //Count all positive (true) values for all the results
             foreach (var result in results)
             {
@@ -61,6 +65,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                     }
                 }
             }
+            
             //Calculate final score and return  in a string format
             checkScore = 100 * checkScore / (boolProperties.Length * results.Count());
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");

@@ -39,8 +39,8 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public string GetReportScoreAsString()
         {
             //Cast results property to a valid list
-            var results = ResultObjects.OfType<IReportProjectBasePoint>().ToList();
-            if (results.Count.Equals(0)) { return string.Empty; }
+            var results = ResultObjects?.OfType<IReportProjectBasePoint>() ?? null;
+            if (results is null) { return string.Empty; }
 
             //Get all bool properties
             PropertyInfo[] boolProperties = typeof(IReportProjectBasePoint).GetProperties()

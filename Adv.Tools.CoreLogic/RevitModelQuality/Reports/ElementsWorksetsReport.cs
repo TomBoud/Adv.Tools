@@ -40,9 +40,13 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         }
         public string GetReportScoreAsString()
         {
+            //Get and Parse this report result objects
+            var results = ResultObjects?.OfType<IReportProjectInfo>() ?? null;
+            if (results is null) { return string.Empty; }
 
-            double totalObjects = ExistingObjects.Cast<IElement>().Count();
-            double falseFound = ResultObjects.Cast<IReportElementsWorkset>().Count();
+            //Initialize vars and Count all positive (true) values for all the results
+            double totalObjects = ExistingObjects.OfType<IElement>().Count();
+            double falseFound = results.Count();
 
             //Calculate final score and return  in a string format
             double checkScore = 100 * falseFound / totalObjects;

@@ -39,9 +39,13 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 
         public string GetReportScoreAsString()
         {
-            double failuresCount = ResultObjects.Cast<IReportProjectWarning>().Count();
-            double checkScore = Math.Max(0, 100 - failuresCount * 0.5);
+            //Get and Parse this report result objects
+            var results = ResultObjects?.OfType<IReportProjectWarning>() ?? null;
+            if (results is null) { return string.Empty; }
 
+            //Calculate final score and return  in a string format
+            double failuresCount = results.Count();
+            double checkScore = Math.Max(0, 100 - failuresCount * 0.5);
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
 
