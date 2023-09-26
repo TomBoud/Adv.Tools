@@ -13,7 +13,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Shapes;
 
 namespace Adv.Tools.RevitAddin.Handlers
 {
@@ -32,7 +31,7 @@ namespace Adv.Tools.RevitAddin.Handlers
 
         public async Task InitializeReportDataAsync(IReportModelQuality report)
         {
-            report.DocumentObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedModel>(_databaseName);
+            report.DocumentObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedDocument>(_databaseName);
             report.ReportDocument = new RevitDocument(_document);
 
             if (report is ElementsWorksetsReport)
@@ -47,7 +46,7 @@ namespace Adv.Tools.RevitAddin.Handlers
             }
             else if (report is FileReferenceReport)
             {
-                report.ExpectedObjects = Enumerable.Empty<object>();
+                report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedDocument>(_databaseName);
                 report.ExistingObjects = GetRevitLinkTypes();
             }
             else if (report is LevelsMonitorReport)
@@ -83,10 +82,9 @@ namespace Adv.Tools.RevitAddin.Handlers
         }
         public async Task ActivateReportBusinessLogicAsync(IReportModelQuality report)
         {
-            await Task.Run(() =>
-            {
-                report.RunReportBusinessLogic();
-            });
+            var task = Task.Run(() => report.RunReportBusinessLogic());
+            await task;
+
         }
         public async Task SaveReportResultsDataAsync(IReportModelQuality report)
         {
@@ -122,12 +120,12 @@ namespace Adv.Tools.RevitAddin.Handlers
             else if (report is FileReferenceReport)
             {
                 var parameters = new { ModelGuid = report.ReportDocument.Guid };
-                var results = report.ResultObjects.Cast<ReportFileReference>().ToList();
+                var results = report.ResultObjects.Cast<CoreLogic.RevitModelQuality.Models.ReportFileReference>().ToList();
 
                 Func<Task>[] functions = new Func<Task>[]
                 {
-                    async () => await _dbAccess.DeleteDataWhereParametersAsync<ReportFileReference, dynamic>(_databaseName, parameters),
-                    async () => await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName,results),
+                    async () => await _dbAccess.DeleteDataWhereParametersAsync<CoreLogic.RevitModelQuality.Models.ReportFileReference, dynamic>(_databaseName, parameters),
+                    async () => await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName, results),
                 };
 
                 await _dbAccess.ExecuteWithTransaction(functions);
@@ -241,15 +239,25 @@ namespace Adv.Tools.RevitAddin.Handlers
         /// </summary>
         private IEnumerable<IRevitLinkType> GetRevitLinkTypes()
         {
-            var collector = new FilteredElementCollector(_document);
-            var linkTypes = collector.WhereElementIsNotElementType()
-                .OfClass(typeof(RevitLinkType)).Cast<RevitLinkType>().ToList();
-
-            foreach (var file in linkTypes)
+            var results = new List<IRevitLinkType>();
+            
+            ICollection<ElementId> colls = ExternalFileUtils.GetAllExternalFileReferences(_document);
+            if (colls.Count.Equals( 0)) { return results; }
+            
+            foreach (var id in colls)
             {
-                yield return new RevitLinkTypeFile(file);
+                Element ele = _document.GetElement(id);
+                if (ele is null) 
+                {
+                    continue; 
+                }
+                if(ele is RevitLinkType) 
+                {
+                    var file = ele as RevitLinkType;
+                    results.Add(new RevitLinkTypeFile(file));
+                }
             }
-
+            return results;
         }
 
         /// <summary>

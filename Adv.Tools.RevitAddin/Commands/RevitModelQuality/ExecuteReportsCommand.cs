@@ -74,7 +74,7 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
             //Execute Reports
             foreach (var reportType in reportTypes)
             {
-                foreach(var rvtModel in links)
+                foreach (var rvtModel in links)
                 {
                     var reportInstance = Activator.CreateInstance(reportType) as IReportModelQuality;
                     var dataHandler = new RevitModelQualityDataHandler(access, rvtModel, dbName);
@@ -82,17 +82,14 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
                     tasks.Add(Task.Run(async () =>
                     {
                         await dataHandler.InitializeReportDataAsync(reportInstance);
-                    }).ContinueWith(async _ =>
-                    {
                         await dataHandler.ActivateReportBusinessLogicAsync(reportInstance);
-                    }).ContinueWith(async _ =>
-                    {
                         await dataHandler.SaveReportResultsDataAsync(reportInstance);
-                    }).ContinueWith(async _ =>
-                    {
                         await dataHandler.SaveReportScoreDataAsync(reportInstance);
                     }));
+
+                    break;
                 }
+                break;
             }
 
             Task.WaitAll(tasks.ToArray());

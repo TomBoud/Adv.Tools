@@ -51,10 +51,10 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 
         public void RunReportBusinessLogic()
         {
-            var expectedModel = DocumentObjects.Cast<IExpectedDocument>()
+            var expectedModel = DocumentObjects.OfType<IExpectedDocument>()
               .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
 
-            var documnetFailures = ExistingObjects.Cast<IFailureMessage>();
+            var documnetFailures = ExistingObjects.OfType<IFailureMessage>();
             var resultObjects = new List<IReportProjectWarning>();
 
  

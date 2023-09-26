@@ -73,8 +73,8 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public void RunReportBusinessLogic()
         {
 
-            var _expectedSharedParams = ExpectedObjects.Cast<IExpectedSharedPara>();
-            var _existingSharedParams = ExistingObjects.Cast<ISharedParameterElement>();
+            var _expectedSharedParams = ExpectedObjects.OfType<IExpectedSharedPara>();
+            var _existingSharedParams = ExistingObjects.OfType<ISharedParameterElement>();
             var _resultObjects = new List<IReportSharedParameter>();
 
             foreach (var param in _expectedSharedParams)

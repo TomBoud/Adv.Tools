@@ -75,7 +75,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             var _resultObjects = new List<IReportFileReference>();
 
             //Initialize existing objects data type
-            var _existingRevitLinks = ExistingObjects?.OfType<IRevitLinkType>();
+            var _existingRevitLinks = ExistingObjects.OfType<IRevitLinkType>().ToList();
 
             //Initialize expected objects data type
             var _expectedRevitLinks = ExpectedObjects.OfType<IExpectedDocument>()
@@ -91,7 +91,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             {
                 var linkFileType = _existingRevitLinks.FirstOrDefault(x => x.FileGuid.ToString().Equals(file.ModelGuid));
 
-                var report = new FileReferenceModel()
+                var report = new ReportFileReference()
                 {
                     ModelName = _expectedDoc.ModelName,
                     Discipline = _expectedDoc.Discipline,

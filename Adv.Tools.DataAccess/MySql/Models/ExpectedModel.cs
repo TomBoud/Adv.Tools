@@ -9,7 +9,7 @@ using Adv.Tools.Abstractions.Database;
 
 namespace Adv.Tools.DataAccess.MySql.Models
 {
-    public class ExpectedModel : IExpectedDocument , IDbModelEntity
+    public class ExpectedDocument : IExpectedDocument , IDbModelEntity
     {
         public int Id { get; set; }
         public string ModelName { get; set; }
