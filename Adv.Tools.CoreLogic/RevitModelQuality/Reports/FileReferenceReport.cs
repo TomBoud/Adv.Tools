@@ -138,7 +138,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             try
             {
                 string databaseName = ReportDocument.DbProjectId;
-                string tableName = ReportName;
+                string tableName = "ExpectedDocument";
 
                 DocumentObjects = await dbAccess.LoadDataSelectAllAsync<IExpectedDocument>(databaseName, tableName);
                 DbDataObjects = await dbAccess.LoadDataSelectAllAsync<IExpectedDocument>(databaseName, tableName);
