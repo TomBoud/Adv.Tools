@@ -21,10 +21,15 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
         public IDocument ReportDocument { get; set; }
-        public IEnumerable ExistingObjects { get; set; }
-        public IEnumerable ExpectedObjects { get; set; }
+        public IEnumerable RvtDataObjects { get; set; }
+        public IEnumerable DbDataObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
         public IEnumerable ResultObjects { get; set; }
+
+        public Task ExecuteReportBusinessLogic()
+        {
+            throw new NotImplementedException();
+        }
 
         public DisciplineType[] GetDisciplines()
         {
@@ -38,6 +43,17 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 DisciplineType.Landscape,
             };
         }
+
+        public Task GetReportDatabaseObjectsAsync(IDbDataAccess rvtAccess)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task GetReportRevitObjectsAsync(IRvtDataAccess dbAccess)
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetReportScoreAsString()
         {
             double checkScore = 0;
@@ -73,8 +89,8 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public void RunReportBusinessLogic()
         {
 
-            var _expectedSharedParams = ExpectedObjects.OfType<IExpectedSharedPara>();
-            var _existingSharedParams = ExistingObjects.OfType<ISharedParameterElement>();
+            var _expectedSharedParams = DbDataObjects.OfType<IExpectedSharedPara>();
+            var _existingSharedParams = RvtDataObjects.OfType<ISharedParameterElement>();
             var _resultObjects = new List<IReportSharedParameter>();
 
             foreach (var param in _expectedSharedParams)
@@ -102,6 +118,16 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             }
 
             ResultObjects = _resultObjects;
+        }
+
+        public Task SaveReportResultsDataAsync(IDbDataAccess dbAccess)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SaveReportScoreDataAsync(IDbDataAccess dbAccess)
+        {
+            throw new NotImplementedException();
         }
     }
 }

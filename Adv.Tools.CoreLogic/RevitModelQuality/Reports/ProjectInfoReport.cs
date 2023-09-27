@@ -1,5 +1,6 @@
 ﻿
 
+using Adv.Tools.Abstractions.Common;
 using Adv.Tools.Abstractions.Database;
 using Adv.Tools.Abstractions.Enums;
 using Adv.Tools.Abstractions.Revit;
@@ -19,10 +20,15 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
         public IDocument ReportDocument { get; set; }
-        public IEnumerable ExistingObjects { get; set; }
-        public IEnumerable ExpectedObjects { get; set; }
+        public IEnumerable RvtDataObjects { get; set; }
+        public IEnumerable DbDataObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
         public IEnumerable ResultObjects { get; set; }
+
+        public Task ExecuteReportBusinessLogic()
+        {
+            throw new NotImplementedException();
+        }
 
         public DisciplineType[] GetDisciplines()
         {
@@ -36,6 +42,17 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 DisciplineType.Landscape,
             };
         }
+
+        public Task GetReportDatabaseObjectsAsync(IDbDataAccess rvtAccess)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task GetReportRevitObjectsAsync(IRvtDataAccess dbAccess)
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetReportScoreAsString()
         {
             //Get and Parse this report result objects
@@ -59,7 +76,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             var _existingInfo = ReportDocument.GetType().GetProperties().ToList();
 
             //Initialize expected objects data type
-            var _expectedInfo = ExpectedObjects.Cast<IExpectedProjectInfo>()
+            var _expectedInfo = DbDataObjects.Cast<IExpectedProjectInfo>()
                 ?.Where(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()))
                 .GetType().GetProperties().ToList();
             if (_expectedInfo.Count.Equals(0)) { ResultObjects = _resultObjects; return; }
@@ -100,6 +117,16 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 
             //Assign Report Results
             ResultObjects = _resultObjects;
+        }
+
+        public Task SaveReportResultsDataAsync(IDbDataAccess dbAccess)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SaveReportScoreDataAsync(IDbDataAccess dbAccess)
+        {
+            throw new NotImplementedException();
         }
     }
 }

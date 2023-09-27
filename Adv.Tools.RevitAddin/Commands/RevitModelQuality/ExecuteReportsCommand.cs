@@ -1,6 +1,6 @@
 ﻿using Adv.Tools.DataAccess.MySql;
 using Adv.Tools.CoreLogic.RevitModelQuality;
-using Adv.Tools.RevitAddin.Handlers;
+using Adv.Tools.RevitAddin.Application;
 using Adv.Tools.RevitAddin.Models;
 using Adv.Tools.Abstractions.Database;
 using Adv.Tools.Abstractions.Revit;
@@ -32,6 +32,7 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
 
         private readonly string _connectionString = Properties.DataAccess.Default.ProdDb;
 
+
         /// <summary>
         /// Main entrance to the class when called by the Revit.exe UI.
         /// </summary>
@@ -41,28 +42,17 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
         /// <returns>The Result object.</returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            //Reference to Revit.exe application objects
+
             var app = commandData.Application.Application;
             var doc = commandData.Application.ActiveUIDocument.Document;
+            var links = RevitDataAccess.GetLinedRevitModels(app.Documents);
 
-            //Reference to support objects
-            var access = new MySqlDataAccess(_connectionString);
-            var links = new List<Document>();
-            var tasks = new List<Task>();
+            var dbAccess = new MySqlDataAccess(_connectionString);
             var dbName = new RevitDocument(doc).DbProjectId;
-
-            //Acquire the Revit models for which the reports to be executed
-            foreach (Document linkedModel in app.Documents)
-            {
-                if (linkedModel.IsLinked) 
-                { 
-                    links.Add(linkedModel);
-                }
-            }
-
+            
             //Acquire user input about which reports to be executed
             IConfigReportView view = new ConfigReportView();
-            IConfigReportRepo repo = new ConfigReportRepo(access, dbName);
+            IConfigReportRepo repo = new ConfigReportRepo(dbAccess, dbName);
             var presenter = new ConfigReportPresenter(view, repo);
             view.RunUIApplication();
 
@@ -72,23 +62,20 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
                 .Where(t => typeof(IReportModelQuality).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract).ToList();
 
             //Execute Reports
+            var tasks = new List<Task>();
             foreach (var reportType in reportTypes)
             {
                 foreach (var rvtModel in links)
                 {
+                    var rvtAccess = new RevitDataAccess(rvtModel);
                     var reportInstance = Activator.CreateInstance(reportType) as IReportModelQuality;
-                    var dataHandler = new RevitModelQualityDataHandler(access, rvtModel, dbName);
-
-                    tasks.Add(Task.Run(async () =>
-                    {
-                        await dataHandler.InitializeReportDataAsync(reportInstance);
-                        await dataHandler.ActivateReportBusinessLogicAsync(reportInstance);
-                        await dataHandler.SaveReportResultsDataAsync(reportInstance);
-                        await dataHandler.SaveReportScoreDataAsync(reportInstance);
-                    }));
+                    
+                    reportInstance.ReportDocument = new RevitDocument(rvtModel);
+                    tasks.Add(Task.Run(async () => await ExecuteReportRoutineAsync(reportInstance, dbAccess, rvtAccess)));
 
                     break;
                 }
+
                 break;
             }
 
@@ -96,5 +83,13 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
             return Result.Succeeded;
         }
 
+        private async Task ExecuteReportRoutineAsync(IReportModelQuality report, IDbDataAccess dbAccess, IRvtDataAccess rvtAccess)
+        {
+            await report.GetReportDatabaseObjectsAsync(dbAccess);
+            await report.GetReportRevitObjectsAsync(rvtAccess);
+            await report.ExecuteReportBusinessLogic();
+            await report.SaveReportResultsDataAsync(dbAccess);
+            await report.SaveReportScoreDataAsync(dbAccess);
+        }
     }
 }

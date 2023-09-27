@@ -7,6 +7,7 @@ using Adv.Tools.CoreLogic.RevitModelQuality.Reports;
 using Adv.Tools.DataAccess.MySql.Models;
 using Adv.Tools.RevitAddin.Models;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.RevitAddin.Handlers
 {
-    public class RevitModelQualityDataHandler
+    public class RevitModelQualityDataHandler : IRvtDataAccess
     {
         private readonly Document _document;
         private readonly IDbDataAccess _dbAccess;
@@ -36,48 +37,48 @@ namespace Adv.Tools.RevitAddin.Handlers
 
             if (report is ElementsWorksetsReport)
             {
-                report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedWorkset>(_databaseName);
-                report.ExistingObjects = GetElementsByExpectedCategoryId(report.ExpectedObjects);
+                report.DbDataObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedWorkset>(_databaseName);
+                report.RvtDataObjects = GetElementsByExpectedCategoryId(report.DbDataObjects);
             }
             else if (report is MissingWorksetsReport)
             {
-                report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedWorkset>(_databaseName);
-                report.ExistingObjects = GetUserCreatedWorksets();
+                report.DbDataObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedWorkset>(_databaseName);
+                report.RvtDataObjects = GetUserCreatedWorksets();
             }
             else if (report is FileReferenceReport)
             {
-                report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedDocument>(_databaseName);
-                report.ExistingObjects = GetRevitLinkTypes();
+                report.DbDataObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedDocument>(_databaseName);
+                report.RvtDataObjects = GetRevitLinkTypes();
             }
             else if (report is LevelsMonitorReport)
             {
-                report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedGridsMonitor>(_databaseName);
-                report.ExistingObjects = GetLevelsAsElements();
+                report.DbDataObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedGridsMonitor>(_databaseName);
+                report.RvtDataObjects = GetLevelsAsElements();
             }
             else if (report is GridsMonitorReport)
             {
-                report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedGridsMonitor>(_databaseName);
-                report.ExistingObjects = GetGridsAsElements();
+                report.DbDataObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedGridsMonitor>(_databaseName);
+                report.RvtDataObjects = GetGridsAsElements();
             }
             else if (report is ProjectWarningReport)
             {
-                report.ExpectedObjects = Enumerable.Empty<object>();
-                report.ExistingObjects = GetDocumentFailureMessages();
+                report.DbDataObjects = Enumerable.Empty<object>();
+                report.RvtDataObjects = GetDocumentFailureMessages();
             }
             else if (report is ProjectBasePointReports)
             {
-                report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedSiteLocation>(_databaseName);
-                report.ExistingObjects = Enumerable.Empty<object>();
+                report.DbDataObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedSiteLocation>(_databaseName);
+                report.RvtDataObjects = Enumerable.Empty<object>();
             }
             else if (report is ProjectInfoReport)
             {
-                report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedProjectInfo>(_databaseName);
-                report.ExistingObjects = Enumerable.Empty<object>();
+                report.DbDataObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedProjectInfo>(_databaseName);
+                report.RvtDataObjects = Enumerable.Empty<object>();
             }
             else if (report is SharedParameterReport)
             {
-                report.ExpectedObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedSharedPara>(_databaseName);
-                report.ExistingObjects = Enumerable.Empty<object>();
+                report.DbDataObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedSharedPara>(_databaseName);
+                report.RvtDataObjects = Enumerable.Empty<object>();
             }
         }
         public async Task ActivateReportBusinessLogicAsync(IReportModelQuality report)
@@ -89,88 +90,16 @@ namespace Adv.Tools.RevitAddin.Handlers
         public async Task SaveReportResultsDataAsync(IReportModelQuality report)
         {
 
-            if (report is ElementsWorksetsReport)
+
+            //Define the functions to be executed
+            Func<Task>[] functions = new Func<Task>[]
             {
-                var parameters = new { ModelGuid = report.ReportDocument.Guid };
-                var results = report.ResultObjects.Cast<ReportElementsWorkset>().ToList();
+                    //async () => await _dbAccess.DeleteDataWhereParametersAsync<ReportElementsWorkset, dynamic>(_databaseName, parameters),
+                    //async () => await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName, results),
+            };
 
-                Func<Task>[] functions = new Func<Task>[]
-                {
-                    async () => await _dbAccess.DeleteDataWhereParametersAsync<ReportElementsWorkset, dynamic>(_databaseName, parameters),
-                    async () => await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName,results),
-                };
-
-                await _dbAccess.ExecuteWithTransaction(functions);
-
-            }
-            else if (report is MissingWorksetsReport)
-            {
-                var parameters = new { ModelGuid = report.ReportDocument.Guid };
-                var results = report.ResultObjects.Cast<ReportElementsWorkset>().ToList();
-
-                Func<Task>[] functions = new Func<Task>[]
-                {
-                    async () => await _dbAccess.DeleteDataWhereParametersAsync<ReportMissingWorkset, dynamic>(_databaseName, parameters),
-                    async () => await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName,results),
-                };
-
-                await _dbAccess.ExecuteWithTransaction(functions);
-
-            }
-            else if (report is FileReferenceReport)
-            {
-                var parameters = new { ModelGuid = report.ReportDocument.Guid };
-                var results = report.ResultObjects.Cast<CoreLogic.RevitModelQuality.Models.ReportFileReference>().ToList();
-
-                Func<Task>[] functions = new Func<Task>[]
-                {
-                    async () => await _dbAccess.DeleteDataWhereParametersAsync<CoreLogic.RevitModelQuality.Models.ReportFileReference, dynamic>(_databaseName, parameters),
-                    async () => await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName, results),
-                };
-
-                await _dbAccess.ExecuteWithTransaction(functions);
-            }
-            else if (report is LevelsMonitorReport)
-            {
-
-                var parameters = new { ModelGuid = report.ReportDocument.Guid };
-                var results = report.ResultObjects.Cast<ReportLevelsMonitor>().ToList();
-
-                Func<Task>[] functions = new Func<Task>[]
-                {
-                    async () => await _dbAccess.DeleteDataWhereParametersAsync<ReportLevelsMonitor, dynamic>(_databaseName, parameters),
-                    async () => await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName,results),
-                };
-
-                await _dbAccess.ExecuteWithTransaction(functions);
-            }
-            else if (report is GridsMonitorReport)
-            {
-                var parameters = new { ModelGuid = report.ReportDocument.Guid };
-                var results = report.ResultObjects.Cast<ReportGridsMonitor>().ToList();
-
-                Func<Task>[] functions = new Func<Task>[]
-                {
-                    async () => await _dbAccess.DeleteDataWhereParametersAsync<ReportGridsMonitor, dynamic>(_databaseName, parameters),
-                    async () => await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName,results),
-                };
-
-                await _dbAccess.ExecuteWithTransaction(functions);
-            }
-            else if (report is ProjectWarningReport)
-            {
-
-                var parameters = new { ModelGuid = report.ReportDocument.Guid };
-                var results = report.ResultObjects.Cast<ReportProjectWarning>().ToList();
-
-                Func<Task>[] functions = new Func<Task>[]
-                {
-                    async () => await _dbAccess.DeleteDataWhereParametersAsync<ReportProjectWarning, dynamic>(_databaseName, parameters),
-                    async () => await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName,results),
-                };
-
-                await _dbAccess.ExecuteWithTransaction(functions);
-            }
+            //Execute data access operations
+            await _dbAccess.ExecuteWithTransaction(functions);
         }
         public async Task SaveReportScoreDataAsync(IReportModelQuality report)
         {
@@ -195,7 +124,7 @@ namespace Adv.Tools.RevitAddin.Handlers
         /// <summary>
         /// Get all the Elements which associated with the Allowed Category Ids of IExpectedWorkset
         /// </summary>
-        private IEnumerable GetElementsByExpectedCategoryId(IEnumerable expectedObjects)
+        public IEnumerable GetElementsByExpectedCategoryId(IEnumerable expectedObjects)
         {
             //Cast expected objects to the relevant context
             var expectedWorksets = expectedObjects.OfType<IExpectedWorkset>().ToList();
@@ -223,7 +152,7 @@ namespace Adv.Tools.RevitAddin.Handlers
         /// <summary>
         /// Get all User defined worksets in the Revit Model
         /// </summary>
-        private IEnumerable<IWorkset> GetUserCreatedWorksets()
+        public IEnumerable<IWorkset> GetUserCreatedWorksets()
         {
             var collector = new FilteredWorksetCollector(_document);
             var filteredCollection = collector.OfKind(WorksetKind.UserWorkset).ToWorksets();
@@ -237,7 +166,7 @@ namespace Adv.Tools.RevitAddin.Handlers
         /// <summary>
         /// Get all RevitLinkType file References in the Revit Model
         /// </summary>
-        private IEnumerable<IRevitLinkType> GetRevitLinkTypes()
+        public IEnumerable<IRevitLinkType> GetRevitLinkTypes()
         {
             var results = new List<IRevitLinkType>();
             
@@ -263,7 +192,7 @@ namespace Adv.Tools.RevitAddin.Handlers
         /// <summary>
         /// Get  All Levels in the Revit Model as IElement
         /// </summary>
-        private IEnumerable<IElement> GetLevelsAsElements()
+        public IEnumerable<IElement> GetLevelsAsElements()
         {
 
             var collector = new FilteredElementCollector(_document);
@@ -279,7 +208,7 @@ namespace Adv.Tools.RevitAddin.Handlers
         /// <summary>
         /// Get All Grids in the Revit Model
         /// </summary>
-        private IEnumerable<IElement> GetGridsAsElements()
+        public IEnumerable<IElement> GetGridsAsElements()
         {
 
             var collector = new FilteredElementCollector(_document);
@@ -295,7 +224,7 @@ namespace Adv.Tools.RevitAddin.Handlers
         /// <summary>
         /// Get All FailureMessages in the Revit Model
         /// </summary>
-        private IEnumerable<IFailureMessage> GetDocumentFailureMessages()
+        public IEnumerable<IFailureMessage> GetDocumentFailureMessages()
         {
             var warnings = _document.GetWarnings().ToList();
 

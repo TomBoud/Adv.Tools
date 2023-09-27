@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Adv.Tools.Abstractions.Common;
 using Adv.Tools.Abstractions.Database;
 using Adv.Tools.Abstractions.Enums;
 using Adv.Tools.Abstractions.Revit;
@@ -17,10 +18,15 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
         public IDocument ReportDocument { get; set; }
-        public IEnumerable ExistingObjects { get; set; }
-        public IEnumerable ExpectedObjects { get; set; }
+        public IEnumerable RvtDataObjects { get; set; }
+        public IEnumerable DbDataObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
         public IEnumerable ResultObjects { get; set; }
+
+        public Task ExecuteReportBusinessLogic()
+        {
+            throw new NotImplementedException();
+        }
 
         public DisciplineType[] GetDisciplines()
         {
@@ -34,6 +40,17 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 DisciplineType.Landscape,
             };
         }
+
+        public Task GetReportDatabaseObjectsAsync(IDbDataAccess rvtAccess)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task GetReportRevitObjectsAsync(IRvtDataAccess dbAccess)
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetReportScoreAsString()
         {
             //Get and Parse this report result objects
@@ -41,7 +58,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             if (results is null) { return string.Empty; }
 
             //Initialize vars and Count all positive (true) values for all the results
-            double totalObjects = ExistingObjects.OfType<IElement>().ToList().Count;
+            double totalObjects = RvtDataObjects.OfType<IElement>().ToList().Count;
             double falseFound = results.Where(x => x.IsFound).ToList().Count;
 
             //Calculate final score and return  in a string format
@@ -54,10 +71,10 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             var _resultObjects = new List<IReportMissingWorkset>();
 
             //Initialize existing objects data type
-            var _existingWorksets = ExistingObjects?.OfType<IWorkset>().ToList();
+            var _existingWorksets = RvtDataObjects?.OfType<IWorkset>().ToList();
 
             //Initialize expected objects data type
-            var _expectedWorksets = ExpectedObjects?.OfType<IExpectedWorkset>().ToList();
+            var _expectedWorksets = DbDataObjects?.OfType<IExpectedWorkset>().ToList();
             if (_expectedWorksets.Count.Equals(0)) { ResultObjects = _resultObjects; return; }
 
             //Initialize user defined documents data type
@@ -104,6 +121,16 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 
             //Assign Report Results
             ResultObjects = _resultObjects;
+        }
+
+        public Task SaveReportResultsDataAsync(IDbDataAccess dbAccess)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SaveReportScoreDataAsync(IDbDataAccess dbAccess)
+        {
+            throw new NotImplementedException();
         }
     }
 }

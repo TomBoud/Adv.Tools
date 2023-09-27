@@ -23,6 +23,21 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public bool IsStatusOk { get; set; }
         public string IsStatusOkHeb { get; set; }
 
+        public void InitializeFromInterface(IReportFileReference source)
+        {
+            Id = source?.Id ?? 0;
+            ModelName = source?.ModelName ?? string.Empty;
+            ModelGuid = source?.ModelGuid ?? string.Empty;
+            Discipline = source?.Discipline ?? string.Empty;
+            LinkName = source?.LinkName ?? string.Empty;
+            Status = source?.Status ?? string.Empty;
+            Reference = source?.Reference ?? string.Empty;
+            IsReffOk = source?.IsReffOk ?? false;
+            IsReffOkHeb = source?.IsReffOkHeb ?? string.Empty;
+            IsStatusOk = source?.IsStatusOk ?? false;
+            IsStatusOkHeb = source?.IsStatusOkHeb ?? string.Empty;
+        }
+              
         public string GetCreateTableQuery(string databaseName)
         {
             string sqlQuery =

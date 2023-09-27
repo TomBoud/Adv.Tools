@@ -1,5 +1,6 @@
 ﻿
 
+using Adv.Tools.Abstractions.Common;
 using Adv.Tools.Abstractions.Database;
 using Adv.Tools.Abstractions.Enums;
 using Adv.Tools.Abstractions.Revit;
@@ -19,10 +20,15 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
         public LodType Lod { get => LodType.Lod100; set => Lod = value; }
         public IDocument ReportDocument { get; set; }
-        public IEnumerable ExistingObjects { get; set; }
-        public IEnumerable ExpectedObjects { get; set; }
+        public IEnumerable RvtDataObjects { get; set; }
+        public IEnumerable DbDataObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
         public IEnumerable ResultObjects { get; set; }
+
+        public Task ExecuteReportBusinessLogic()
+        {
+            throw new NotImplementedException();
+        }
 
         public DisciplineType[] GetDisciplines()
         {
@@ -35,6 +41,16 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 DisciplineType.Plumbing,
                 DisciplineType.Landscape,
             };
+        }
+
+        public Task GetReportDatabaseObjectsAsync(IDbDataAccess rvtAccess)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task GetReportRevitObjectsAsync(IRvtDataAccess dbAccess)
+        {
+            throw new NotImplementedException();
         }
 
         public string GetReportScoreAsString()
@@ -54,7 +70,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             var expectedModel = DocumentObjects.OfType<IExpectedDocument>()
               .FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid.ToString()));
 
-            var documnetFailures = ExistingObjects.OfType<IFailureMessage>();
+            var documnetFailures = RvtDataObjects.OfType<IFailureMessage>();
             var resultObjects = new List<IReportProjectWarning>();
 
  
@@ -74,6 +90,16 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             }
 
             ResultObjects = resultObjects;
+        }
+
+        public Task SaveReportResultsDataAsync(IDbDataAccess dbAccess)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SaveReportScoreDataAsync(IDbDataAccess dbAccess)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -21,6 +21,19 @@ namespace Adv.Tools.DataAccess.MySql.Models
         public string ObjectFamily { get; set; }
         public string ObjectWorkset { get; set; }
 
+        public void InitializeFromInterface(IReportElementsWorkset source)
+        {
+            Id = source?.Id ?? 0;
+            ModelName = source?.ModelName ?? string.Empty;
+            ModelGuid = source?.ModelGuid ?? string.Empty;
+            Discipline = source?.Discipline ?? string.Empty;
+            ObjectName = source?.ObjectName ?? string.Empty;
+            ObjectCategory = source?.ObjectCategory ?? string.Empty;
+            ObjectId = source?.ObjectId ?? string.Empty;
+            ObjectFamily = source?.ObjectFamily ?? string.Empty;
+            ObjectWorkset = source?.ObjectWorkset ?? string.Empty;
+        }
+
         public string GetCreateTableQuery(string databaseName)
         {
             string sqlQuery =

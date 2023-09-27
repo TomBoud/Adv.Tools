@@ -58,6 +58,23 @@ namespace Adv.Tools.DataAccess.MySql
                 throw ex;
             }
         }
+        public async Task<List<T>> LoadDataSelectAllAsync<T>(string databaseName, string tableName)
+        {
+            string sqlQuery = $"SELECT * FROM {databaseName}.{tableName}";
+
+            try
+            {
+                using (IDbConnection connection = new MySqlConnection(_connectionString))
+                {
+                    var rows = await connection.QueryAsync<T>(sqlQuery, new { });
+                    return rows.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         //Save
         public async Task SaveByUpdateValuesAsync<T>(string databaseName, List<T> data)
@@ -120,6 +137,22 @@ namespace Adv.Tools.DataAccess.MySql
                 await dbConnection.ExecuteAsync(query, data);
             }
         }
+        public async Task SaveByInsertUpdateOnDuplicateKeysAsync<T>(string databaseName, string tableName, List<T> data)
+        {
+            using (IDbConnection dbConnection = new MySqlConnection(_connectionString))
+            {
+                var properties = typeof(T).GetProperties();
+
+                string columns = string.Join(", ", properties.Select(p => p.Name));
+                string parametersPlaceholder = string.Join(", ", properties.Select(p => "@" + p.Name));
+                string updateAssignments = string.Join(", ", properties.Select(p => p.Name + " = VALUES(" + p.Name + ")"));
+
+                string query = $"INSERT INTO {databaseName}.{tableName} ({columns}) VALUES ({parametersPlaceholder}) " +
+                               $"ON DUPLICATE KEY UPDATE {updateAssignments}";
+
+                await dbConnection.ExecuteAsync(query, data);
+            }
+        }
 
         //Delete
         public async Task DeleteAllTableDataAsync<T>(string databaseName)
@@ -152,9 +185,28 @@ namespace Adv.Tools.DataAccess.MySql
                 throw ex;
             }
         }
-        public async Task DeleteDataWhereParametersAsync<T,U>(string databaseName, U parameters)
+        public async Task DeleteDataWhereParametersAsync<T, U>(string databaseName, U parameters)
         {
             var tableName = typeof(T).Name;
+            var properties = parameters.GetType().GetProperties();
+            var whereCondition = string.Join(" AND ", properties.Select(p => $"{p.Name} = @{p.Name}"));
+
+            var sqlQuery = $"DELETE FROM {databaseName}.{tableName} WHERE {whereCondition}";
+
+            try
+            {
+                using (IDbConnection dbConnection = new MySqlConnection(_connectionString))
+                {
+                    await dbConnection.ExecuteAsync(sqlQuery, parameters);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task DeleteDataWhereParametersAsync<T>(string databaseName, string tableName, T parameters)
+        {
             var properties = parameters.GetType().GetProperties();
             var whereCondition = string.Join(" AND ", properties.Select(p => $"{p.Name} = @{p.Name}"));
 
