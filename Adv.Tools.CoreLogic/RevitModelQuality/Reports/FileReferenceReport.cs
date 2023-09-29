@@ -178,7 +178,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             try
             {
                 string databaseName = ReportDocument.DbProjectId;
-                string tableName = ReportName;
+                string tableName = "ReportCheckScore";
 
                 var checkScoreData = new List<IReportCheckScore>
                 {
