@@ -31,6 +31,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql
             Assert.True(data.Count > 0);
         }
 
+      
         [Fact, Order(2)]
         public void TestLoadDataSelectAll_Successful()
         {

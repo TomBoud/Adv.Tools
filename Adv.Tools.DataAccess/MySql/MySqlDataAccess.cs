@@ -11,6 +11,8 @@ using Adv.Tools.DataAccess.MySql.Models;
 using System.Reflection;
 using System.Threading;
 using Adv.Tools.Abstractions.Common;
+using System.Collections;
+using Adv.Tools.Abstractions.Database;
 
 namespace Adv.Tools.DataAccess.MySql
 {
@@ -62,17 +64,38 @@ namespace Adv.Tools.DataAccess.MySql
         {
             string sqlQuery = $"SELECT * FROM {databaseName}.{tableName}";
 
-            try
+            if (typeof(T).IsInterface)
             {
-                using (IDbConnection connection = new MySqlConnection(_connectionString))
+                var interfaceType = Assembly.GetExecutingAssembly().GetTypes()
+                .FirstOrDefault(t => typeof(T).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract);
+
+                try
                 {
-                    var rows = await connection.QueryAsync<T>(sqlQuery, new { });
-                    return rows.ToList();
+                    using (IDbConnection connection = new MySqlConnection(_connectionString))
+                    {
+                        var rows = await connection.QueryAsync(interfaceType, sqlQuery);
+                        return rows.Cast<T>().ToList();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
                 }
             }
-            catch (Exception ex)
+            else
             {
-                throw ex;
+                try
+                {
+                    using (IDbConnection connection = new MySqlConnection(_connectionString))
+                    {
+                        var rows = await connection.QueryAsync<T>(sqlQuery);
+                        return rows.ToList();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
         }
 
