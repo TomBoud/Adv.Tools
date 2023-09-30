@@ -14,18 +14,15 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality
 {
     public interface IReportModelQuality
     {
-        string ReportName { get; set; }
-        LodType Lod { get; set; }
+        ReportType ReportName { get; }
+        LodType Lod { get; }
+        IDocument ReportDocument { get; set; }
         IEnumerable ResultObjects { get; set; }
         IEnumerable RvtDataObjects { get; set; }
         IEnumerable DbDataObjects { get; set; }
         IEnumerable DocumentObjects { get; set; }
-        IDocument ReportDocument { get; set; }
-
-        string GetReportScoreAsString();
-        void RunReportBusinessLogic();
-
-        Task ExecuteReportBusinessLogic();
+        
+        Task ExecuteReportCoreLogicAsync();
         Task GetReportRevitObjectsAsync(IRvtDataAccess dbAccess);
         Task GetReportDatabaseObjectsAsync(IDbDataAccess rvtAccess);
         Task SaveReportResultsDataAsync(IDbDataAccess dbAccess);

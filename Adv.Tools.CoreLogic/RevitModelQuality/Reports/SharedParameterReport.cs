@@ -17,58 +17,31 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 {
     public class SharedParameterReport : IReportModelQuality
     {
-        public string ReportName { get => "ReportSharedParameter"; set => ReportName = "ReportSharedParameter"; }
-        public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
-        public LodType Lod { get => LodType.Lod100; set => Lod = value; }
+        //Properties
+        public ReportType ReportName { get => ReportType.ReportSharedParameter; }
+        public LodType Lod { get => LodType.Lod100; }
         public IDocument ReportDocument { get; set; }
         public IEnumerable RvtDataObjects { get; set; }
         public IEnumerable DbDataObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
         public IEnumerable ResultObjects { get; set; }
 
-        public Task ExecuteReportBusinessLogic()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DisciplineType[] GetDisciplines()
-        {
-            return new DisciplineType[]
-            {
-                DisciplineType.Structural,
-                DisciplineType.Architectural,
-                DisciplineType.Electrical,
-                DisciplineType.Mechanical,
-                DisciplineType.Plumbing,
-                DisciplineType.Landscape,
-            };
-        }
-
-        public Task GetReportDatabaseObjectsAsync(IDbDataAccess rvtAccess)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task GetReportRevitObjectsAsync(IRvtDataAccess dbAccess)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetReportScoreAsString()
+        //Private Methods
+        private string GetReportScoreAsString()
         {
             double checkScore = 0;
 
             //Get and Parse this report result objects
             var results = ResultObjects?.OfType<IReportSharedParameter>() ?? null;
             if (results is null) { return string.Empty; }
-            
+
             //Get all bool properties
             PropertyInfo[] boolProperties = typeof(IReportSharedParameter).GetProperties()
                     .Where(prop => prop.PropertyType == typeof(bool)).ToArray();
-            
+
             //Check for bool properties existence (avoid zero division)
             if (boolProperties.Length.Equals(0)) { return string.Empty; }
-            
+
             //Count all positive (true) values for all the results
             foreach (var result in results)
             {
@@ -81,12 +54,12 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                     }
                 }
             }
-            
+
             //Calculate final score and return  in a string format
             checkScore = 100 * checkScore / (boolProperties.Length * results.Count());
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
-        public void RunReportBusinessLogic()
+        private void RunReportCoreLogic()
         {
 
             var _expectedSharedParams = DbDataObjects.OfType<IExpectedSharedPara>();
@@ -120,14 +93,98 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             ResultObjects = _resultObjects;
         }
 
-        public Task SaveReportResultsDataAsync(IDbDataAccess dbAccess)
+        //Public Tasks
+        public async Task ExecuteReportCoreLogicAsync()
         {
-            throw new NotImplementedException();
+            try
+            {
+                await Task.Run(() =>
+                {
+                    RunReportCoreLogic();
+                });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
-
-        public Task SaveReportScoreDataAsync(IDbDataAccess dbAccess)
+        public async Task GetReportRevitObjectsAsync(IRvtDataAccess rvtAccess)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await Task.Run(() =>
+                {
+                    RvtDataObjects = Enumerable.Empty<object>();
+                });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+        public async Task GetReportDatabaseObjectsAsync(IDbDataAccess dbAccess)
+        {
+            try
+            {
+                DocumentObjects = await dbAccess.LoadDataSelectAllAsync<IExpectedDocument>(ReportDocument.DbProjectId);
+                DbDataObjects = await dbAccess.LoadDataSelectAllAsync<IExpectedSharedPara>(ReportDocument.DbProjectId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public async Task SaveReportResultsDataAsync(IDbDataAccess dbAccess)
+        {
+
+            try
+            {
+                var parameters = new { ModelGuid = ReportDocument.Guid };
+                var results = ResultObjects.Cast<IReportSharedParameter>().ToList();
+
+                var functions = new Func<Task>[]
+                {
+                    async () => await dbAccess.DeleteDataWhereParametersAsync<IReportSharedParameter,dynamic>(ReportDocument.DbProjectId, parameters),
+                    async () => await dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(ReportDocument.DbProjectId, results),
+                };
+
+                await dbAccess.ExecuteWithTransaction(functions);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+        public async Task SaveReportScoreDataAsync(IDbDataAccess dbAccess)
+        {
+            try
+            {
+                string databaseName = ReportDocument.DbProjectId;
+
+                var checkScoreData = new List<IReportCheckScore>
+                {
+                    new CheckScoreModel
+                    {
+                       Id = 0,
+                       CheckLod = ((int)Lod).ToString(),
+                       CheckScore = GetReportScoreAsString(),
+                       CheckName = ReportName.ToString(),
+                       Discipline = string.Empty,
+                       ModelGuid = ReportDocument.Guid.ToString(),
+                       ModelName = ReportDocument.Title,
+                       IsActive = true,
+                    }
+                };
+
+                await dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(databaseName, checkScoreData);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

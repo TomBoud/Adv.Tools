@@ -81,12 +81,7 @@ namespace Adv.Tools.RevitAddin.Handlers
                 report.RvtDataObjects = Enumerable.Empty<object>();
             }
         }
-        public async Task ActivateReportBusinessLogicAsync(IReportModelQuality report)
-        {
-            var task = Task.Run(() => report.RunReportBusinessLogic());
-            await task;
-
-        }
+  
         public async Task SaveReportResultsDataAsync(IReportModelQuality report)
         {
 
@@ -109,8 +104,8 @@ namespace Adv.Tools.RevitAddin.Handlers
                 {
                        Id = 0,
                        CheckLod = ((int)report.Lod).ToString(),
-                       CheckScore = report.GetReportScoreAsString(),
-                       CheckName = report.ReportName,
+                       CheckScore = "",
+                       CheckName = report.ReportName.ToString(),
                        Discipline = string.Empty,
                        ModelGuid = report.ReportDocument.Guid.ToString(),
                        ModelName = report.ReportDocument.Title,

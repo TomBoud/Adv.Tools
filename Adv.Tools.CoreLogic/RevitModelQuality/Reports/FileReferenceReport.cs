@@ -17,16 +17,16 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
     public class FileReferenceReport : IReportModelQuality
     {
         //Properties
-        public string ReportName { get => "ReportFileReference"; set => ReportName = "ReportFileReference"; }
-        public LodType Lod { get => LodType.Lod100; set => Lod = value; }
+        public ReportType ReportName { get => ReportType.ReportFileReference; }
+        public LodType Lod { get => LodType.Lod100; }
         public IDocument ReportDocument { get; set; }
         public IEnumerable RvtDataObjects { get; set; }
         public IEnumerable DbDataObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
         public IEnumerable ResultObjects { get; set; }
 
-        //Methods
-        public string GetReportScoreAsString()
+        //Private Methods
+        private string GetReportScoreAsString()
         {
 
             //Cast results property to a valid list
@@ -58,7 +58,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             checkScore = 100 * checkScore / (boolProperties.Length * results.Count());
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
-        public void RunReportBusinessLogic()
+        private void RunReportCoreLogic()
         {
             //Initialize Result objects return data type
             var _resultObjects = new List<IReportFileReference>();
@@ -103,14 +103,14 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             ResultObjects = _resultObjects;
         }
 
-        //Tasks
-        public async Task ExecuteReportBusinessLogic()
+        //Public Tasks
+        public async Task ExecuteReportCoreLogicAsync()
         {
             try
             {
                 await Task.Run(() =>
                 {
-                    RunReportBusinessLogic();
+                    RunReportCoreLogic();
                 });
             }
             catch (Exception ex)
@@ -137,11 +137,8 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         {
             try
             {
-                string databaseName = ReportDocument.DbProjectId;
-                string tableName = "ExpectedDocument";
-
-                DocumentObjects = await dbAccess.LoadDataSelectAllAsync<IExpectedDocument>(databaseName, tableName);
-                DbDataObjects = await dbAccess.LoadDataSelectAllAsync<IExpectedDocument>(databaseName, tableName);
+                DocumentObjects = await dbAccess.LoadDataSelectAllAsync<IExpectedDocument>(ReportDocument.DbProjectId);
+                DbDataObjects = await dbAccess.LoadDataSelectAllAsync<IExpectedDocument>(ReportDocument.DbProjectId);
             }
             catch (Exception ex)
             {
@@ -153,16 +150,13 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 
             try
             {
-                string tableName = ReportName;
-                string databaseName = ReportDocument.DbProjectId;
-
                 var parameters = new { ModelGuid = ReportDocument.Guid };
                 var results = ResultObjects.Cast<IReportFileReference>().ToList();
 
                 Func<Task>[] functions = new Func<Task>[]
                 {
-                async () => await dbAccess.DeleteDataWhereParametersAsync<dynamic>(databaseName, tableName, parameters),
-                async () => await dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(databaseName, tableName, results),
+                    async () => await dbAccess.DeleteDataWhereParametersAsync<IReportFileReference,dynamic>(ReportDocument.DbProjectId, parameters),
+                    async () => await dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(ReportDocument.DbProjectId, results),
                 };
 
                 await dbAccess.ExecuteWithTransaction(functions);
@@ -178,7 +172,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             try
             {
                 string databaseName = ReportDocument.DbProjectId;
-                string tableName = "ReportCheckScore";
 
                 var checkScoreData = new List<IReportCheckScore>
                 {
@@ -187,7 +180,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                        Id = 0,
                        CheckLod = ((int)Lod).ToString(),
                        CheckScore = GetReportScoreAsString(),
-                       CheckName = ReportName,
+                       CheckName = ReportName.ToString(),
                        Discipline = string.Empty,
                        ModelGuid = ReportDocument.Guid.ToString(),
                        ModelName = ReportDocument.Title,
@@ -195,7 +188,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                     }
                 };
 
-                await dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(databaseName, tableName, checkScoreData);
+                await dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(databaseName, checkScoreData);
 
             }
             catch (Exception ex)

@@ -16,44 +16,17 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
 {
     public class ProjectInfoReport : IReportModelQuality
     {
-        public string ReportName { get => "ReportProjectInfo"; set => ReportName = "ReportProjectInfo"; }
-        public DisciplineType[] Disciplines { get => GetDisciplines(); set => Disciplines = value; }
-        public LodType Lod { get => LodType.Lod100; set => Lod = value; }
+        //Properties
+        public ReportType ReportName { get => ReportType.ReportProjectInfo; }
+        public LodType Lod { get => LodType.Lod100; }
         public IDocument ReportDocument { get; set; }
         public IEnumerable RvtDataObjects { get; set; }
         public IEnumerable DbDataObjects { get; set; }
         public IEnumerable DocumentObjects { get; set; }
         public IEnumerable ResultObjects { get; set; }
 
-        public Task ExecuteReportBusinessLogic()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DisciplineType[] GetDisciplines()
-        {
-            return new DisciplineType[]
-            {
-                DisciplineType.Structural,
-                DisciplineType.Architectural,
-                DisciplineType.Electrical,
-                DisciplineType.Mechanical,
-                DisciplineType.Plumbing,
-                DisciplineType.Landscape,
-            };
-        }
-
-        public Task GetReportDatabaseObjectsAsync(IDbDataAccess rvtAccess)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task GetReportRevitObjectsAsync(IRvtDataAccess dbAccess)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetReportScoreAsString()
+        //Private Methods
+        private string GetReportScoreAsString()
         {
             //Get and Parse this report result objects
             var results = ResultObjects?.OfType<IReportProjectInfo>() ?? null;
@@ -62,12 +35,12 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             //Initialize vars and Count all positive (true) values for all the results
             double totalObjects = results.Count();
             double trueFound = results.Where(x => x.IsCorrect).ToList().Count;
-            
+
             //Calculate final score and return  in a string format
             double checkScore = 100 * trueFound / totalObjects;
             return double.IsNaN(checkScore) ? string.Empty : checkScore.ToString("0.#");
         }
-        public void RunReportBusinessLogic()
+        private void RunReportCoreLogic()
         {
             //Initialize Result objects return data type
             var _resultObjects = new List<IReportProjectInfo>();
@@ -96,9 +69,9 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                     ModelName = _expectedDoc.ModelName,
                     ModelGuid = _expectedDoc.ModelGuid,
                     Discipline = _expectedDoc.Discipline,
-                    ExpectedValue = (string)property?.GetValue(property.Name,null) ?? string.Empty,
+                    ExpectedValue = (string)property?.GetValue(property.Name, null) ?? string.Empty,
                     InfoName = existingProperty.Name,
-                    InfoValue = (string)existingProperty?.GetValue(existingProperty.Name,null) ?? string.Empty,
+                    InfoValue = (string)existingProperty?.GetValue(existingProperty.Name, null) ?? string.Empty,
                 };
 
                 if (report.ExpectedValue.Equals(report.InfoValue))
@@ -119,14 +92,98 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             ResultObjects = _resultObjects;
         }
 
-        public Task SaveReportResultsDataAsync(IDbDataAccess dbAccess)
+        //Public Tasks
+        public async Task ExecuteReportCoreLogicAsync()
         {
-            throw new NotImplementedException();
+            try
+            {
+                await Task.Run(() =>
+                {
+                    RunReportCoreLogic();
+                });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
-
-        public Task SaveReportScoreDataAsync(IDbDataAccess dbAccess)
+        public async Task GetReportRevitObjectsAsync(IRvtDataAccess rvtAccess)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await Task.Run(() =>
+                {
+                    RvtDataObjects = Enumerable.Empty<object>();
+                });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+        public async Task GetReportDatabaseObjectsAsync(IDbDataAccess dbAccess)
+        {
+            try
+            {
+                DocumentObjects = await dbAccess.LoadDataSelectAllAsync<IExpectedDocument>(ReportDocument.DbProjectId);
+                DbDataObjects = await dbAccess.LoadDataSelectAllAsync<IExpectedProjectInfo>(ReportDocument.DbProjectId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public async Task SaveReportResultsDataAsync(IDbDataAccess dbAccess)
+        {
+
+            try
+            {
+                var parameters = new { ModelGuid = ReportDocument.Guid };
+                var results = ResultObjects.Cast<IReportProjectInfo>().ToList();
+
+                var functions = new Func<Task>[]
+                {
+                    async () => await dbAccess.DeleteDataWhereParametersAsync<IReportProjectInfo,dynamic>(ReportDocument.DbProjectId, parameters),
+                    async () => await dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(ReportDocument.DbProjectId, results),
+                };
+
+                await dbAccess.ExecuteWithTransaction(functions);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+        public async Task SaveReportScoreDataAsync(IDbDataAccess dbAccess)
+        {
+            try
+            {
+                string databaseName = ReportDocument.DbProjectId;
+
+                var checkScoreData = new List<IReportCheckScore>
+                {
+                    new CheckScoreModel
+                    {
+                       Id = 0,
+                       CheckLod = ((int)Lod).ToString(),
+                       CheckScore = GetReportScoreAsString(),
+                       CheckName = ReportName.ToString(),
+                       Discipline = string.Empty,
+                       ModelGuid = ReportDocument.Guid.ToString(),
+                       ModelName = ReportDocument.Title,
+                       IsActive = true,
+                    }
+                };
+
+                await dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(databaseName, checkScoreData);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

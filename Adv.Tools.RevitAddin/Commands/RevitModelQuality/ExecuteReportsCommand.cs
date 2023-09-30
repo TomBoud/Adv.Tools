@@ -87,7 +87,7 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
         {
             await report.GetReportDatabaseObjectsAsync(dbAccess);
             await report.GetReportRevitObjectsAsync(rvtAccess);
-            await report.ExecuteReportBusinessLogic();
+            await report.ExecuteReportCoreLogicAsync();
             await report.SaveReportResultsDataAsync(dbAccess);
             await report.SaveReportScoreDataAsync(dbAccess);
         }
