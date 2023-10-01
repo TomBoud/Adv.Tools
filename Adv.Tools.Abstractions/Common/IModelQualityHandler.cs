@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Adv.Tools.Abstractions.Common
 {
-    public interface IRvtDataAccess
+    public interface IModelQualityHandler
     {
         IEnumerable<IRevitLinkType> GetRevitLinkTypes();
         IEnumerable GetElementsByExpectedCategoryId(IEnumerable expectedObjects);

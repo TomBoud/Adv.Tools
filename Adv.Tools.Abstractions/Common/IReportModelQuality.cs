@@ -17,7 +17,7 @@ namespace Adv.Tools.Abstractions.Common
         IEnumerable DocumentObjects { get; set; }
         
         Task ExecuteReportCoreLogicAsync();
-        Task GetReportRevitObjectsAsync(IRvtDataAccess dbAccess);
+        Task GetReportRevitObjectsAsync(IModelQualityHandler dbAccess);
         Task GetReportDatabaseObjectsAsync(IDbDataAccess rvtAccess);
         Task SaveReportResultsDataAsync(IDbDataAccess dbAccess);
         Task SaveReportScoreDataAsync(IDbDataAccess dbAccess);

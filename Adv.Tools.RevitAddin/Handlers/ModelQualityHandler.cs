@@ -17,103 +17,13 @@ using System.Threading.Tasks;
 
 namespace Adv.Tools.RevitAddin.Handlers
 {
-    public class RevitModelQualityDataHandler : IRvtDataAccess
+    public class ModelQualityHandler : IModelQualityHandler
     {
         private readonly Document _document;
-        private readonly IDbDataAccess _dbAccess;
-        private readonly string _databaseName;
 
-        public RevitModelQualityDataHandler(IDbDataAccess dbAccess, Document document, string databaseName)
+        public ModelQualityHandler(Document document)
         {
             _document = document;
-            _dbAccess = dbAccess;
-            _databaseName = databaseName;
-        }
-
-        public async Task InitializeReportDataAsync(IReportModelQuality report)
-        {
-            report.DocumentObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedDocument>(_databaseName);
-            report.ReportDocument = new RevitDocument(_document);
-
-            if (report is ElementsWorksetsReport)
-            {
-                report.DbDataObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedWorkset>(_databaseName);
-                report.RvtDataObjects = GetElementsByExpectedCategoryId(report.DbDataObjects);
-            }
-            else if (report is MissingWorksetsReport)
-            {
-                report.DbDataObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedWorkset>(_databaseName);
-                report.RvtDataObjects = GetUserCreatedWorksets();
-            }
-            else if (report is FileReferenceReport)
-            {
-                report.DbDataObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedDocument>(_databaseName);
-                report.RvtDataObjects = GetRevitLinkTypes();
-            }
-            else if (report is LevelsMonitorReport)
-            {
-                report.DbDataObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedGridsMonitor>(_databaseName);
-                report.RvtDataObjects = GetLevelsAsElements();
-            }
-            else if (report is GridsMonitorReport)
-            {
-                report.DbDataObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedGridsMonitor>(_databaseName);
-                report.RvtDataObjects = GetGridsAsElements();
-            }
-            else if (report is ProjectWarningReport)
-            {
-                report.DbDataObjects = Enumerable.Empty<object>();
-                report.RvtDataObjects = GetDocumentFailureMessages();
-            }
-            else if (report is ProjectBasePointReports)
-            {
-                report.DbDataObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedSiteLocation>(_databaseName);
-                report.RvtDataObjects = Enumerable.Empty<object>();
-            }
-            else if (report is ProjectInfoReport)
-            {
-                report.DbDataObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedProjectInfo>(_databaseName);
-                report.RvtDataObjects = Enumerable.Empty<object>();
-            }
-            else if (report is SharedParameterReport)
-            {
-                report.DbDataObjects = await _dbAccess.LoadDataSelectAllAsync<ExpectedSharedPara>(_databaseName);
-                report.RvtDataObjects = Enumerable.Empty<object>();
-            }
-        }
-  
-        public async Task SaveReportResultsDataAsync(IReportModelQuality report)
-        {
-
-
-            //Define the functions to be executed
-            Func<Task>[] functions = new Func<Task>[]
-            {
-                    //async () => await _dbAccess.DeleteDataWhereParametersAsync<ReportElementsWorkset, dynamic>(_databaseName, parameters),
-                    //async () => await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName, results),
-            };
-
-            //Execute data access operations
-            await _dbAccess.ExecuteWithTransaction(functions);
-        }
-        public async Task SaveReportScoreDataAsync(IReportModelQuality report)
-        {
-            var checkScoreData = new List<ReportCheckScore>
-            {
-                new ReportCheckScore
-                {
-                       Id = 0,
-                       CheckLod = ((int)report.Lod).ToString(),
-                       CheckScore = "",
-                       CheckName = report.ReportName.ToString(),
-                       Discipline = string.Empty,
-                       ModelGuid = report.ReportDocument.Guid.ToString(),
-                       ModelName = report.ReportDocument.Title,
-                       IsActive = true,
-                }
-            };
-
-            await _dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(_databaseName, checkScoreData);
         }
 
         /// <summary>

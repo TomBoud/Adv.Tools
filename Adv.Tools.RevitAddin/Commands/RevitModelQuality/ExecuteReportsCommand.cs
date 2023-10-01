@@ -19,6 +19,7 @@ using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Repository;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Views;
 using Adv.Tools.RevitAddin.Application.Components;
 using Adv.Tools.Abstractions.Common;
+using Adv.Tools.RevitAddin.Handlers;
 
 
 namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
@@ -67,11 +68,11 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
             {
                 foreach (var rvtModel in links)
                 {
-                    var rvtAccess = new RevitDataAccess(rvtModel);
+                    var rvtHandler = new ModelQualityHandler(rvtModel);
                     var reportInstance = Activator.CreateInstance(reportType) as IReportModelQuality;
                     
                     reportInstance.ReportDocument = new RevitDocument(rvtModel);
-                    tasks.Add(Task.Run(async () => await ExecuteReportRoutineAsync(reportInstance, dbAccess, rvtAccess)));
+                    tasks.Add(Task.Run(async () => await ExecuteReportRoutineAsync(reportInstance, dbAccess, rvtHandler)));
 
                     break;
                 }
@@ -83,10 +84,10 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
             return Result.Succeeded;
         }
 
-        private async Task ExecuteReportRoutineAsync(IReportModelQuality report, IDbDataAccess dbAccess, IRvtDataAccess rvtAccess)
+        private async Task ExecuteReportRoutineAsync(IReportModelQuality report, IDbDataAccess dbAccess, IModelQualityHandler rvtHandler)
         {
             await report.GetReportDatabaseObjectsAsync(dbAccess);
-            await report.GetReportRevitObjectsAsync(rvtAccess);
+            await report.GetReportRevitObjectsAsync(rvtHandler);
             await report.ExecuteReportCoreLogicAsync();
             await report.SaveReportResultsDataAsync(dbAccess);
             await report.SaveReportScoreDataAsync(dbAccess);

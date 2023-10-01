@@ -12,7 +12,7 @@ using Adv.Tools.Abstractions.DbEntities;
 
 namespace Adv.Tools.RevitAddin.Application
 {
-    public class RevitDataAccess : IRvtDataAccess
+    public class RevitDataAccess : IModelQualityHandler
     {
         private readonly Document _document;
 

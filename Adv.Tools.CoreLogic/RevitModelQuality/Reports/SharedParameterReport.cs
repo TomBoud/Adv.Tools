@@ -108,7 +108,7 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
                 throw new Exception(ex.Message);
             }
         }
-        public async Task GetReportRevitObjectsAsync(IRvtDataAccess rvtAccess)
+        public async Task GetReportRevitObjectsAsync(IModelQualityHandler rvtAccess)
         {
             try
             {
