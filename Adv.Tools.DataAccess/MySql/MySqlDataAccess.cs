@@ -12,7 +12,7 @@ using System.Reflection;
 using System.Threading;
 using Adv.Tools.Abstractions.Common;
 using System.Collections;
-using Adv.Tools.Abstractions.Database;
+using Adv.Tools.Abstractions.DbEntities;
 
 namespace Adv.Tools.DataAccess.MySql
 {

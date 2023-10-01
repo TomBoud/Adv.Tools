@@ -1,6 +1,6 @@
 ﻿
 using Adv.Tools.Abstractions.Common;
-using Adv.Tools.Abstractions.Database;
+using Adv.Tools.Abstractions.DbEntities;
 using System;
 
 namespace Adv.Tools.DataAccess.MySql.Models

@@ -1,4 +1,4 @@
-﻿using Adv.Tools.Abstractions.Database;
+﻿using Adv.Tools.Abstractions.DbEntities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

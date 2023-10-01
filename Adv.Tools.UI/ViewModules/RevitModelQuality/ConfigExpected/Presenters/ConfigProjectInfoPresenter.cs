@@ -1,4 +1,4 @@
-﻿using Adv.Tools.Abstractions.Database;
+﻿using Adv.Tools.Abstractions.DbEntities;
 using Adv.Tools.Abstractions.Revit;
 using Adv.Tools.UI.Common;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models;

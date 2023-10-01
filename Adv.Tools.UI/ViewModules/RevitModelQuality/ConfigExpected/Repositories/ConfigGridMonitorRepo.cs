@@ -1,5 +1,5 @@
 ﻿using Adv.Tools.Abstractions.Common;
-using Adv.Tools.Abstractions.Database;
+using Adv.Tools.Abstractions.DbEntities;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigExpected.Models;
 using System;
 using System.Collections.Generic;

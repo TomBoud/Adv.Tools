@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Adv.Tools.Abstractions;
 using Adv.Tools.Abstractions.Common;
-using Adv.Tools.Abstractions.Database;
+using Adv.Tools.Abstractions.DbEntities;
 using Adv.Tools.Abstractions.Enums;
 using Adv.Tools.Abstractions.Revit;
 using Adv.Tools.CoreLogic.RevitModelQuality.Models;

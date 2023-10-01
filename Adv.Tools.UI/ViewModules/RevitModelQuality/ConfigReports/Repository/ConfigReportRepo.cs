@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Adv.Tools.Abstractions.Database;
+using Adv.Tools.Abstractions.DbEntities;
 using Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Models;
 using Adv.Tools.UI.DataModels.RevitModelQuality;
 using System.Text.RegularExpressions;

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Adv.Tools.Abstractions.Database;
+using Adv.Tools.Abstractions.DbEntities;
 using Adv.Tools.UI.DataModels.RevitModelQuality;
 
 namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Models

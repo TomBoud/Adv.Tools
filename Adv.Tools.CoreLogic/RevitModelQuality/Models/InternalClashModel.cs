@@ -1,5 +1,5 @@
 ﻿
-using Adv.Tools.Abstractions.Database;
+using Adv.Tools.Abstractions.DbEntities;
 
 namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
 {

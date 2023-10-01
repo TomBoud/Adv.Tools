@@ -2,7 +2,7 @@
 using Adv.Tools.CoreLogic.RevitModelQuality;
 using Adv.Tools.RevitAddin.Application;
 using Adv.Tools.RevitAddin.Models;
-using Adv.Tools.Abstractions.Database;
+using Adv.Tools.Abstractions.DbEntities;
 using Adv.Tools.Abstractions.Revit;
 using Adv.Tools.CoreLogic.RevitModelQuality.Reports;
 using Autodesk.Revit.Attributes;

@@ -1,4 +1,4 @@
-﻿using Adv.Tools.Abstractions.Database;
+﻿using Adv.Tools.Abstractions.DbEntities;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using System;
 using System.Collections.Generic;

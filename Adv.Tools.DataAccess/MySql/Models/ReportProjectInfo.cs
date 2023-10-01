@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Adv.Tools.Abstractions.Common;
-using Adv.Tools.Abstractions.Database;
+using Adv.Tools.Abstractions.DbEntities;
 using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace Adv.Tools.DataAccess.MySql.Models
