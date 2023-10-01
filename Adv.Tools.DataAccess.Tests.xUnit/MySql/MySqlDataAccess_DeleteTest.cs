@@ -18,7 +18,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql
         private readonly string _dbName = Properties.DataAccess.Default.DevMySqlAccess;
 
 
-        [Fact, Order(2)]
+        [Fact, Order(1)]
         public async void TestDeleteDataByIdAsyncAsync_Successful()
         {
             //Stage
@@ -40,7 +40,7 @@ namespace Adv.Tools.DataAccess.Tests.xUnit.MySql
             var data = new { ModelGuid = "NewInsertedDataOk0" };
 
             //Act
-            var executeTask = _access.DeleteDataWhereParametersAsync<ReportCheckScore,dynamic>(_dbName, data);
+            var executeTask = _access.DeleteDataByParametersAsync<ReportCheckScore, dynamic>(_dbName, data);
             await executeTask;
 
             //Assert
