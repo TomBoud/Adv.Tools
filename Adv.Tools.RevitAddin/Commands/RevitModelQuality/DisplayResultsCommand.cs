@@ -22,7 +22,7 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
     /// Represents the RevitCmd class for executing a specific function in Autodesk Revit.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    public class DisplayResultsCommand : IExternalCommand
+    public class DisplayScoresCommand : IExternalCommand
     {
 
         private readonly string _connectionString = Properties.DataAccess.Default.ProdDb;
@@ -60,22 +60,7 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
             //Acquire the data needed for the reports logic
             foreach (var report in reports)
             {
-                var document = links.FirstOrDefault(x => x.GetCloudModelPath().GetModelGUID().Equals(report.ReportDocument.Guid));
-                var dataHandler = new RevitModelQualityDataHandler(access, document, report.ReportDocument.DbProjectId);
-
-                tasks.Add(Task.Run(async () =>
-                {
-                    await dataHandler.InitializeReportDataAsync(report);
-                }).ContinueWith(async _ =>
-                {
-                    await dataHandler.ActivateReportBusinessLogicAsync(report);
-                }).ContinueWith(async _ =>
-                {
-                    await dataHandler.SaveReportResultsDataAsync(report);
-                }).ContinueWith(async _ =>
-                {
-                    await dataHandler.SaveReportScoreDataAsync(report);
-                }));
+               
             }
 
             Task.WaitAll(tasks.ToArray());

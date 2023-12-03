@@ -73,11 +73,7 @@ namespace Adv.Tools.RevitAddin.Commands.RevitModelQuality
                     
                     reportInstance.ReportDocument = new RevitDocument(rvtModel);
                     tasks.Add(Task.Run(async () => await ExecuteReportRoutineAsync(reportInstance, dbAccess, rvtHandler)));
-
-                    break;
                 }
-
-                break;
             }
 
             Task.WaitAll(tasks.ToArray());

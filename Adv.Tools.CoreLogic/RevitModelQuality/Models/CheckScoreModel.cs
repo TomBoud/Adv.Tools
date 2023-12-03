@@ -16,6 +16,6 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Models
         public string CheckName { get; set; }
         public string CheckLod { get; set; }
         public string CheckScore { get; set; }
-        public bool IsActive { get; set; }
+        public string CheckStatus { get; set; }
     }
 }

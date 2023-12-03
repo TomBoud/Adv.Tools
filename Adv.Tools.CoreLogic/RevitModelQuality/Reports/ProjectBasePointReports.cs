@@ -174,24 +174,23 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         {
             try
             {
-                string databaseName = ReportDocument.DbProjectId;
+                var expectedDoc = DocumentObjects?.OfType<IExpectedDocument>()?.FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid));
 
                 var checkScoreData = new List<IReportCheckScore>
                 {
                     new CheckScoreModel
                     {
                        Id = 0,
+                       ModelName = expectedDoc.ModelName,
+                       ModelGuid = expectedDoc.ModelGuid,
+                       Discipline = expectedDoc.Discipline,
+                       CheckName = ReportName.ToString(),
                        CheckLod = ((int)Lod).ToString(),
                        CheckScore = GetReportScoreAsString(),
-                       CheckName = ReportName.ToString(),
-                       Discipline = string.Empty,
-                       ModelGuid = ReportDocument.Guid.ToString(),
-                       ModelName = ReportDocument.Title,
-                       IsActive = true,
                     }
                 };
 
-                await dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(databaseName, checkScoreData);
+                await dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(ReportDocument.DbProjectId, checkScoreData);
 
             }
             catch (Exception ex)

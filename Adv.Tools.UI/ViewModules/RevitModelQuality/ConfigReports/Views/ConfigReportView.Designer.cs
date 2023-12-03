@@ -32,17 +32,45 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.disable_button = new System.Windows.Forms.Button();
-            this.start_button = new System.Windows.Forms.Button();
-            this.search_button = new System.Windows.Forms.Button();
-            this.dataGridView = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
+            this.search_button = new System.Windows.Forms.Button();
             this.search_textBox = new System.Windows.Forms.TextBox();
-            this.enable_button = new System.Windows.Forms.Button();
+            this.start_button = new System.Windows.Forms.Button();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.edit_button = new System.Windows.Forms.Button();
+            this.add_button = new System.Windows.Forms.Button();
+            this.delete_button = new System.Windows.Forms.Button();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.discipline_comboBox = new System.Windows.Forms.ComboBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.folderId_textBox = new System.Windows.Forms.TextBox();
+            this.hubId_textBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.modelGuid_textBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.modelName_comboBox = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.modelNameComment_label = new System.Windows.Forms.Label();
+            this.itemId_textBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.cancel_button = new System.Windows.Forms.Button();
+            this.save_button = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
+            this.tabPage2.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -67,22 +95,24 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 53);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1297, 528);
+            this.tabControl1.Size = new System.Drawing.Size(1297, 541);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.delete_button);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.search_button);
             this.tabPage1.Controls.Add(this.search_textBox);
             this.tabPage1.Controls.Add(this.start_button);
             this.tabPage1.Controls.Add(this.dataGridView);
-            this.tabPage1.Controls.Add(this.enable_button);
-            this.tabPage1.Controls.Add(this.disable_button);
+            this.tabPage1.Controls.Add(this.edit_button);
+            this.tabPage1.Controls.Add(this.add_button);
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -91,25 +121,15 @@
             this.tabPage1.Text = "Active Reports";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // disable_button
+            // label2
             // 
-            this.disable_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.disable_button.Location = new System.Drawing.Point(1106, 99);
-            this.disable_button.Name = "disable_button";
-            this.disable_button.Size = new System.Drawing.Size(175, 40);
-            this.disable_button.TabIndex = 2;
-            this.disable_button.Text = "Disable Report(s)";
-            this.disable_button.UseVisualStyleBackColor = true;
-            // 
-            // start_button
-            // 
-            this.start_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.start_button.Location = new System.Drawing.Point(1106, 447);
-            this.start_button.Name = "start_button";
-            this.start_button.Size = new System.Drawing.Size(175, 40);
-            this.start_button.TabIndex = 0;
-            this.start_button.Text = "Run Selected";
-            this.start_button.UseVisualStyleBackColor = true;
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label2.Location = new System.Drawing.Point(8, 33);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(94, 16);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Search Report";
             // 
             // search_button
             // 
@@ -120,6 +140,25 @@
             this.search_button.TabIndex = 3;
             this.search_button.Text = "Search";
             this.search_button.UseVisualStyleBackColor = true;
+            // 
+            // search_textBox
+            // 
+            this.search_textBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.search_textBox.Location = new System.Drawing.Point(8, 67);
+            this.search_textBox.Name = "search_textBox";
+            this.search_textBox.Size = new System.Drawing.Size(979, 26);
+            this.search_textBox.TabIndex = 0;
+            // 
+            // start_button
+            // 
+            this.start_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.start_button.Location = new System.Drawing.Point(1106, 447);
+            this.start_button.Name = "start_button";
+            this.start_button.Size = new System.Drawing.Size(175, 40);
+            this.start_button.TabIndex = 0;
+            this.start_button.Text = "Start";
+            this.start_button.UseVisualStyleBackColor = true;
             // 
             // dataGridView
             // 
@@ -132,40 +171,335 @@
             this.dataGridView.Size = new System.Drawing.Size(1092, 388);
             this.dataGridView.TabIndex = 1;
             // 
-            // label2
+            // edit_button
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.label2.Location = new System.Drawing.Point(8, 33);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 16);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Search Report";
+            this.edit_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.edit_button.Location = new System.Drawing.Point(1106, 145);
+            this.edit_button.Name = "edit_button";
+            this.edit_button.Size = new System.Drawing.Size(175, 40);
+            this.edit_button.TabIndex = 3;
+            this.edit_button.Text = "Edit Report";
+            this.edit_button.UseVisualStyleBackColor = true;
             // 
-            // search_textBox
+            // add_button
             // 
-            this.search_textBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.add_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.add_button.Location = new System.Drawing.Point(1106, 99);
+            this.add_button.Name = "add_button";
+            this.add_button.Size = new System.Drawing.Size(175, 40);
+            this.add_button.TabIndex = 2;
+            this.add_button.Text = "Add Report";
+            this.add_button.UseVisualStyleBackColor = true;
+            // 
+            // delete_button
+            // 
+            this.delete_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.delete_button.Location = new System.Drawing.Point(1106, 191);
+            this.delete_button.Name = "delete_button";
+            this.delete_button.Size = new System.Drawing.Size(175, 40);
+            this.delete_button.TabIndex = 4;
+            this.delete_button.Text = "Delete Report";
+            this.delete_button.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.save_button);
+            this.tabPage2.Controls.Add(this.cancel_button);
+            this.tabPage2.Controls.Add(this.tableLayoutPanel1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 29);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1289, 508);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Details";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.search_textBox.Location = new System.Drawing.Point(8, 67);
-            this.search_textBox.Name = "search_textBox";
-            this.search_textBox.Size = new System.Drawing.Size(979, 26);
-            this.search_textBox.TabIndex = 0;
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.label17, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label11, 2, 3);
+            this.tableLayoutPanel1.Controls.Add(this.hubId_textBox, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.modelGuid_textBox, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.modelName_comboBox, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.modelNameComment_label, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.itemId_textBox, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label6, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label5, 2, 2);
+            this.tableLayoutPanel1.Controls.Add(this.discipline_comboBox, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label8, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label13, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.folderId_textBox, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.label14, 2, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label10, 2, 6);
+            this.tableLayoutPanel1.Controls.Add(this.label9, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.textBox1, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.label12, 2, 5);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(8, 6);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 8;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1273, 414);
+            this.tableLayoutPanel1.TabIndex = 1;
             // 
-            // enable_button
+            // label17
             // 
-            this.enable_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.enable_button.Location = new System.Drawing.Point(1106, 145);
-            this.enable_button.Name = "enable_button";
-            this.enable_button.Size = new System.Drawing.Size(175, 40);
-            this.enable_button.TabIndex = 3;
-            this.enable_button.Text = "Enable Report(s)";
-            this.enable_button.UseVisualStyleBackColor = true;
+            this.label17.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label17.Location = new System.Drawing.Point(3, 15);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(90, 20);
+            this.label17.TabIndex = 25;
+            this.label17.Text = "Report Id:";
+            // 
+            // label11
+            // 
+            this.label11.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(1098, 168);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(94, 20);
+            this.label11.TabIndex = 13;
+            this.label11.Text = "(Read-Only)";
+            // 
+            // discipline_comboBox
+            // 
+            this.discipline_comboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.discipline_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.discipline_comboBox.FormattingEnabled = true;
+            this.discipline_comboBox.Location = new System.Drawing.Point(193, 215);
+            this.discipline_comboBox.Name = "discipline_comboBox";
+            this.discipline_comboBox.Size = new System.Drawing.Size(821, 28);
+            this.discipline_comboBox.TabIndex = 20;
+            this.discipline_comboBox.Tag = "";
+            // 
+            // label14
+            // 
+            this.label14.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(1073, 219);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(144, 20);
+            this.label14.TabIndex = 16;
+            this.label14.Text = "Selection Required";
+            // 
+            // label13
+            // 
+            this.label13.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label13.Location = new System.Drawing.Point(3, 321);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(91, 20);
+            this.label13.TabIndex = 15;
+            this.label13.Text = "Discipline:";
+            // 
+            // folderId_textBox
+            // 
+            this.folderId_textBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.folderId_textBox.Location = new System.Drawing.Point(193, 318);
+            this.folderId_textBox.Name = "folderId_textBox";
+            this.folderId_textBox.ReadOnly = true;
+            this.folderId_textBox.Size = new System.Drawing.Size(821, 26);
+            this.folderId_textBox.TabIndex = 11;
+            // 
+            // hubId_textBox
+            // 
+            this.hubId_textBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.hubId_textBox.Location = new System.Drawing.Point(193, 165);
+            this.hubId_textBox.Name = "hubId_textBox";
+            this.hubId_textBox.ReadOnly = true;
+            this.hubId_textBox.Size = new System.Drawing.Size(821, 26);
+            this.hubId_textBox.TabIndex = 9;
+            // 
+            // label7
+            // 
+            this.label7.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label7.Location = new System.Drawing.Point(3, 168);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(121, 20);
+            this.label7.TabIndex = 6;
+            this.label7.Text = "Report Score:";
+            // 
+            // label10
+            // 
+            this.label10.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(1098, 321);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(94, 20);
+            this.label10.TabIndex = 12;
+            this.label10.Text = "(Read-Only)";
+            // 
+            // modelGuid_textBox
+            // 
+            this.modelGuid_textBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.modelGuid_textBox.Location = new System.Drawing.Point(193, 114);
+            this.modelGuid_textBox.Name = "modelGuid_textBox";
+            this.modelGuid_textBox.ReadOnly = true;
+            this.modelGuid_textBox.Size = new System.Drawing.Size(821, 26);
+            this.modelGuid_textBox.TabIndex = 3;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label4.Location = new System.Drawing.Point(3, 117);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(104, 20);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Report Lod:";
+            // 
+            // modelName_comboBox
+            // 
+            this.modelName_comboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.modelName_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.modelName_comboBox.FormattingEnabled = true;
+            this.modelName_comboBox.Location = new System.Drawing.Point(193, 62);
+            this.modelName_comboBox.Name = "modelName_comboBox";
+            this.modelName_comboBox.Size = new System.Drawing.Size(821, 28);
+            this.modelName_comboBox.TabIndex = 22;
+            this.modelName_comboBox.Tag = "";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label3.Location = new System.Drawing.Point(3, 66);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(120, 20);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Report Name:";
+            // 
+            // modelNameComment_label
+            // 
+            this.modelNameComment_label.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.modelNameComment_label.AutoSize = true;
+            this.modelNameComment_label.Location = new System.Drawing.Point(1073, 66);
+            this.modelNameComment_label.Name = "modelNameComment_label";
+            this.modelNameComment_label.Size = new System.Drawing.Size(144, 20);
+            this.modelNameComment_label.TabIndex = 4;
+            this.modelNameComment_label.Text = "Selection Required";
+            // 
+            // itemId_textBox
+            // 
+            this.itemId_textBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.itemId_textBox.Location = new System.Drawing.Point(193, 12);
+            this.itemId_textBox.Name = "itemId_textBox";
+            this.itemId_textBox.ReadOnly = true;
+            this.itemId_textBox.Size = new System.Drawing.Size(821, 26);
+            this.itemId_textBox.TabIndex = 23;
+            // 
+            // label6
+            // 
+            this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(1098, 15);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(94, 20);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "(Read-Only)";
+            // 
+            // label5
+            // 
+            this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(1098, 117);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(94, 20);
+            this.label5.TabIndex = 24;
+            this.label5.Text = "(Read-Only)";
+            // 
+            // label8
+            // 
+            this.label8.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label8.Location = new System.Drawing.Point(3, 219);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(113, 20);
+            this.label8.TabIndex = 26;
+            this.label8.Text = "Model Name:";
+            // 
+            // label9
+            // 
+            this.label9.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label9.Location = new System.Drawing.Point(3, 270);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(105, 20);
+            this.label9.TabIndex = 27;
+            this.label9.Text = "Model Guid:";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Location = new System.Drawing.Point(193, 267);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(821, 26);
+            this.textBox1.TabIndex = 28;
+            // 
+            // label12
+            // 
+            this.label12.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(1098, 270);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(94, 20);
+            this.label12.TabIndex = 29;
+            this.label12.Text = "(Read-Only)";
+            // 
+            // cancel_button
+            // 
+            this.cancel_button.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cancel_button.Location = new System.Drawing.Point(8, 426);
+            this.cancel_button.Name = "cancel_button";
+            this.cancel_button.Size = new System.Drawing.Size(1273, 36);
+            this.cancel_button.TabIndex = 22;
+            this.cancel_button.Text = "Cancel";
+            this.cancel_button.UseVisualStyleBackColor = true;
+            // 
+            // save_button
+            // 
+            this.save_button.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.save_button.Location = new System.Drawing.Point(8, 468);
+            this.save_button.Name = "save_button";
+            this.save_button.Size = new System.Drawing.Size(1273, 36);
+            this.save_button.TabIndex = 23;
+            this.save_button.Text = "Save";
+            this.save_button.UseVisualStyleBackColor = true;
             // 
             // ConfigReportView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1297, 581);
+            this.ClientSize = new System.Drawing.Size(1297, 594);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
@@ -178,6 +512,9 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -191,9 +528,35 @@
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.TextBox search_textBox;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button disable_button;
+        private System.Windows.Forms.Button add_button;
         private System.Windows.Forms.Button start_button;
         private System.Windows.Forms.Button search_button;
-        private System.Windows.Forms.Button enable_button;
+        private System.Windows.Forms.Button edit_button;
+        private System.Windows.Forms.Button delete_button;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox discipline_comboBox;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox folderId_textBox;
+        private System.Windows.Forms.TextBox hubId_textBox;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox modelGuid_textBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox modelName_comboBox;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label modelNameComment_label;
+        private System.Windows.Forms.TextBox itemId_textBox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button cancel_button;
+        private System.Windows.Forms.Button save_button;
     }
 }

@@ -14,9 +14,10 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Views
         string ReportName { get; set; }
         string ReportLod { get; set; }
         string ReportScore { get; set; }
-        string DocumentName { get; set; }
-        string DocumentGuid { get; set; }
-        bool IsActive { get; set; }
+        string ModelName { get; set; }
+        string ModelGuid { get; set; }
+        string Discipline { get; set; }
+       
 
         string SearchValue { get; set; }
         bool IsEdit { get; set; }
@@ -30,8 +31,6 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Views
         event EventHandler EditedEvent;
         event EventHandler DeleteEvent;
         event EventHandler CloseEvent;
-        event EventHandler EnableEvent;
-        event EventHandler DisableEvent;
 
         //Methods
         void SetPetListBindingSource(BindingSource reportsList);

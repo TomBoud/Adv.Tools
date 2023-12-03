@@ -25,25 +25,22 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Views
         public string ReportName { get; set; }
         public string ReportLod { get; set; }
         public string ReportScore { get; set; }
-        public string DocumentName { get; set; }
-        public string DocumentGuid { get; set; }
-        public bool IsActive { get; set; }
+        public string ModelName { get; set; }
+        public string ModelGuid { get; set; }
+        public string Discipline { get; set; }
+
         public string SearchValue { get => search_textBox.Text ; set => search_textBox.Text = value; }
-        
         public bool IsEdit { get; set; }
         public bool IsEnabled{ get; set; }
         public bool IsSuccessful { get; set; }
         public string Message { get; set; }
         
-
         //Events
         public event EventHandler SearchEvent;
         public event EventHandler AddNewEvent;
         public event EventHandler EditedEvent;
         public event EventHandler DeleteEvent;
         public event EventHandler CloseEvent;
-        public event EventHandler EnableEvent;
-        public event EventHandler DisableEvent;
 
         //Methods
         public void SetPetListBindingSource(BindingSource reportsList)
@@ -65,11 +62,6 @@ namespace Adv.Tools.UI.ViewModules.RevitModelQuality.ConfigReports.Views
                 SearchEvent?.Invoke(this, EventArgs.Empty);
             };
 
-            //Enable Reports
-            enable_button.Click += delegate { EnableEvent?.Invoke(this, EventArgs.Empty); };
-
-            //Disable Reports
-            disable_button.Click += delegate { DisableEvent?.Invoke(this, EventArgs.Empty); };
 
             //Run Reports
             start_button.Click += delegate 

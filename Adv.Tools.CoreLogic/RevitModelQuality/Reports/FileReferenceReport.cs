@@ -76,16 +76,16 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
             if (_expectedDoc is null) { ResultObjects = _resultObjects; return; }
 
             //Perform Report Business Logic
-            foreach (var file in _expectedRevitLinks)
+            foreach (var expectedRevitLink in _expectedRevitLinks)
             {
-                var linkFileType = _existingRevitLinks.FirstOrDefault(x => x.FileGuid.ToString().Equals(file.ModelGuid));
+                var linkFileType = _existingRevitLinks.FirstOrDefault(x => x.FileGuid.ToString().Equals(expectedRevitLink.ModelGuid));
 
                 var report = new FileReferenceModel()
                 {
                     ModelName = _expectedDoc.ModelName,
                     Discipline = _expectedDoc.Discipline,
                     ModelGuid = _expectedDoc.ModelGuid,
-                    LinkName = linkFileType?.FileName ?? string.Empty,
+                    LinkName = expectedRevitLink.ModelName,
                     Status = linkFileType?.LinkedFileStatus ?? string.Empty,
                     Reference = linkFileType?.AttachmentType ?? string.Empty,
                 };
@@ -171,24 +171,23 @@ namespace Adv.Tools.CoreLogic.RevitModelQuality.Reports
         {
             try
             {
-                string databaseName = ReportDocument.DbProjectId;
+                var expectedDoc = DocumentObjects?.OfType<IExpectedDocument>()?.FirstOrDefault(x => x.ModelGuid.Equals(ReportDocument.Guid));
 
                 var checkScoreData = new List<IReportCheckScore>
                 {
                     new CheckScoreModel
                     {
                        Id = 0,
+                       ModelName = expectedDoc.ModelName,
+                       ModelGuid = expectedDoc.ModelGuid,
+                       Discipline = expectedDoc.Discipline,
+                       CheckName = ReportName.ToString(),
                        CheckLod = ((int)Lod).ToString(),
                        CheckScore = GetReportScoreAsString(),
-                       CheckName = ReportName.ToString(),
-                       Discipline = string.Empty,
-                       ModelGuid = ReportDocument.Guid.ToString(),
-                       ModelName = ReportDocument.Title,
-                       IsActive = true,
                     }
                 };
 
-                await dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(databaseName, checkScoreData);
+                await dbAccess.SaveByInsertUpdateOnDuplicateKeysAsync(ReportDocument.DbProjectId, checkScoreData);
 
             }
             catch (Exception ex)
